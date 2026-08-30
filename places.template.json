@@ -1,0 +1,60 @@
+{
+  "_README": [
+    "Seed dataset. This file IS the product — the planner can only be as good as this.",
+    "",
+    "RULES:",
+    "1. Do not add a place whose opening_hours you have not read from an official",
+    "   source (rng.org.il, the site's own page, the local authority).",
+    "   Never fill hours from memory and never let a model guess them.",
+    "2. opening_hours: [open, close] in 24h, or null if closed that weekday.",
+    "3. duration_min: realistic visit length, not the minimum possible.",
+    "4. region is hand-assigned. test_regions.py smoke-tests it against latitude.",
+    "5. id format: {region}-{slug}. English, lowercase, hyphens.",
+    "6. All internal fields English. Only *_he fields are Hebrew.",
+    "",
+    "TARGET: 10 per region tonight, ~30 per region eventually.",
+    "Delete this _README key before shipping.",
+    ""
+  ],
+
+  "places": [
+    {
+      "id": "north-EXAMPLE-slug",
+      "name_he": "שם המקום",
+      "description_he": "משפט אחד או שניים. מה רואים, למי זה מתאים.",
+      "tip_he": "טיפ מעשי אחד: חניה, שעה מומלצת, מה להביא.",
+      "category": "nature",
+      "region": "north",
+      "lat": 0.0,
+      "lng": 0.0,
+      "duration_min": 90,
+      "opening_hours": {
+        "sun": ["08:00", "17:00"],
+        "mon": ["08:00", "17:00"],
+        "tue": ["08:00", "17:00"],
+        "wed": ["08:00", "17:00"],
+        "thu": ["08:00", "17:00"],
+        "fri": ["08:00", "14:00"],
+        "sat": null
+      },
+      "closed_on_shabbat": true,
+      "kid_friendly": true,
+      "accessible": false,
+      "tags": ["spring", "easy-walk", "shade"],
+      "_source": "https://... (where you verified the hours)",
+      "_verified_on": "2026-08-30"
+    }
+  ],
+
+  "_enums": {
+    "category": ["museum", "nature", "hike", "viewpoint", "meal", "kids", "historic"],
+    "region": ["north", "central", "south"],
+    "weekday": ["sun", "mon", "tue", "wed", "thu", "fri", "sat"]
+  },
+
+  "_tag_vocabulary": [
+    "spring", "waterfall", "easy-walk", "long-hike", "shade", "swimming",
+    "stroller-ok", "picnic", "indoor", "free", "paid", "parking-onsite",
+    "desert", "forest", "coast", "archaeology", "animals", "playground"
+  ]
+}
