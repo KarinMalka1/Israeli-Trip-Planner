@@ -1,0 +1,84 @@
+{
+  "central-test-kids": {
+    "central-test-lunch": 12,
+    "central-test-museum": 10,
+    "central-test-park": 19,
+    "central-test-ruins": 19,
+    "central-test-viewpoint": 42
+  },
+  "central-test-lunch": {
+    "central-test-kids": 12,
+    "central-test-museum": 5,
+    "central-test-park": 8,
+    "central-test-ruins": 15,
+    "central-test-viewpoint": 39
+  },
+  "central-test-museum": {
+    "central-test-kids": 10,
+    "central-test-lunch": 5,
+    "central-test-park": 10,
+    "central-test-ruins": 19,
+    "central-test-viewpoint": 43
+  },
+  "central-test-park": {
+    "central-test-kids": 19,
+    "central-test-lunch": 8,
+    "central-test-museum": 10,
+    "central-test-ruins": 20,
+    "central-test-viewpoint": 42
+  },
+  "central-test-ruins": {
+    "central-test-kids": 19,
+    "central-test-lunch": 15,
+    "central-test-museum": 19,
+    "central-test-park": 20,
+    "central-test-viewpoint": 25
+  },
+  "central-test-viewpoint": {
+    "central-test-kids": 42,
+    "central-test-lunch": 39,
+    "central-test-museum": 43,
+    "central-test-park": 42,
+    "central-test-ruins": 25
+  },
+  "north-test-lookout": {
+    "north-test-spring": 9,
+    "north-test-trail": 19,
+    "north-test-winery": 11
+  },
+  "north-test-spring": {
+    "north-test-lookout": 9,
+    "north-test-trail": 10,
+    "north-test-winery": 5
+  },
+  "north-test-trail": {
+    "north-test-lookout": 19,
+    "north-test-spring": 10,
+    "north-test-winery": 10
+  },
+  "north-test-winery": {
+    "north-test-lookout": 11,
+    "north-test-spring": 5,
+    "north-test-trail": 10
+  },
+  "south-test-canyon": {
+    "south-test-crater": 12,
+    "south-test-oasis": 13,
+    "south-test-visitor-centre": 10
+  },
+  "south-test-crater": {
+    "south-test-canyon": 12,
+    "south-test-oasis": 17,
+    "south-test-visitor-centre": 9
+  },
+  "south-test-oasis": {
+    "south-test-canyon": 13,
+    "south-test-crater": 17,
+    "south-test-visitor-centre": 9
+  },
+  "south-test-visitor-centre": {
+    "south-test-canyon": 10,
+    "south-test-crater": 9,
+    "south-test-oasis": 9
+  }
+}

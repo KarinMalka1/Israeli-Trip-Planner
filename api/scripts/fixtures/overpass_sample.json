@@ -1,0 +1,114 @@
+{
+  "_README": "Synthetic Overpass API response used only by test_fetch_osm.py. Never hits the network.",
+  "version": 0.6,
+  "generator": "test fixture, not a real Overpass response",
+  "elements": [
+    {
+      "type": "node", "id": 1001, "lat": 32.05, "lon": 34.75,
+      "tags": {
+        "tourism": "museum",
+        "name:he": "מוזיאון בדיקה",
+        "opening_hours": "Mo-Fr 08:00-17:00; Sa off"
+      }
+    },
+    {
+      "type": "node", "id": 1004, "lat": 32.15, "lon": 34.85,
+      "tags": { "tourism": "viewpoint", "name:he": "תצפית בדיקה" }
+    },
+    {
+      "type": "way", "id": 2001,
+      "bounds": { "minlat": 32.000000, "minlon": 34.800000, "maxlat": 32.010000, "maxlon": 34.815000 },
+      "tags": { "leisure": "park", "name:he": "פארק גדול בדיקה" }
+    },
+    {
+      "type": "way", "id": 2002,
+      "bounds": { "minlat": 32.020000, "minlon": 34.820000, "maxlat": 32.020050, "maxlon": 34.820050 },
+      "tags": { "leisure": "park", "name:he": "פארק קטן בדיקה" }
+    },
+    {
+      "type": "node", "id": 2003, "lat": 32.70, "lon": 35.30,
+      "tags": { "leisure": "park", "wikidata": "Q999999", "name:he": "פארק בדיקה עם תיעוד" }
+    },
+    {
+      "type": "way", "id": 3001,
+      "bounds": { "minlat": 33.000000, "minlon": 35.500000, "maxlat": 33.002000, "maxlon": 35.502000 },
+      "tags": {
+        "leisure": "nature_reserve",
+        "historic": "archaeological_site",
+        "name:he": "שמורה עתיקה בדיקה"
+      }
+    },
+    {
+      "type": "way", "id": 3002,
+      "bounds": { "minlat": 31.700000, "minlon": 35.100000, "maxlat": 31.701000, "maxlon": 35.101000 },
+      "tags": { "historic": "archaeological_site", "name:he": "אתר עתיקות בדיקה" }
+    },
+    {
+      "type": "node", "id": 4001, "lat": 32.100000, "lon": 34.800000,
+      "tags": { "tourism": "viewpoint", "name:he": "תצפית כפולה" }
+    },
+    {
+      "type": "node", "id": 4002, "lat": 32.100400, "lon": 34.800000,
+      "tags": { "tourism": "viewpoint", "name:he": "תצפית כפולה" }
+    },
+    {
+      "type": "node", "id": 5001, "lat": 32.20, "lon": 34.90,
+      "tags": { "tourism": "museum", "name": "Random English Name" }
+    },
+    {
+      "type": "node", "id": 6001, "lat": 32.30, "lon": 34.95,
+      "tags": {
+        "tourism": "museum",
+        "name:he": "מוזיאון שעות מוזרות",
+        "opening_hours": "Apr-Oct Mo-Su 08:00-20:00"
+      }
+    },
+    {
+      "type": "node", "id": 7001, "lat": 32.40, "lon": 35.00,
+      "tags": {
+        "tourism": "attraction", "attraction": "playground", "wikidata": "Q1",
+        "name:he": "מתקן שעשועים בדיקה"
+      }
+    },
+    {
+      "type": "node", "id": 7002, "lat": 32.41, "lon": 35.01,
+      "tags": { "tourism": "attraction", "wikidata": "Q2", "name:he": "אתר תיירות כללי" }
+    },
+    {
+      "type": "node", "id": 7003, "lat": 32.42, "lon": 35.02,
+      "tags": { "tourism": "attraction", "name:he": "אטרקציה זניחה" }
+    },
+    {
+      "type": "node", "id": 8001, "lat": 32.50, "lon": 35.10,
+      "tags": { "tourism": "zoo", "name:he": "גן חיות בדיקה", "wheelchair": "yes" }
+    },
+    {
+      "type": "node", "id": 8002, "lat": 32.51, "lon": 35.11,
+      "tags": { "tourism": "aquarium", "name:he": "אקווריום בדיקה" }
+    },
+    {
+      "type": "node", "id": 8003, "lat": 32.60, "lon": 35.20,
+      "tags": { "natural": "spring", "name:he": "מעיין בדיקה", "fee": "yes" }
+    },
+    {
+      "type": "node", "id": 8004, "lat": 32.61, "lon": 35.21,
+      "tags": { "natural": "cave_entrance", "name:he": "מערה בדיקה" }
+    },
+    {
+      "type": "node", "id": 8005, "lat": 32.62, "lon": 35.22,
+      "tags": { "natural": "beach", "name:he": "חוף בדיקה" }
+    },
+    {
+      "type": "node", "id": 8006, "lat": 32.63, "lon": 35.23,
+      "tags": { "waterway": "waterfall", "name:he": "מפל בדיקה" }
+    },
+    {
+      "type": "node", "id": 8007, "lat": 32.64, "lon": 35.24,
+      "tags": { "historic": "ruins", "name:he": "חורבה בדיקה" }
+    },
+    {
+      "type": "node", "id": 8008, "lat": 32.65, "lon": 35.25,
+      "tags": { "historic": "castle", "name:he": "מצודה בדיקה" }
+    }
+  ]
+}

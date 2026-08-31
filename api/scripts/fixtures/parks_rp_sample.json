@@ -1,0 +1,113 @@
+[
+  {
+    "id": 100001,
+    "slug": "test-reserve-clean-hours",
+    "title": "שמורת בדיקה עם שעות",
+    "link": "https://www.parks.org.il/reserve-park/test-reserve-clean-hours/",
+    "lat": "237322",
+    "lon": "596631",
+    "accessible_f": true,
+    "Park_information_on_time": {
+      "Special_Opening_hours_s": "<h4><strong><span class=\"hourSTitle\">שעות קיץ:</span></strong></h4>\n<p>ימים א' &#8211; ה' פתוח: <span class=\"time\">17:00 &#8211; 08:00</span><br />\nביום שישי וערבי חג: <span class=\"time\">16:00 &#8211; 08:00</span></p>\n<h4><span class=\"hourSTitle\"><strong>שעות חורף:</strong></span></h4>\n<p>ימים א' &#8211; ה' פתוח: <span class=\"time\">16:00 &#8211; 08:00</span><br />\nביום שישי וערבי חג: <span class=\"time\">15:00 &#8211; 08:00</span></p>\n<p><span class=\"holidHour holiday_eves\">בימי שישי וערבי חג בחודשים אלה: <span class=\"time\">13:00 &#8211; 08:00</span></span></p>\n"
+    }
+  },
+  {
+    "id": 100002,
+    "slug": "test-reserve-no-restriction",
+    "title": "שמורת בדיקה ללא הגבלה",
+    "link": "https://www.parks.org.il/reserve-park/test-reserve-no-restriction/",
+    "lat": "190000",
+    "lon": "663000",
+    "accessible_f": false,
+    "Park_information_on_time": {
+      "Special_Opening_hours_s": "<p>פתוח לביקור <strong>בכל ימות השבוע</strong>.</p>\n<p>הכניסה חופשית וללא הגבלת שעות.</p>\n"
+    }
+  },
+  {
+    "id": 100003,
+    "slug": "test-reserve-no-coordinates",
+    "title": "שמורת בדיקה ללא קואורדינטות",
+    "link": "https://www.parks.org.il/reserve-park/test-reserve-no-coordinates/",
+    "lat": "",
+    "lon": "",
+    "accessible_f": false,
+    "Park_information_on_time": {
+      "Special_Opening_hours_s": ""
+    }
+  },
+  {
+    "id": 100004,
+    "slug": "test-reserve-north",
+    "title": "שמורת בדיקה צפונית",
+    "link": "https://www.parks.org.il/reserve-park/test-reserve-north/",
+    "lat": "277142",
+    "lon": "763883",
+    "accessible_f": false,
+    "Park_information_on_time": {
+      "Special_Opening_hours_s": ""
+    }
+  },
+  {
+    "id": 100005,
+    "slug": "test-marine-reserve-no-coords",
+    "title": "שמורת ים בדיקה",
+    "link": "https://www.parks.org.il/reserve-park/test-marine-reserve-no-coords/",
+    "lat": "",
+    "lon": "",
+    "trip-area": [4698, 4706],
+    "accessible_f": false,
+    "Park_information_on_time": {
+      "Special_Opening_hours_s": ""
+    }
+  },
+  {
+    "id": 100006,
+    "slug": "test-bad-itm-no-trip-area",
+    "title": "שמורת בדיקה עם קואורדינטה שגויה",
+    "link": "https://www.parks.org.il/reserve-park/test-bad-itm-no-trip-area/",
+    "lat": "1799799",
+    "lon": "638656",
+    "trip-area": [],
+    "accessible_f": false,
+    "Park_information_on_time": {
+      "Special_Opening_hours_s": ""
+    }
+  },
+  {
+    "id": 100007,
+    "slug": "test-bad-itm-with-trip-area",
+    "title": "שמורת בדיקה עם קואורדינטה שגויה וטריפ-אריה",
+    "link": "https://www.parks.org.il/reserve-park/test-bad-itm-with-trip-area/",
+    "lat": "1799799",
+    "lon": "638656",
+    "trip-area": [4699],
+    "accessible_f": false,
+    "Park_information_on_time": {
+      "Special_Opening_hours_s": ""
+    }
+  },
+  {
+    "id": 100008,
+    "slug": "test-museum-title",
+    "title": "מוזיאון בדיקה",
+    "link": "https://www.parks.org.il/reserve-park/test-museum-title/",
+    "lat": "237322",
+    "lon": "596631",
+    "accessible_f": false,
+    "Park_information_on_time": {
+      "Special_Opening_hours_s": ""
+    }
+  },
+  {
+    "id": 100009,
+    "slug": "test-list-item-hours",
+    "title": "שמורת בדיקה עם שעות ברשימה",
+    "link": "https://www.parks.org.il/reserve-park/test-list-item-hours/",
+    "lat": "237322",
+    "lon": "596631",
+    "accessible_f": false,
+    "Park_information_on_time": {
+      "Special_Opening_hours_s": "<ul>\n<li>בימים א' &#8211; ה' ושבת: <span class=\"time\">17:00 &#8211; 08:00</span></li>\n<li>בימי שישי וערבי חג: <span class=\"time\">16:00 &#8211; 08:00</span></li>\n</ul>\n"
+    }
+  }
+]

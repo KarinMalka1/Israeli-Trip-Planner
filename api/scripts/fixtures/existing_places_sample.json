@@ -1,0 +1,53 @@
+{
+  "_README": "Synthetic existing places.json used only by test_fetch_osm.py's merge test.",
+  "places": [
+    {
+      "id": "north-shmura-atika-bdika",
+      "name_he": "שמורה עתיקה בדיקה",
+      "description_he": "תיאור שאומת בידי אדם.",
+      "tip_he": "טיפ שאומת בידי אדם.",
+      "description_source": "human",
+      "category": "nature",
+      "region": "north",
+      "access": "gated",
+      "lat": 33.5,
+      "lng": 36.0,
+      "duration_min": 90,
+      "opening_hours": {
+        "sun": ["08:00", "17:00"], "mon": ["08:00", "17:00"], "tue": ["08:00", "17:00"],
+        "wed": ["08:00", "17:00"], "thu": ["08:00", "17:00"], "fri": ["08:00", "14:00"],
+        "sat": null
+      },
+      "hours_verified": true,
+      "closed_on_shabbat": true,
+      "kid_friendly": false,
+      "accessible": false,
+      "tags": ["archaeology"],
+      "_osm_id": 3001,
+      "_osm_type": "way"
+    },
+    {
+      "id": "north-hand-written-restaurant",
+      "name_he": "מקום ידני",
+      "description_he": "מסעדה שהוספה ידנית, לא דרך OSM.",
+      "tip_he": "טיפ שנכתב ידנית.",
+      "description_source": "human",
+      "category": "meal",
+      "region": "north",
+      "access": "gated",
+      "lat": 32.90,
+      "lng": 35.30,
+      "duration_min": 60,
+      "opening_hours": {
+        "sun": ["11:00", "22:00"], "mon": ["11:00", "22:00"], "tue": ["11:00", "22:00"],
+        "wed": ["11:00", "22:00"], "thu": ["11:00", "22:00"], "fri": ["11:00", "14:00"],
+        "sat": null
+      },
+      "hours_verified": true,
+      "closed_on_shabbat": true,
+      "kid_friendly": true,
+      "accessible": true,
+      "tags": ["indoor", "paid"]
+    }
+  ]
+}

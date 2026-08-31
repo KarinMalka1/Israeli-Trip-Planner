@@ -283,3 +283,51 @@ The hard part of this project is not the LLM. It is producing ~100 places with
 correct, verified opening hours across three regions. Budget more time for it
 than feels reasonable and start before the planner is finished — it is the only
 task here that cannot be compressed by writing better code.
+
+---
+
+## 10. Amendment: OSM-assisted seeding (2026-08-30)
+
+`Place` (section 7) gains three fields, added to support `BRIEF_data_pipeline.md`'s
+OSM ingest + LLM-description pipeline:
+
+```ts
+interface Place {
+  // ...as above...
+  access: "gated" | "open";        // "gated": a real gate/ticket/staff — opening_hours
+                                    // applies. "open": free-access trail, spring,
+                                    // viewpoint — opening_hours is always null.
+  hours_verified: boolean;         // true only when a human read official hours
+  description_source: "generated" | "human";
+}
+```
+
+Scheduler consequence (not yet implemented — tracked separately):
+a `gated` place with `hours_verified == false` must never be scheduled; an
+`open` place is scheduled by daylight (07:00–18:00) rather than by
+`opening_hours`. Rule 11 does not change; this only defines what counts as
+"open" for a place OSM ingest could not verify.
+
+This is the only exception to the freeze note at the top of this file — the
+fields are additive and no existing rule changes.
+
+---
+
+## 11. Amendment: seasonal places (2026-08-30)
+
+`Place` (section 7) gains one more field, added to support
+`BRIEF_data_acquisition.md`'s multi-source data acquisition (parks.org.il,
+OSM open-access curation, data.gov.il museums, hand-typed):
+
+```ts
+interface Place {
+  // ...as above...
+  season: "year_round" | "summer_only";   // default "year_round"
+}
+```
+
+Scheduler consequence (not yet implemented — tracked as a TODO in
+`domain/schedule.py`): a `summer_only` place must never be scheduled outside
+April–October. This requires a request date, which itineraries do not yet
+carry (only a weekday) — implementing the exclusion is deferred until that
+exists. Additive field, no existing rule changes.
