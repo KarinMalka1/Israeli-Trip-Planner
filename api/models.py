@@ -231,6 +231,11 @@ class Itinerary(BaseModel):
     places: list[Place] = Field(default_factory=list)
     # Set when fallback step 1 relaxed the leg cap, so the client can toast.
     relaxed_to: Optional[int] = None
+    # The RNG seed the planner used to choose among valid options (never to
+    # relax a rule). Always present: the planner mints one when the request
+    # doesn't supply it. Reusing this value reproduces the exact same day —
+    # the point is to let a specific bad day be reported and replayed.
+    seed: int
 
 
 class CreateItineraryRequest(BaseModel):
@@ -244,6 +249,9 @@ class CreateItineraryRequest(BaseModel):
     # planner accepts and ignores them, so the contract need not change later.
     prompt_he: Optional[str] = None
     chip: Optional[str] = None
+    # Omit to get a random day; repeat a specific value to reproduce one
+    # exactly (e.g. to report a bug against a particular itinerary).
+    seed: Optional[int] = None
 
 
 class PlaceRefRequest(BaseModel):

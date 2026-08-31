@@ -40,6 +40,7 @@ class ItineraryPlanner(ABC):
         weekday: Weekday,
         prompt_he: Optional[str] = None,
         chip: Optional[str] = None,
+        seed: Optional[int] = None,
     ) -> Itinerary:
         """
         Build one itinerary for the given region, leg cap and weekday.
@@ -47,6 +48,12 @@ class ItineraryPlanner(ABC):
         ``prompt_he`` and ``chip`` are the free-text and preset hooks reserved
         for the LLM planner. The rule-based planner accepts and ignores them so
         the API contract does not have to change when ``llm.py`` lands.
+
+        ``seed`` picks among equally-valid options so repeating a request need
+        not return the same day twice; omitting it means "pick one for me."
+        Randomness only ever chooses between valid options — it never relaxes
+        a rule — and the seed actually used is always returned on the
+        ``Itinerary`` so a specific day can be reproduced.
 
         Implementations must not raise on a sparse region: too few places is a
         normal outcome that the section 4 fallback ladder handles.
