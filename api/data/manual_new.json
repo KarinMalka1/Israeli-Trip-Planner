@@ -168,7 +168,7 @@
   "hours_verified": true,
   "closed_on_shabbat": false,
   "kid_friendly": true,
-  "accessible": true,
+  "accessible": false,
   "tags": ["outdoor", "paid", "parking-onsite"],
   "season": "year_round",
   "source": "https://www.kofim.co.il/",
