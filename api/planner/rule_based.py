@@ -76,17 +76,22 @@ class RuleBasedPlanner(ItineraryPlanner):
         region: Region,
         max_leg_min: int,
         weekday: Weekday,
+        month: Optional[int] = None,
         prompt_he: Optional[str] = None,
         chip: Optional[str] = None,
     ) -> Itinerary:
         """
         Build an itinerary, degrading through the section 4 ladder as needed.
 
+        ``month`` resolves the section 11 season amendment (``summer_only``
+        places excluded outside April-October); ``None`` defaults to the
+        current calendar month, resolved by the repository.
+
         ``prompt_he`` and ``chip`` are accepted and ignored: they belong to the
         future LLM planner, and the contract carries them today so it will not
         need to change when that lands.
         """
-        candidates = self._places.candidates(region, weekday)
+        candidates = self._places.candidates(region, weekday, month)
         logger.debug(
             "planning %s/%s cap=%dmin: %d candidate places",
             region.value,

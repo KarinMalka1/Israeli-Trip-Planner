@@ -153,6 +153,7 @@ def create_itinerary(
         region=body.region,
         max_leg_min=body.max_leg_min,
         weekday=body.weekday,
+        month=body.month,
         prompt_he=body.prompt_he,
         chip=body.chip,
     )

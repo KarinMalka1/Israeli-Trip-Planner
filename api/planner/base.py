@@ -38,11 +38,16 @@ class ItineraryPlanner(ABC):
         region: Region,
         max_leg_min: int,
         weekday: Weekday,
+        month: Optional[int] = None,
         prompt_he: Optional[str] = None,
         chip: Optional[str] = None,
     ) -> Itinerary:
         """
         Build one itinerary for the given region, leg cap and weekday.
+
+        ``month`` (1-12) resolves the section 11 season amendment; ``None``
+        defaults to the current calendar month, since the request carries a
+        weekday but no date.
 
         ``prompt_he`` and ``chip`` are the free-text and preset hooks reserved
         for the LLM planner. The rule-based planner accepts and ignores them so

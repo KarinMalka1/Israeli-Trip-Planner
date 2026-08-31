@@ -234,6 +234,11 @@ class SeedName(BaseModel):
     category: Category
     access: AccessType
     season: str = "year_round"
+    # An explicit hand-set visit length (BRIEF_data_acquisition.md: a water
+    # park is ~240min, nothing like the "kids" category default of 120).
+    # ``None`` means "use DEFAULT_DURATION_MIN[category]" — enrich_seed_entry
+    # never overwrites an explicit value with the category default.
+    duration_min: Optional[int] = None
 
     lat: Optional[float] = None
     lng: Optional[float] = None
@@ -972,7 +977,7 @@ def _build_place_record(
         access=seed.access,
         lat=lat,
         lng=lng,
-        duration_min=DEFAULT_DURATION_MIN.get(seed.category, 60),
+        duration_min=seed.duration_min if seed.duration_min is not None else DEFAULT_DURATION_MIN.get(seed.category, 60),
         opening_hours=opening_hours,
         hours_verified=hours_verified,
         closed_on_shabbat=closed_on_shabbat,
@@ -1007,12 +1012,39 @@ def print_enrich_summary(stats: EnrichStats) -> None:
     )
 
 
+def _seed_sanity_warnings(seed: SeedName) -> list[str]:
+    """
+    Non-fatal seed sanity checks (BRIEF_data_acquisition.md). Warns, never fixes.
+
+    There is no new Category for water parks/zoos — they are ``category:
+    "kids"`` plus tags, so a ``summer_only`` place outside ``kids`` and a
+    ``"swimming"`` tag outside ``summer_only`` are both suspicious enough to
+    flag for a human, without being wrong often enough to justify auto-fixing.
+    """
+    warnings: list[str] = []
+    if seed.season == "summer_only" and seed.category != Category.KIDS:
+        warnings.append(
+            f"{seed.name_he!r} ({seed.region.value}): season=summer_only but "
+            f"category={seed.category.value!r}, expected 'kids'"
+        )
+    if "swimming" in seed.tags and seed.season == "year_round":
+        warnings.append(
+            f"{seed.name_he!r} ({seed.region.value}): tags include 'swimming' "
+            f"but season='year_round'"
+        )
+    return warnings
+
+
 def load_seed_names(path: Path) -> list[SeedName]:
     """Read and validate seed_names.json — a bare JSON array, not wrapped in an object."""
     raw = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(raw, list):
         raise ValueError(f"{path} must be a JSON array of {{name_he, region, category, access}}")
-    return [SeedName.model_validate(row) for row in raw]
+    seed_names = [SeedName.model_validate(row) for row in raw]
+    for seed in seed_names:
+        for warning in _seed_sanity_warnings(seed):
+            print(f"WARNING: {warning}")
+    return seed_names
 
 
 def run_enrich(

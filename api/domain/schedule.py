@@ -41,6 +41,10 @@ MAX_DAY_MINUTES = 9 * 60
 MEAL_WINDOW_START = "12:00"
 MEAL_WINDOW_END = "15:00"
 
+# SPEC section 11 amendment: a season=="summer_only" place is only schedulable
+# April through October, inclusive.
+SUMMER_ONLY_MONTHS = frozenset(range(4, 11))
+
 
 # --------------------------------------------------------------------------
 # Time primitives
@@ -119,11 +123,16 @@ def visit_fits_opening_hours(place: Place, weekday: Weekday, arrive_at: str) -> 
     return to_minutes(opens) <= arrival and arrival + place.duration_min <= to_minutes(closes)
 
 
-def is_available_on(place: Place, weekday: Weekday) -> bool:
-    """Combined day-level filter: open at all that weekday, and shabbat-eligible (rule 12)."""
-    # TODO(BRIEF_data_acquisition.md): once itineraries carry a request date
-    # (not just a weekday), exclude place.season == "summer_only" outside
-    # April-October. Not implemented here — this brief only adds the field.
+def is_available_on(place: Place, weekday: Weekday, month: int) -> bool:
+    """
+    Combined day-level filter: open at all that weekday, shabbat-eligible
+    (rule 12), and in season (SPEC section 11 amendment).
+
+    ``month`` is 1-12. A ``summer_only`` place is excluded outside
+    April-October; a ``year_round`` place is unaffected by ``month``.
+    """
+    if place.season == "summer_only" and month not in SUMMER_ONLY_MONTHS:
+        return False
     is_open_that_day = place.access == AccessType.OPEN or place.opening_hours.get(weekday) is not None
     return is_open_that_day and shabbat.is_shabbat_eligible(place, weekday)
 

@@ -75,3 +75,23 @@ def test_planner_builds_a_real_day_from_twenty_open_access_places():
 
     problems = schedule.validate_itinerary(itinerary, {place.id for place in places})
     assert problems == [], f"planner produced an invalid itinerary: {problems}"
+
+
+def test_summer_only_place_dropped_from_candidates_outside_season():
+    """A summer_only place must never reach the search when month is outside April-October."""
+    places = [_open_place(i) for i in range(20)]
+    places[0] = places[0].model_copy(update={"season": "summer_only"})
+    repository = PlaceRepository(places)
+    matrix = _dense_matrix(places, leg_minutes=15)
+    planner = RuleBasedPlanner(repository, matrix)
+
+    itinerary = planner.plan(
+        itinerary_id="test-itinerary-winter",
+        region=Region.CENTRAL,
+        max_leg_min=45,
+        weekday=Weekday.TUE,
+        month=11,
+    )
+
+    day = itinerary.days[0]
+    assert places[0].id not in {stop.place_id for stop in day.stops}
