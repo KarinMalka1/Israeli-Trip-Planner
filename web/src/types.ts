@@ -1,5 +1,6 @@
-// Hand-mirrored from SPEC.md section 7 (the shared API contract).
-// Keep this in sync with api/models.py by hand until codegen is worth it.
+// Hand-mirrored from SPEC.md section 7 (the shared API contract), including
+// the section 10/11 amendments. Keep this in sync with api/models.py by hand
+// until codegen is worth it.
 
 export type PlaceId = string;
 export type Region = "north" | "central" | "south";
@@ -13,22 +14,31 @@ export type Category =
   | "meal"
   | "kids"
   | "historic";
+export type AccessType = "gated" | "open";
+export type DescriptionSource = "generated" | "human";
+export type Season = "year_round" | "summer_only";
 
 export interface Place {
   id: PlaceId;
   name_he: string;
   description_he: string;
   tip_he: string;
+  description_source: DescriptionSource;
   category: Category;
   region: Region;
-  lat: number;
-  lng: number;
+  access: AccessType;
+  // null = not yet resolved (SPEC section 10 amendment); such a place is
+  // never scheduled, so the UI never needs to render a missing coordinate.
+  lat: number | null;
+  lng: number | null;
   duration_min: number;
   opening_hours: Record<Weekday, [string, string] | null>;
+  hours_verified: boolean;
   closed_on_shabbat: boolean;
   kid_friendly: boolean;
   accessible: boolean;
   tags: string[];
+  season: Season;
 }
 
 export interface Stop {
@@ -55,8 +65,15 @@ export interface Itinerary {
   relaxed_to: MaxLegMin | null;
 }
 
-export interface HealthStatus {
-  status: string;
-  places: number;
-  matrix_loaded: boolean;
+export interface CreateItineraryRequest {
+  session_id: string;
+  region: Region;
+  max_leg_min: MaxLegMin;
+  weekday: Weekday;
+  prompt_he?: string;
+  chip?: string;
+}
+
+export interface PlaceRefRequest {
+  place_id: PlaceId;
 }

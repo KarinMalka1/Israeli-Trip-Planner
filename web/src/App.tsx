@@ -1,48 +1,211 @@
-import { useEffect, useState } from "react";
-import { getHealth, getPlaces } from "./api/client";
-import type { HealthStatus, Place } from "./types";
+import { useCallback, useEffect, useState } from "react";
+import { ApiError, createItinerary, getItinerary, removeStop, swapStop, undoEdit } from "./api/client";
+import DriveTimeChips from "./components/DriveTimeChips";
+import RegionChips from "./components/RegionChips";
+import Timeline from "./components/Timeline";
+import Toast from "./components/Toast";
+import { clearStoredItineraryId, getOrCreateSessionId, getStoredItineraryId, setStoredItineraryId } from "./session";
+import type { Itinerary, MaxLegMin, Region } from "./types";
+import { getTodayWeekday } from "./weekday";
 
-// Deliberately bare: this proves the frontend can reach the FastAPI backend
-// before any real UI (region chips, itinerary rendering) is built on top.
+type Status = "loading" | "ready" | "error";
+
+interface ToastState {
+  message: string;
+  actionLabel?: string;
+  onAction?: () => void;
+}
+
+function errorMessage(err: unknown): string {
+  if (err instanceof ApiError) return err.message;
+  if (err instanceof Error) return err.message;
+  return "משהו השתבש. נסו שוב.";
+}
+
 function App() {
-  const [health, setHealth] = useState<HealthStatus | null>(null);
-  const [places, setPlaces] = useState<Place[] | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  // Pre-selected defaults so chips render on first paint even before any
+  // network call resolves (US-1: "I never see an empty screen").
+  const [region, setRegion] = useState<Region>("central");
+  const [maxLegMin, setMaxLegMin] = useState<MaxLegMin>(45);
+  const [itinerary, setItinerary] = useState<Itinerary | null>(null);
+  const [status, setStatus] = useState<Status>("loading");
+  const [errorText, setErrorText] = useState<string | null>(null);
+  const [busy, setBusy] = useState(false);
+  const [toast, setToast] = useState<ToastState | null>(null);
 
-  useEffect(() => {
-    Promise.all([getHealth(), getPlaces()])
-      .then(([healthResult, placesResult]) => {
-        setHealth(healthResult);
-        setPlaces(placesResult);
-      })
-      .catch((err: unknown) => {
-        setError(err instanceof Error ? err.message : String(err));
+  const planNew = useCallback(async (nextRegion: Region, nextMaxLeg: MaxLegMin) => {
+    setBusy(true);
+    setStatus("loading");
+    setErrorText(null);
+    try {
+      const created = await createItinerary({
+        session_id: getOrCreateSessionId(),
+        region: nextRegion,
+        max_leg_min: nextMaxLeg,
+        weekday: getTodayWeekday(),
       });
+      setStoredItineraryId(created.id);
+      setItinerary(created);
+      setRegion(created.region);
+      setMaxLegMin(created.max_leg_min);
+      setStatus("ready");
+      if (created.relaxed_to) {
+        setToast({
+          message: `הרחבנו את זמן הנסיעה ל-${created.relaxed_to} דקות כדי למצוא מספיק מקומות`,
+        });
+      }
+    } catch (err) {
+      setStatus("error");
+      setErrorText(errorMessage(err));
+    } finally {
+      setBusy(false);
+    }
   }, []);
 
+  // US-3: resume on load if a saved itinerary exists; a 404 means the
+  // in-memory server store lost it (e.g. a restart), so fall back to
+  // planning fresh rather than showing an error for something the user
+  // never caused.
+  useEffect(() => {
+    const savedId = getStoredItineraryId();
+    if (!savedId) {
+      void planNew(region, maxLegMin);
+      return;
+    }
+    getItinerary(savedId)
+      .then((resumed) => {
+        setItinerary(resumed);
+        setRegion(resumed.region);
+        setMaxLegMin(resumed.max_leg_min);
+        setStatus("ready");
+      })
+      .catch((err: unknown) => {
+        if (err instanceof ApiError && err.status === 404) {
+          clearStoredItineraryId();
+          void planNew(region, maxLegMin);
+        } else {
+          setStatus("error");
+          setErrorText(errorMessage(err));
+        }
+      });
+    // Runs once on mount only — planNew/region/maxLegMin intentionally
+    // excluded so a resumed itinerary isn't immediately replanned.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  function handleRegionSelect(next: Region) {
+    if (busy || next === region) return;
+    setRegion(next);
+    void planNew(next, maxLegMin);
+  }
+
+  function handleMaxLegSelect(next: MaxLegMin) {
+    if (busy || next === maxLegMin) return;
+    setMaxLegMin(next);
+    void planNew(region, next);
+  }
+
+  async function handleUndo() {
+    if (!itinerary || busy) return;
+    setBusy(true);
+    try {
+      setItinerary(await undoEdit(itinerary.id));
+    } catch (err) {
+      setToast({ message: errorMessage(err) });
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function handleRemove(placeId: string) {
+    if (!itinerary || busy) return;
+    const removedPlace = itinerary.days[0]?.stops.find((stop) => stop.place_id === placeId)?.place;
+    setBusy(true);
+    try {
+      setItinerary(await removeStop(itinerary.id, placeId));
+      setToast({
+        message: removedPlace ? `${removedPlace.name_he} הוסר/ה מהמסלול` : "העצירה הוסרה מהמסלול",
+        actionLabel: "בטל",
+        onAction: () => void handleUndo(),
+      });
+    } catch (err) {
+      setToast({ message: errorMessage(err) });
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function handleSwap(placeId: string) {
+    if (!itinerary || busy) return;
+    setBusy(true);
+    try {
+      setItinerary(await swapStop(itinerary.id, placeId));
+    } catch (err) {
+      setToast({ message: errorMessage(err) });
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  const day = itinerary?.days[0];
+  const hasFallbackPlaces = itinerary !== null && itinerary.days.length === 0 && itinerary.places.length > 0;
+
   return (
-    <main style={{ fontFamily: "system-ui, sans-serif", padding: 32 }}>
-      <h1>Israeli Day Trip Planner — connectivity check</h1>
+    <div dir="rtl" lang="he" className="min-h-screen bg-slate-50 text-slate-900">
+      <header className="mx-auto max-w-2xl px-4 pt-8 pb-2">
+        <h1 className="text-2xl font-bold">מסלול יום בישראל</h1>
+      </header>
 
-      {error && (
-        <p style={{ color: "crimson" }}>
-          Could not reach the API: {error}
-          <br />
-          Is <code>uvicorn api.main:app --reload</code> running on port 8000?
-        </p>
+      <main className="mx-auto flex max-w-2xl flex-col gap-6 px-4 pb-24">
+        <div className="flex flex-col gap-4 rounded-xl bg-white p-4 shadow-sm">
+          <div>
+            <p className="mb-2 text-sm font-medium text-slate-600">אזור</p>
+            <RegionChips selected={region} onSelect={handleRegionSelect} disabled={busy} />
+          </div>
+          <div>
+            <p className="mb-2 text-sm font-medium text-slate-600">זמן נסיעה מקסימלי בין עצירות</p>
+            <DriveTimeChips selected={maxLegMin} onSelect={handleMaxLegSelect} disabled={busy} />
+          </div>
+        </div>
+
+        {status === "loading" && !itinerary && <p className="text-center text-slate-500">בונים מסלול…</p>}
+
+        {status === "error" && errorText && (
+          <p role="alert" className="rounded-xl bg-red-50 p-4 text-red-700">
+            {errorText}
+          </p>
+        )}
+
+        {day && day.stops.length > 0 && (
+          <Timeline day={day} onRemove={handleRemove} onSwap={handleSwap} disabled={busy} />
+        )}
+
+        {hasFallbackPlaces && itinerary && (
+          <div className="flex flex-col gap-3">
+            <p role="status" className="rounded-xl bg-amber-50 p-4 text-amber-900">
+              לא מצאנו מספיק מקומות לבנות מסלול מלא באזור הזה עם ההגבלות הנוכחיות. הנה מה שיש:
+            </p>
+            <ul className="flex flex-col gap-3">
+              {itinerary.places.map((place) => (
+                <li key={place.id} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+                  <h3 className="text-lg font-semibold">{place.name_he}</h3>
+                  {place.description_he && <p className="mt-1 text-sm text-slate-600">{place.description_he}</p>}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </main>
+
+      {toast && (
+        <Toast
+          message={toast.message}
+          actionLabel={toast.actionLabel}
+          onAction={toast.onAction}
+          onDismiss={() => setToast(null)}
+        />
       )}
-
-      {!error && !health && <p>Connecting to API…</p>}
-
-      {health && (
-        <ul>
-          <li>API status: {health.status}</li>
-          <li>Places loaded: {health.places}</li>
-          <li>Distance matrix loaded: {String(health.matrix_loaded)}</li>
-          <li>Places returned by GET /api/places: {places?.length ?? "…"}</li>
-        </ul>
-      )}
-    </main>
+    </div>
   );
 }
 

@@ -15,11 +15,18 @@ from __future__ import annotations
 from typing import Iterable, Sequence
 
 from api.domain import regions, shabbat
-from api.models import Category, Day, Itinerary, Place, Region, Stop, Weekday
+from api.models import AccessType, Category, Day, Itinerary, Place, Region, Stop, Weekday
 
 # Rule 8: the day always starts at 09:00 at the first stop. There is no origin
 # and no travel leg before it.
 DAY_START = "09:00"
+
+# SPEC section 10 amendment: an access=="open" place has no gate, so
+# opening_hours is always seven nulls for it by design (not "closed every
+# day" — there is simply no gate for a weekly schedule to describe). Such a
+# place is scheduled by daylight instead, clamped to this fixed window.
+DAYLIGHT_START = "07:00"
+DAYLIGHT_END = "18:00"
 
 # Rule 2: fewer than three stops is not a day out; more than six is more than
 # a person will actually read on a phone.
@@ -70,9 +77,15 @@ def is_open_at(place: Place, weekday: Weekday, at: str) -> bool:
     """
     Rule 11 exactly as written: is this place open at this instant on this weekday?
 
-    ``opening_hours[weekday] is None`` means closed that day, and a place closed
-    that day is never scheduled.
+    ``opening_hours[weekday] is None`` means closed that day for a ``gated``
+    place, and a place closed that day is never scheduled. An ``open`` place
+    (SPEC section 10 amendment) has no gate for ``opening_hours`` to describe
+    at all — it is always seven nulls by design — so it is checked against
+    the fixed daylight window instead, not read as permanently closed.
     """
+    if place.access == AccessType.OPEN:
+        return DAYLIGHT_START <= at < DAYLIGHT_END
+
     window = place.opening_hours.get(weekday)
     if window is None:
         return False
@@ -88,12 +101,21 @@ def visit_fits_opening_hours(place: Place, weekday: Weekday, arrive_at: str) -> 
     90-minute museum visit ten minutes before closing. The planner uses this
     tighter test when choosing stops; ``validate_itinerary`` still checks the
     literal rule, so a hand-edited itinerary is judged by the spec, not by this.
+
+    ``open`` places use the same daylight window as ``is_open_at`` — the
+    whole visit must finish by ``DAYLIGHT_END``, not merely start before it.
     """
+    arrival = to_minutes(arrive_at)
+
+    if place.access == AccessType.OPEN:
+        return to_minutes(DAYLIGHT_START) <= arrival and arrival + place.duration_min <= to_minutes(
+            DAYLIGHT_END
+        )
+
     window = place.opening_hours.get(weekday)
     if window is None:
         return False
     opens, closes = window
-    arrival = to_minutes(arrive_at)
     return to_minutes(opens) <= arrival and arrival + place.duration_min <= to_minutes(closes)
 
 
@@ -102,9 +124,8 @@ def is_available_on(place: Place, weekday: Weekday) -> bool:
     # TODO(BRIEF_data_acquisition.md): once itineraries carry a request date
     # (not just a weekday), exclude place.season == "summer_only" outside
     # April-October. Not implemented here — this brief only adds the field.
-    return place.opening_hours.get(weekday) is not None and shabbat.is_shabbat_eligible(
-        place, weekday
-    )
+    is_open_that_day = place.access == AccessType.OPEN or place.opening_hours.get(weekday) is not None
+    return is_open_that_day and shabbat.is_shabbat_eligible(place, weekday)
 
 
 # --------------------------------------------------------------------------
