@@ -82,6 +82,7 @@ class RuleBasedPlanner(ItineraryPlanner):
         region: Region,
         max_leg_min: int,
         weekday: Weekday,
+        month: Optional[int] = None,
         prompt_he: Optional[str] = None,
         chip: Optional[str] = None,
         seed: Optional[int] = None,
@@ -89,22 +90,15 @@ class RuleBasedPlanner(ItineraryPlanner):
         """
         Build an itinerary, degrading through the section 4 ladder as needed.
 
+        ``month`` resolves the section 11 season amendment (``summer_only``
+        places excluded outside April-October); ``None`` defaults to the
+        current calendar month, resolved by the repository.
+
         ``prompt_he`` and ``chip`` are accepted and ignored: they belong to the
         future LLM planner, and the contract carries them today so it will not
         need to change when that lands.
-
-        ``seed`` seeds a private ``random.Random`` — never the global
-        ``random`` module, so two planners never interfere with each other and
-        a test can hand in any seed and get a reproducible answer. A missing
-        seed gets one minted here (from the global module, once, to draw the
-        actual entropy) and returned on the ``Itinerary`` either way, so every
-        answer — chosen or random — can be replayed exactly.
         """
-        if seed is None:
-            seed = random.randrange(_RANDOM_SEED_UPPER_BOUND)
-        rng = random.Random(seed)
-
-        candidates = self._places.candidates(region, weekday)
+        candidates = self._places.candidates(region, weekday, month)
         logger.debug(
             "planning %s/%s cap=%dmin seed=%d: %d candidate places",
             region.value,

@@ -15,7 +15,7 @@
     "fri": ["17:00", "21:30"],
     "sat": ["00:00", "00:00"]
   },
-    "hours_verified": false,
+    "hours_verified": true,
     "closed_on_shabbat": true,
     "kid_friendly": true,
     "accessible": true,
@@ -40,7 +40,7 @@
         "fri": ["00:00", "00:00"],
         "sat": ["00:00", "00:00"]
     },
-    "hours_verified": false,
+    "hours_verified": true,
     "closed_on_shabbat": true,
     "kid_friendly": true,
     "accessible": true,
@@ -62,10 +62,10 @@
     "tue": ["11:00", "21:00"],
     "wed": ["11:00", "21:00"],
     "thu": ["11:00", "21:00"],
-    "fri": ["00:00", "00:00"], 
-    "sat": ["00:00", "00:00"] 
+    "fri": null, 
+    "sat": null 
   },
-    "hours_verified": false,
+    "hours_verified": true,
     "closed_on_shabbat": true,
     "kid_friendly": true,
     "accessible": true,
@@ -82,7 +82,7 @@
   "lat": 31.77212839518143, 
   "lng": 35.20408942281614,
   "opening_hours": {
-    "sun": ["00:00", "00:00"], 
+    "sun": null, 
     "mon": ["10:00", "16:00"],
     "tue": ["16:00", "20:00"],
     "wed": ["10:00", "16:00"],
@@ -113,7 +113,7 @@
     "wed": ["09:00", "16:00"],
     "thu": ["09:00", "19:00"],
     "fri": ["09:00", "13:00"],
-    "sat": ["00:00", "00:00"]
+    "sat": null
   },
   "hours_verified": true,
   "closed_on_shabbat": true,
@@ -132,10 +132,10 @@
   "lat": 32.51457719585206, 
   "lng": 34.907405473016375 ,
   "opening_hours": {
-    "sun": ["00:00", "00:00"], 
+    "sun": null, 
     "mon": ["10:30", "17:00"],
     "tue": ["10:30", "17:00"],
-    "wed": ["00:00", "00:00"], 
+    "wed": null, 
     "thu": ["10:30", "17:00"],
     "fri": ["10:30", "15:00"],
     "sat": ["10:30", "17:00"]
@@ -152,7 +152,7 @@
   {
   "name_he": "יער הקופים יודפת",
   "region": "north",
-  "category": "zoo",
+  "category": "kids",
   "access": "gated",
   "lat": 32.83858835990575,  
   "lng": 35.274549542327875,
@@ -169,9 +169,35 @@
   "closed_on_shabbat": false,
   "kid_friendly": true,
   "accessible": false,
-  "tags": ["outdoor", "paid", "parking-onsite"],
+  "tags": ["animals", "paid", "parking-onsite"],
   "season": "year_round",
   "source": "https://www.kofim.co.il/",
+  "scraped_on": "2026-08-31"
+},
+{
+  "name_he": "פארק המים שפיים",
+  "region": "central",
+  "lat": 32.217542823672375, 
+  "lng": 34.82189473075908,
+  "opening_hours": {
+    "sun": ["09:00", "16:00"],
+    "mon": ["09:00", "16:00"],
+    "tue": ["09:00", "16:00"],
+    "wed": ["09:00", "16:00"],
+    "thu": ["09:00", "16:00"],
+    "fri": ["09:00", "16:00"],
+    "sat": ["09:00", "16:00"]
+  },
+  "hours_verified": true,
+  "closed_on_shabbat": false,
+  "kid_friendly": true,
+  "accessible": true,
+  "category": "kids",
+  "access": "gated",
+  "duration_min": 240,
+  "tags": ["swimming", "paid", "parking-onsite"],
+  "season": "summer_only",
+  "source": "https://waterpark.co.il/",
   "scraped_on": "2026-08-31"
 }
 ]

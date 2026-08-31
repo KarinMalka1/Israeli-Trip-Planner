@@ -245,6 +245,12 @@ class CreateItineraryRequest(BaseModel):
     region: Region
     max_leg_min: MaxLegMin = DEFAULT_MAX_LEG_MIN
     weekday: Weekday
+    # Calendar month (1-12), for the season amendment (SPEC section 11): a
+    # summer_only place is excluded outside April-October. There is no
+    # request date, only a weekday, so this is the narrowest addition that
+    # lets the caller pin a month; omitted or null defaults to the current
+    # calendar month.
+    month: Optional[int] = Field(default=None, ge=1, le=12)
     # Reserved for the LLM planner (planner/llm.py). The rule-based MVP
     # planner accepts and ignores them, so the contract need not change later.
     prompt_he: Optional[str] = None

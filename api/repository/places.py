@@ -9,6 +9,7 @@ dropped row that shows up as a thin itinerary weeks later.
 
 from __future__ import annotations
 
+import datetime as dt
 import json
 import logging
 import os
@@ -134,18 +135,24 @@ class PlaceRepository:
         """
         return list(self._by_region.get(region, []))
 
-    def candidates(self, region: Region, weekday: Weekday) -> list[Place]:
+    def candidates(self, region: Region, weekday: Weekday, month: Optional[int] = None) -> list[Place]:
         """
-        The planner's starting set: in-region, open that weekday, shabbat-eligible.
+        The planner's starting set: in-region, open that weekday, shabbat-eligible, in season.
 
-        Applies rules 5, 11 and 12 at the day level, before any time arithmetic
-        happens. Anything filtered out here can never appear in an itinerary, so
-        the search never has to reconsider it.
+        Applies rules 5, 11 and 12 and the section 11 season amendment at the
+        day level, before any time arithmetic happens. Anything filtered out
+        here can never appear in an itinerary, so the search never has to
+        reconsider it.
+
+        ``month`` defaults to the current calendar month when omitted — a
+        remove/swap edit has no request date of its own to carry forward, so
+        "now" is the only sensible default for it.
         """
+        effective_month = month if month is not None else dt.date.today().month
         return [
             place
             for place in self._by_region.get(region, [])
-            if schedule.is_available_on(place, weekday)
+            if schedule.is_available_on(place, weekday, effective_month)
         ]
 
     def __len__(self) -> int:

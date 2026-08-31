@@ -404,6 +404,38 @@ def test_enrich_seasonal_flag_flows_through():
     assert record["season"] == "summer_only"
 
 
+def test_enrich_uses_explicit_duration_min():
+    """A hand-set duration_min in the seed (e.g. a water park at 240min) must win over the category default."""
+    seed = fetch_osm.SeedName(
+        name_he="פארק מים בדיקה", region=Region.CENTRAL, category=Category.KIDS,
+        access=AccessType.GATED, duration_min=240,
+    )
+    record, _ = fetch_osm.enrich_seed_entry(seed, {"elements": []}, set())
+    assert record["duration_min"] == 240
+
+
+def test_enrich_falls_back_to_category_default_duration_min():
+    seed = fetch_osm.SeedName(
+        name_he="מוזיאון בדיקה", region=Region.CENTRAL, category=Category.MUSEUM, access=AccessType.GATED
+    )
+    record, _ = fetch_osm.enrich_seed_entry(seed, {"elements": []}, set())
+    assert record["duration_min"] == fetch_osm.DEFAULT_DURATION_MIN[Category.MUSEUM]
+
+
+def test_rerun_does_not_overwrite_explicit_duration_min(tmp_path):
+    """The reported bug: re-running fetch_osm silently lost a hand-set duration_min."""
+    seed = fetch_osm.SeedName(
+        name_he="פארק מים בדיקה", region=Region.CENTRAL, category=Category.KIDS,
+        access=AccessType.GATED, lat=32.0, lng=34.9, duration_min=240,
+    )
+    out_path = tmp_path / "places.json"
+    fetch_osm.run_enrich([seed], region_filter=None, refresh=False, out_path=out_path)
+    fetch_osm.run_enrich([seed], region_filter=None, refresh=False, out_path=out_path)
+
+    written = json.loads(out_path.read_text(encoding="utf-8"))
+    assert written["places"][0]["duration_min"] == 240
+
+
 def test_run_enrich_never_fetches_overpass_for_pre_supplied_seeds(tmp_path, monkeypatch):
     def _boom(*args, **kwargs):
         raise AssertionError("fetch_matches_for_name must not be called for a pre-supplied seed")
@@ -519,6 +551,61 @@ def test_merge_adds_a_new_entry():
     merged, notes = fetch_osm.merge_places(_existing_fixture(), [fresh_row], {"north"})
     assert any(row["id"] == "north-brand-new" for row in merged)
     assert any(note.startswith("new:") for note in notes)
+
+
+# --------------------------------------------------------------------------
+# Seed validation pass: warns, never auto-fixes
+# --------------------------------------------------------------------------
+
+
+def _write_seed_names(tmp_path, rows: list[dict]) -> Path:
+    path = tmp_path / "seed_names.json"
+    path.write_text(json.dumps(rows, ensure_ascii=False), encoding="utf-8")
+    return path
+
+
+def test_load_seed_names_warns_on_summer_only_outside_kids(tmp_path, capsys):
+    path = _write_seed_names(tmp_path, [
+        {
+            "name_he": "פארק מים בדיקה", "region": "central", "category": "nature",
+            "access": "gated", "season": "summer_only",
+        }
+    ])
+    fetch_osm.load_seed_names(path)
+    assert "season=summer_only" in capsys.readouterr().out
+
+
+def test_load_seed_names_no_warning_for_summer_only_kids(tmp_path, capsys):
+    path = _write_seed_names(tmp_path, [
+        {
+            "name_he": "פארק מים בדיקה", "region": "central", "category": "kids",
+            "access": "gated", "season": "summer_only",
+        }
+    ])
+    fetch_osm.load_seed_names(path)
+    assert capsys.readouterr().out == ""
+
+
+def test_load_seed_names_warns_on_swimming_tag_year_round(tmp_path, capsys):
+    path = _write_seed_names(tmp_path, [
+        {
+            "name_he": "בריכה בדיקה", "region": "central", "category": "kids",
+            "access": "gated", "season": "year_round", "tags": ["swimming"],
+        }
+    ])
+    fetch_osm.load_seed_names(path)
+    assert "swimming" in capsys.readouterr().out
+
+
+def test_load_seed_names_no_warning_for_swimming_tag_summer_only(tmp_path, capsys):
+    path = _write_seed_names(tmp_path, [
+        {
+            "name_he": "בריכה בדיקה", "region": "central", "category": "kids",
+            "access": "gated", "season": "summer_only", "tags": ["swimming"],
+        }
+    ])
+    fetch_osm.load_seed_names(path)
+    assert capsys.readouterr().out == ""
 
 
 # --------------------------------------------------------------------------

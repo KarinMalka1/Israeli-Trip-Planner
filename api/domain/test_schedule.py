@@ -53,7 +53,7 @@ def test_open_access_place_visit_fits_opening_hours_at_10am_tuesday():
 
 def test_open_access_place_is_available_on_tuesday():
     place = _place(access=AccessType.OPEN)
-    assert schedule.is_available_on(place, Weekday.TUE) is True
+    assert schedule.is_available_on(place, Weekday.TUE, month=6) is True
 
 
 def test_open_access_place_outside_daylight_window_is_not_open():
@@ -77,7 +77,7 @@ def test_open_access_visit_must_finish_before_daylight_ends():
 def test_gated_place_with_null_hours_is_still_closed():
     place = _place(access=AccessType.GATED, opening_hours={day: None for day in Weekday})
     assert schedule.is_open_at(place, Weekday.TUE, "10:00") is False
-    assert schedule.is_available_on(place, Weekday.TUE) is False
+    assert schedule.is_available_on(place, Weekday.TUE, month=6) is False
 
 
 def test_gated_place_with_real_hours_is_open_as_before():
@@ -87,4 +87,25 @@ def test_gated_place_with_real_hours_is_open_as_before():
         opening_hours={**{day: None for day in Weekday}, Weekday.TUE: ("09:00", "17:00")},
     )
     assert schedule.is_open_at(place, Weekday.TUE, "10:00") is True
-    assert schedule.is_available_on(place, Weekday.TUE) is True
+    assert schedule.is_available_on(place, Weekday.TUE, month=6) is True
+
+
+# --------------------------------------------------------------------------
+# SPEC section 11 amendment: summer_only places excluded outside April-October.
+# --------------------------------------------------------------------------
+
+
+def test_summer_only_place_is_rejected_in_november():
+    place = _place(access=AccessType.OPEN, season="summer_only")
+    assert schedule.is_available_on(place, Weekday.TUE, month=11) is False
+
+
+def test_summer_only_place_is_accepted_in_july():
+    place = _place(access=AccessType.OPEN, season="summer_only")
+    assert schedule.is_available_on(place, Weekday.TUE, month=7) is True
+
+
+def test_year_round_place_is_unaffected_by_month():
+    place = _place(access=AccessType.OPEN, season="year_round")
+    assert schedule.is_available_on(place, Weekday.TUE, month=11) is True
+    assert schedule.is_available_on(place, Weekday.TUE, month=7) is True
