@@ -98,6 +98,10 @@ class RuleBasedPlanner(ItineraryPlanner):
         future LLM planner, and the contract carries them today so it will not
         need to change when that lands.
         """
+        if seed is None:
+            seed = random.randrange(_RANDOM_SEED_UPPER_BOUND)
+        rng = random.Random(seed)
+
         candidates = self._places.candidates(region, weekday, month)
         logger.debug(
             "planning %s/%s cap=%dmin seed=%d: %d candidate places",

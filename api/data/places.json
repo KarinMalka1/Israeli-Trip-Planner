@@ -29,7 +29,8 @@
         "spring"
       ],
       "season": "year_round",
-      "_source": "osm:node/278471161"
+      "_source": "osm:node/278471161",
+      "_stale": true
     },
     {
       "id": "north-seed-3243ef85ca",
@@ -58,7 +59,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:node/278474137"
+      "_source": "osm:node/278474137",
+      "_stale": true
     },
     {
       "id": "north-seed-772e987115",
@@ -87,7 +89,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:node/343450051"
+      "_source": "osm:node/343450051",
+      "_stale": true
     },
     {
       "id": "north-seed-b8e7e6fe09",
@@ -116,7 +119,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:node/1031324526"
+      "_source": "osm:node/1031324526",
+      "_stale": true
     },
     {
       "id": "north-seed-f450df7269",
@@ -147,7 +151,8 @@
         "spring"
       ],
       "season": "year_round",
-      "_source": "osm:node/1162945858"
+      "_source": "osm:node/1162945858",
+      "_stale": true
     },
     {
       "id": "north-seed-5dc87aaecc",
@@ -176,7 +181,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:node/1362590341"
+      "_source": "osm:node/1362590341",
+      "_stale": true
     },
     {
       "id": "north-seed-ec2171de8d",
@@ -207,7 +213,8 @@
         "spring"
       ],
       "season": "year_round",
-      "_source": "osm:node/1518072771"
+      "_source": "osm:node/1518072771",
+      "_stale": true
     },
     {
       "id": "north-seed-b3b3410807",
@@ -236,7 +243,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:node/1528108726"
+      "_source": "osm:node/1528108726",
+      "_stale": true
     },
     {
       "id": "north-seed-3c88ad879b",
@@ -265,7 +273,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:node/1737676812"
+      "_source": "osm:node/1737676812",
+      "_stale": true
     },
     {
       "id": "north-seed-9b374ba1dc",
@@ -296,7 +305,8 @@
         "spring"
       ],
       "season": "year_round",
-      "_source": "osm:node/3060720581"
+      "_source": "osm:node/3060720581",
+      "_stale": true
     },
     {
       "id": "north-seed-1f7eb80ec4",
@@ -325,7 +335,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:node/4303278166"
+      "_source": "osm:node/4303278166",
+      "_stale": true
     },
     {
       "id": "north-seed-36ec851d44",
@@ -356,7 +367,8 @@
         "spring"
       ],
       "season": "year_round",
-      "_source": "osm:node/5683266321"
+      "_source": "osm:node/5683266321",
+      "_stale": true
     },
     {
       "id": "north-seed-384edac34c",
@@ -387,7 +399,8 @@
         "spring"
       ],
       "season": "year_round",
-      "_source": "osm:node/5721284321"
+      "_source": "osm:node/5721284321",
+      "_stale": true
     },
     {
       "id": "north-seed-08fa086e3e",
@@ -418,7 +431,8 @@
         "waterfall"
       ],
       "season": "year_round",
-      "_source": "osm:node/6330449985"
+      "_source": "osm:node/6330449985",
+      "_stale": true
     },
     {
       "id": "north-seed-1744a605e8",
@@ -447,7 +461,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:node/6875179849"
+      "_source": "osm:node/6875179849",
+      "_stale": true
     },
     {
       "id": "north-seed-b50949ceb6",
@@ -478,7 +493,8 @@
         "spring"
       ],
       "season": "year_round",
-      "_source": "osm:node/7022209368"
+      "_source": "osm:node/7022209368",
+      "_stale": true
     },
     {
       "id": "north-seed-b8b5866721",
@@ -509,7 +525,8 @@
         "spring"
       ],
       "season": "year_round",
-      "_source": "osm:node/7706571485"
+      "_source": "osm:node/7706571485",
+      "_stale": true
     },
     {
       "id": "north-seed-a7946e35d0",
@@ -538,7 +555,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:node/7797183289"
+      "_source": "osm:node/7797183289",
+      "_stale": true
     },
     {
       "id": "north-seed-0c4061a56e",
@@ -567,7 +585,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:node/8787171217"
+      "_source": "osm:node/8787171217",
+      "_stale": true
     },
     {
       "id": "north-seed-585447fdbf",
@@ -598,7 +617,8 @@
         "spring"
       ],
       "season": "year_round",
-      "_source": "osm:node/8819431917"
+      "_source": "osm:node/8819431917",
+      "_stale": true
     },
     {
       "id": "north-seed-cc634bc5ae",
@@ -627,7 +647,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:node/10118653745"
+      "_source": "osm:node/10118653745",
+      "_stale": true
     },
     {
       "id": "north-seed-b8d3b0ef50",
@@ -656,7 +677,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:way/24929951"
+      "_source": "osm:way/24929951",
+      "_stale": true
     },
     {
       "id": "north-seed-7aa802f90a",
@@ -685,7 +707,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:way/47224978"
+      "_source": "osm:way/47224978",
+      "_stale": true
     },
     {
       "id": "north-seed-a68a19b8d7",
@@ -714,7 +737,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:way/53785366"
+      "_source": "osm:way/53785366",
+      "_stale": true
     },
     {
       "id": "north-seed-2e29dd3f27",
@@ -743,7 +767,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:way/123464650"
+      "_source": "osm:way/123464650",
+      "_stale": true
     },
     {
       "id": "north-seed-bfeb11d269",
@@ -774,7 +799,8 @@
         "spring"
       ],
       "season": "year_round",
-      "_source": "osm:way/251771495"
+      "_source": "osm:way/251771495",
+      "_stale": true
     },
     {
       "id": "north-seed-3de63a5cdd",
@@ -803,7 +829,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:relation/282071"
+      "_source": "osm:relation/282071",
+      "_stale": true
     },
     {
       "id": "north-seed-15cdaa9fe9",
@@ -832,7 +859,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:relation/364191"
+      "_source": "osm:relation/364191",
+      "_stale": true
     },
     {
       "id": "north-seed-3d4a32eb90",
@@ -861,7 +889,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:relation/568661"
+      "_source": "osm:relation/568661",
+      "_stale": true
     },
     {
       "id": "north-seed-ab63278346",
@@ -890,7 +919,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:relation/2860967"
+      "_source": "osm:relation/2860967",
+      "_stale": true
     },
     {
       "id": "north-seed-adaf56f579",
@@ -919,7 +949,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:relation/3323739"
+      "_source": "osm:relation/3323739",
+      "_stale": true
     },
     {
       "id": "north-seed-f2fb2314b7",
@@ -948,7 +979,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:relation/7121629"
+      "_source": "osm:relation/7121629",
+      "_stale": true
     },
     {
       "id": "north-seed-f6a4ebd6a0",
@@ -977,7 +1009,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:relation/8630890"
+      "_source": "osm:relation/8630890",
+      "_stale": true
     },
     {
       "id": "north-seed-9221378ac7",
@@ -1006,7 +1039,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:relation/10816954"
+      "_source": "osm:relation/10816954",
+      "_stale": true
     },
     {
       "id": "central-seed-f8fe81eeda",
@@ -1037,7 +1071,8 @@
         "spring"
       ],
       "season": "year_round",
-      "_source": "osm:node/278473495"
+      "_source": "osm:node/278473495",
+      "_stale": true
     },
     {
       "id": "central-seed-0a5fcb1b3f",
@@ -1068,7 +1103,8 @@
         "spring"
       ],
       "season": "year_round",
-      "_source": "osm:node/278474094"
+      "_source": "osm:node/278474094",
+      "_stale": true
     },
     {
       "id": "central-seed-2ec7bd557a",
@@ -1099,7 +1135,8 @@
         "spring"
       ],
       "season": "year_round",
-      "_source": "osm:node/278477849"
+      "_source": "osm:node/278477849",
+      "_stale": true
     },
     {
       "id": "central-seed-4e119a5903",
@@ -1130,7 +1167,8 @@
         "spring"
       ],
       "season": "year_round",
-      "_source": "osm:node/563287162"
+      "_source": "osm:node/563287162",
+      "_stale": true
     },
     {
       "id": "central-seed-807b868cf5",
@@ -1159,7 +1197,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:node/1005375203"
+      "_source": "osm:node/1005375203",
+      "_stale": true
     },
     {
       "id": "central-seed-a82b0f4a21",
@@ -1190,7 +1229,8 @@
         "spring"
       ],
       "season": "year_round",
-      "_source": "osm:node/1022475002"
+      "_source": "osm:node/1022475002",
+      "_stale": true
     },
     {
       "id": "central-seed-56c8e437ae",
@@ -1221,7 +1261,8 @@
         "spring"
       ],
       "season": "year_round",
-      "_source": "osm:node/1030920036"
+      "_source": "osm:node/1030920036",
+      "_stale": true
     },
     {
       "id": "central-seed-483e26649c",
@@ -1252,7 +1293,8 @@
         "archaeology"
       ],
       "season": "year_round",
-      "_source": "osm:node/1212457265"
+      "_source": "osm:node/1212457265",
+      "_stale": true
     },
     {
       "id": "central-seed-596e5b5114",
@@ -1283,7 +1325,8 @@
         "spring"
       ],
       "season": "year_round",
-      "_source": "osm:node/1252332570"
+      "_source": "osm:node/1252332570",
+      "_stale": true
     },
     {
       "id": "central-seed-d20ecae6b9",
@@ -1314,7 +1357,8 @@
         "spring"
       ],
       "season": "year_round",
-      "_source": "osm:node/1608094098"
+      "_source": "osm:node/1608094098",
+      "_stale": true
     },
     {
       "id": "central-seed-433df4be6e",
@@ -1345,7 +1389,8 @@
         "spring"
       ],
       "season": "year_round",
-      "_source": "osm:node/1617060241"
+      "_source": "osm:node/1617060241",
+      "_stale": true
     },
     {
       "id": "central-seed-40d69ac9b4",
@@ -1376,7 +1421,8 @@
         "spring"
       ],
       "season": "year_round",
-      "_source": "osm:node/1617060244"
+      "_source": "osm:node/1617060244",
+      "_stale": true
     },
     {
       "id": "central-seed-2f3b79dc07",
@@ -1407,7 +1453,8 @@
         "archaeology"
       ],
       "season": "year_round",
-      "_source": "osm:node/1854834873"
+      "_source": "osm:node/1854834873",
+      "_stale": true
     },
     {
       "id": "central-seed-7de9b1edef",
@@ -1438,7 +1485,8 @@
         "spring"
       ],
       "season": "year_round",
-      "_source": "osm:node/2365294263"
+      "_source": "osm:node/2365294263",
+      "_stale": true
     },
     {
       "id": "central-seed-b2141dd74d",
@@ -1467,7 +1515,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:node/2522398688"
+      "_source": "osm:node/2522398688",
+      "_stale": true
     },
     {
       "id": "central-seed-ccb929a12f",
@@ -1498,7 +1547,8 @@
         "archaeology"
       ],
       "season": "year_round",
-      "_source": "osm:node/3309212388"
+      "_source": "osm:node/3309212388",
+      "_stale": true
     },
     {
       "id": "central-seed-99c2c1bcd8",
@@ -1527,7 +1577,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:node/3629222806"
+      "_source": "osm:node/3629222806",
+      "_stale": true
     },
     {
       "id": "central-seed-1a31f498e9",
@@ -1558,7 +1609,8 @@
         "spring"
       ],
       "season": "year_round",
-      "_source": "osm:node/3771755082"
+      "_source": "osm:node/3771755082",
+      "_stale": true
     },
     {
       "id": "central-seed-a0d652ff0b",
@@ -1587,7 +1639,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:node/4172995826"
+      "_source": "osm:node/4172995826",
+      "_stale": true
     },
     {
       "id": "central-seed-9c78d279d0",
@@ -1618,7 +1671,8 @@
         "spring"
       ],
       "season": "year_round",
-      "_source": "osm:node/4319817216"
+      "_source": "osm:node/4319817216",
+      "_stale": true
     },
     {
       "id": "central-seed-b0833e4e80",
@@ -1649,7 +1703,8 @@
         "archaeology"
       ],
       "season": "year_round",
-      "_source": "osm:node/4375306175"
+      "_source": "osm:node/4375306175",
+      "_stale": true
     },
     {
       "id": "central-seed-4b1b116717",
@@ -1680,7 +1735,8 @@
         "spring"
       ],
       "season": "year_round",
-      "_source": "osm:node/4915119626"
+      "_source": "osm:node/4915119626",
+      "_stale": true
     },
     {
       "id": "central-seed-fe300929e0",
@@ -1711,7 +1767,8 @@
         "spring"
       ],
       "season": "year_round",
-      "_source": "osm:node/4915123074"
+      "_source": "osm:node/4915123074",
+      "_stale": true
     },
     {
       "id": "central-seed-236d713a81",
@@ -1740,7 +1797,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:node/5471543714"
+      "_source": "osm:node/5471543714",
+      "_stale": true
     },
     {
       "id": "central-seed-d13395a5fd",
@@ -1769,7 +1827,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:node/5742623721"
+      "_source": "osm:node/5742623721",
+      "_stale": true
     },
     {
       "id": "central-seed-dc4fb9bd75",
@@ -1800,7 +1859,8 @@
         "spring"
       ],
       "season": "year_round",
-      "_source": "osm:node/6642810554"
+      "_source": "osm:node/6642810554",
+      "_stale": true
     },
     {
       "id": "central-seed-c19fe295fc",
@@ -1829,7 +1889,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:node/6781187877"
+      "_source": "osm:node/6781187877",
+      "_stale": true
     },
     {
       "id": "central-seed-c46dd1af4d",
@@ -1858,7 +1919,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:node/7312199042"
+      "_source": "osm:node/7312199042",
+      "_stale": true
     },
     {
       "id": "central-seed-48d5c7b6e9",
@@ -1887,7 +1949,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:node/7507406846"
+      "_source": "osm:node/7507406846",
+      "_stale": true
     },
     {
       "id": "central-seed-79587c12bb",
@@ -1918,7 +1981,8 @@
         "spring"
       ],
       "season": "year_round",
-      "_source": "osm:node/7608518439"
+      "_source": "osm:node/7608518439",
+      "_stale": true
     },
     {
       "id": "central-seed-5879c4040c",
@@ -1949,7 +2013,8 @@
         "spring"
       ],
       "season": "year_round",
-      "_source": "osm:node/7745862485"
+      "_source": "osm:node/7745862485",
+      "_stale": true
     },
     {
       "id": "central-seed-dfd78cb203",
@@ -1978,7 +2043,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:node/7799385385"
+      "_source": "osm:node/7799385385",
+      "_stale": true
     },
     {
       "id": "central-seed-2e111eedea",
@@ -2007,7 +2073,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:node/8312911961"
+      "_source": "osm:node/8312911961",
+      "_stale": true
     },
     {
       "id": "central-seed-8ec551596f",
@@ -2038,7 +2105,8 @@
         "spring"
       ],
       "season": "year_round",
-      "_source": "osm:node/9087799054"
+      "_source": "osm:node/9087799054",
+      "_stale": true
     },
     {
       "id": "central-seed-9d1ed56212",
@@ -2067,7 +2135,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:node/10018108615"
+      "_source": "osm:node/10018108615",
+      "_stale": true
     },
     {
       "id": "central-seed-744a184807",
@@ -2096,7 +2165,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:node/10692140605"
+      "_source": "osm:node/10692140605",
+      "_stale": true
     },
     {
       "id": "central-seed-e9df523070",
@@ -2125,7 +2195,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:node/10702544406"
+      "_source": "osm:node/10702544406",
+      "_stale": true
     },
     {
       "id": "central-seed-c8efab3622",
@@ -2156,7 +2227,8 @@
         "spring"
       ],
       "season": "year_round",
-      "_source": "osm:node/10848366305"
+      "_source": "osm:node/10848366305",
+      "_stale": true
     },
     {
       "id": "central-seed-64d71a1679",
@@ -2185,7 +2257,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:node/12805705801"
+      "_source": "osm:node/12805705801",
+      "_stale": true
     },
     {
       "id": "central-seed-b62ec5aaf7",
@@ -2216,7 +2289,8 @@
         "spring"
       ],
       "season": "year_round",
-      "_source": "osm:node/13059953743"
+      "_source": "osm:node/13059953743",
+      "_stale": true
     },
     {
       "id": "central-seed-b3fd6e78b3",
@@ -2245,7 +2319,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:way/28071665"
+      "_source": "osm:way/28071665",
+      "_stale": true
     },
     {
       "id": "central-seed-0436df4f60",
@@ -2274,7 +2349,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:way/115749592"
+      "_source": "osm:way/115749592",
+      "_stale": true
     },
     {
       "id": "central-seed-f1bfbb399b",
@@ -2303,7 +2379,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:way/183834576"
+      "_source": "osm:way/183834576",
+      "_stale": true
     },
     {
       "id": "central-seed-4443645bc3",
@@ -2332,7 +2409,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:way/256615017"
+      "_source": "osm:way/256615017",
+      "_stale": true
     },
     {
       "id": "central-seed-b7bffcdc34",
@@ -2361,7 +2439,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:way/277505336"
+      "_source": "osm:way/277505336",
+      "_stale": true
     },
     {
       "id": "central-seed-28dc24a087",
@@ -2393,7 +2472,8 @@
         "paid"
       ],
       "season": "year_round",
-      "_source": "osm:way/365057390"
+      "_source": "osm:way/365057390",
+      "_stale": true
     },
     {
       "id": "central-seed-e1b3e38a5d",
@@ -2422,7 +2502,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:way/410659166"
+      "_source": "osm:way/410659166",
+      "_stale": true
     },
     {
       "id": "central-seed-18e3409e27",
@@ -2453,7 +2534,8 @@
         "spring"
       ],
       "season": "year_round",
-      "_source": "osm:way/485369325"
+      "_source": "osm:way/485369325",
+      "_stale": true
     },
     {
       "id": "central-seed-c14c69157e",
@@ -2484,7 +2566,8 @@
         "spring"
       ],
       "season": "year_round",
-      "_source": "osm:way/499853680"
+      "_source": "osm:way/499853680",
+      "_stale": true
     },
     {
       "id": "central-seed-fa0e438476",
@@ -2515,7 +2598,8 @@
         "spring"
       ],
       "season": "year_round",
-      "_source": "osm:way/501901138"
+      "_source": "osm:way/501901138",
+      "_stale": true
     },
     {
       "id": "central-seed-79275ae525",
@@ -2544,7 +2628,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:way/675195045"
+      "_source": "osm:way/675195045",
+      "_stale": true
     },
     {
       "id": "central-seed-0fa536effd",
@@ -2573,7 +2658,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:way/711695810"
+      "_source": "osm:way/711695810",
+      "_stale": true
     },
     {
       "id": "central-seed-580ad97806",
@@ -2602,7 +2688,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:way/743548972"
+      "_source": "osm:way/743548972",
+      "_stale": true
     },
     {
       "id": "central-seed-8b7d3c1a04",
@@ -2631,7 +2718,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:way/963111045"
+      "_source": "osm:way/963111045",
+      "_stale": true
     },
     {
       "id": "central-seed-d2b1ded4d9",
@@ -2660,7 +2748,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:way/1019049226"
+      "_source": "osm:way/1019049226",
+      "_stale": true
     },
     {
       "id": "central-seed-3de63a5cdd",
@@ -2689,7 +2778,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:relation/282071"
+      "_source": "osm:relation/282071",
+      "_stale": true
     },
     {
       "id": "central-seed-89805f413b",
@@ -2718,7 +2808,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:relation/1282706"
+      "_source": "osm:relation/1282706",
+      "_stale": true
     },
     {
       "id": "central-seed-cef711dbc1",
@@ -2747,7 +2838,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:relation/2504605"
+      "_source": "osm:relation/2504605",
+      "_stale": true
     },
     {
       "id": "central-seed-f2fb2314b7",
@@ -2776,7 +2868,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:relation/7121629"
+      "_source": "osm:relation/7121629",
+      "_stale": true
     },
     {
       "id": "central-seed-ed9c975b25",
@@ -2805,7 +2898,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:relation/9351124"
+      "_source": "osm:relation/9351124",
+      "_stale": true
     },
     {
       "id": "central-seed-511afd5379",
@@ -2834,7 +2928,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:relation/11518999"
+      "_source": "osm:relation/11518999",
+      "_stale": true
     },
     {
       "id": "central-seed-19b396ec9f",
@@ -2865,7 +2960,8 @@
         "archaeology"
       ],
       "season": "year_round",
-      "_source": "osm:relation/14243316"
+      "_source": "osm:relation/14243316",
+      "_stale": true
     },
     {
       "id": "central-seed-2edffbc36a",
@@ -2894,7 +2990,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:relation/14730532"
+      "_source": "osm:relation/14730532",
+      "_stale": true
     },
     {
       "id": "central-seed-d67fec4cf2",
@@ -2923,7 +3020,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:relation/17465162"
+      "_source": "osm:relation/17465162",
+      "_stale": true
     },
     {
       "id": "central-seed-88ceecca17",
@@ -2954,7 +3052,8 @@
         "spring"
       ],
       "season": "year_round",
-      "_source": "osm:relation/19161609"
+      "_source": "osm:relation/19161609",
+      "_stale": true
     },
     {
       "id": "central-seed-91c8f78049",
@@ -2985,7 +3084,8 @@
         "spring"
       ],
       "season": "year_round",
-      "_source": "osm:relation/21179578"
+      "_source": "osm:relation/21179578",
+      "_stale": true
     },
     {
       "id": "south-seed-dbf2d32199",
@@ -3016,7 +3116,8 @@
         "spring"
       ],
       "season": "year_round",
-      "_source": "osm:node/278476529"
+      "_source": "osm:node/278476529",
+      "_stale": true
     },
     {
       "id": "south-seed-ecb83b9d15",
@@ -3045,7 +3146,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:node/278478717"
+      "_source": "osm:node/278478717",
+      "_stale": true
     },
     {
       "id": "south-seed-d8d5ae854f",
@@ -3076,7 +3178,8 @@
         "spring"
       ],
       "season": "year_round",
-      "_source": "osm:node/768793290"
+      "_source": "osm:node/768793290",
+      "_stale": true
     },
     {
       "id": "south-seed-c3b80d57ae",
@@ -3105,7 +3208,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:node/988772039"
+      "_source": "osm:node/988772039",
+      "_stale": true
     },
     {
       "id": "south-seed-cfeaa9f1db",
@@ -3134,7 +3238,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:node/989241279"
+      "_source": "osm:node/989241279",
+      "_stale": true
     },
     {
       "id": "south-seed-c8d391f03f",
@@ -3163,7 +3268,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:node/1258388551"
+      "_source": "osm:node/1258388551",
+      "_stale": true
     },
     {
       "id": "south-seed-03e495302a",
@@ -3192,7 +3298,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:node/2940194495"
+      "_source": "osm:node/2940194495",
+      "_stale": true
     },
     {
       "id": "south-seed-24d9270803",
@@ -3223,7 +3330,8 @@
         "spring"
       ],
       "season": "year_round",
-      "_source": "osm:node/3296007478"
+      "_source": "osm:node/3296007478",
+      "_stale": true
     },
     {
       "id": "south-seed-dd62c26b38",
@@ -3254,7 +3362,8 @@
         "spring"
       ],
       "season": "year_round",
-      "_source": "osm:node/3308311234"
+      "_source": "osm:node/3308311234",
+      "_stale": true
     },
     {
       "id": "south-seed-2a36ce660a",
@@ -3285,7 +3394,8 @@
         "spring"
       ],
       "season": "year_round",
-      "_source": "osm:node/3328163713"
+      "_source": "osm:node/3328163713",
+      "_stale": true
     },
     {
       "id": "south-seed-5b7d4a543d",
@@ -3314,7 +3424,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:node/6646338085"
+      "_source": "osm:node/6646338085",
+      "_stale": true
     },
     {
       "id": "south-seed-4de731d50d",
@@ -3345,7 +3456,8 @@
         "spring"
       ],
       "season": "year_round",
-      "_source": "osm:node/8742653817"
+      "_source": "osm:node/8742653817",
+      "_stale": true
     },
     {
       "id": "south-seed-d034dce125",
@@ -3376,7 +3488,8 @@
         "spring"
       ],
       "season": "year_round",
-      "_source": "osm:node/9939887417"
+      "_source": "osm:node/9939887417",
+      "_stale": true
     },
     {
       "id": "south-seed-b1455f1c80",
@@ -3407,7 +3520,8 @@
         "spring"
       ],
       "season": "year_round",
-      "_source": "osm:node/10269923509"
+      "_source": "osm:node/10269923509",
+      "_stale": true
     },
     {
       "id": "south-seed-8dfa6c6ac6",
@@ -3436,7 +3550,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:node/13228488201"
+      "_source": "osm:node/13228488201",
+      "_stale": true
     },
     {
       "id": "south-seed-597e7572bb",
@@ -3467,7 +3582,8 @@
         "spring"
       ],
       "season": "year_round",
-      "_source": "osm:node/13379805901"
+      "_source": "osm:node/13379805901",
+      "_stale": true
     },
     {
       "id": "south-seed-ba48bc0502",
@@ -3496,7 +3612,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:way/29797679"
+      "_source": "osm:way/29797679",
+      "_stale": true
     },
     {
       "id": "south-seed-ce96f9f9e1",
@@ -3527,7 +3644,8 @@
         "spring"
       ],
       "season": "year_round",
-      "_source": "osm:way/780961819"
+      "_source": "osm:way/780961819",
+      "_stale": true
     },
     {
       "id": "south-seed-3de63a5cdd",
@@ -3556,7 +3674,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:relation/282071"
+      "_source": "osm:relation/282071",
+      "_stale": true
     },
     {
       "id": "south-seed-a999e43925",
@@ -3585,7 +3704,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:relation/1534064"
+      "_source": "osm:relation/1534064",
+      "_stale": true
     },
     {
       "id": "south-seed-1d65dd2417",
@@ -3614,7 +3734,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:relation/6148296"
+      "_source": "osm:relation/6148296",
+      "_stale": true
     },
     {
       "id": "south-seed-ed9c975b25",
@@ -3643,7 +3764,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:relation/9351124"
+      "_source": "osm:relation/9351124",
+      "_stale": true
     },
     {
       "id": "south-seed-79f6bcc492",
@@ -3672,7 +3794,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:relation/13046860"
+      "_source": "osm:relation/13046860",
+      "_stale": true
     },
     {
       "id": "south-seed-86aa18794f",
@@ -3701,7 +3824,8 @@
       "accessible": false,
       "tags": [],
       "season": "year_round",
-      "_source": "osm:relation/14618298"
+      "_source": "osm:relation/14618298",
+      "_stale": true
     },
     {
       "id": "north-seed-e5f5100140",
@@ -3711,7 +3835,7 @@
       "description_source": "generated",
       "category": "nature",
       "region": "north",
-      "access": "gated",
+      "access": "open",
       "lat": 32.96842883863883,
       "lng": 35.821477201965976,
       "duration_min": 90,
@@ -3726,9 +3850,11 @@
       },
       "hours_verified": false,
       "closed_on_shabbat": false,
-      "kid_friendly": false,
+      "kid_friendly": true,
       "accessible": false,
-      "tags": [],
+      "tags": [
+        "spring"
+      ],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/aynot-fakhum/",
       "_scraped_on": "2026-08-31"
@@ -3761,7 +3887,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/sea-turtles/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-3686f95c75",
@@ -3771,9 +3898,9 @@
       "description_source": "generated",
       "category": "nature",
       "region": "north",
-      "access": "gated",
-      "lat": null,
-      "lng": null,
+      "access": "open",
+      "lat": 33.1614,
+      "lng": 35.6789,
       "duration_min": 90,
       "opening_hours": {
         "sun": null,
@@ -3786,9 +3913,12 @@
       },
       "hours_verified": false,
       "closed_on_shabbat": false,
-      "kid_friendly": false,
+      "kid_friendly": true,
       "accessible": false,
-      "tags": [],
+      "tags": [
+        "archaeology",
+        "free"
+      ],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/omrit/",
       "_scraped_on": "2026-08-31"
@@ -3801,9 +3931,9 @@
       "description_source": "generated",
       "category": "nature",
       "region": "central",
-      "access": "gated",
-      "lat": 32.359793350000004,
-      "lng": 34.9957117,
+      "access": "open",
+      "lat": 32.359878764915436,
+      "lng": 34.99548266251341,
       "duration_min": 90,
       "opening_hours": {
         "sun": null,
@@ -3816,14 +3946,15 @@
       },
       "hours_verified": false,
       "closed_on_shabbat": false,
-      "kid_friendly": false,
+      "kid_friendly": true,
       "accessible": false,
-      "tags": [],
+      "tags": [
+        "archaeology",
+        "free"
+      ],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/tel-kakun/",
-      "_scraped_on": "2026-08-31",
-      "_osm_id": 1322496821,
-      "_osm_type": "way"
+      "_scraped_on": "2026-08-31"
     },
     {
       "id": "south-seed-65579413c1",
@@ -3853,7 +3984,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/sternbergia-nature-reserve-boker-ridge-and-nahal-hashour-gap/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "south-seed-91a27f61f5",
@@ -3931,7 +4063,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/diple/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "south-seed-a288bf9f95",
@@ -3961,7 +4094,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%a2%d7%91%d7%a8%d7%95%d7%a0%d7%94/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-ubeidiya-national-park",
@@ -3971,9 +4105,9 @@
       "description_source": "generated",
       "category": "nature",
       "region": "north",
-      "access": "gated",
-      "lat": 32.68978175,
-      "lng": 35.55647315,
+      "access": "open",
+      "lat": 32.6880845370201,
+      "lng": 35.55680580240956,
       "duration_min": 90,
       "opening_hours": {
         "sun": null,
@@ -3986,14 +4120,15 @@
       },
       "hours_verified": false,
       "closed_on_shabbat": false,
-      "kid_friendly": false,
+      "kid_friendly": true,
       "accessible": false,
-      "tags": [],
+      "tags": [
+        "free",
+        "archaeology"
+      ],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/ubedya/",
-      "_scraped_on": "2026-08-31",
-      "_osm_id": 14146550,
-      "_osm_type": "relation"
+      "_scraped_on": "2026-08-31"
     },
     {
       "id": "central-seed-b38c628671",
@@ -4008,19 +4143,39 @@
       "lng": 35.50376359841612,
       "duration_min": 90,
       "opening_hours": {
-        "sun": null,
-        "mon": null,
-        "tue": null,
-        "wed": null,
-        "thu": null,
-        "fri": null,
+        "sun": [
+          "08:00",
+          "17:00"
+        ],
+        "mon": [
+          "08:00",
+          "17:00"
+        ],
+        "tue": [
+          "08:00",
+          "17:00"
+        ],
+        "wed": [
+          "08:00",
+          "17:00"
+        ],
+        "thu": [
+          "08:00",
+          "17:00"
+        ],
+        "fri": [
+          "08:00",
+          "16:00"
+        ],
         "sat": null
       },
-      "hours_verified": false,
-      "closed_on_shabbat": false,
-      "kid_friendly": false,
-      "accessible": false,
-      "tags": [],
+      "hours_verified": true,
+      "closed_on_shabbat": true,
+      "kid_friendly": true,
+      "accessible": true,
+      "tags": [
+        "spring"
+      ],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/en-judah/",
       "_scraped_on": "2026-08-31"
@@ -4038,19 +4193,44 @@
       "lng": 35.642418185939114,
       "duration_min": 90,
       "opening_hours": {
-        "sun": null,
-        "mon": null,
-        "tue": null,
-        "wed": null,
-        "thu": null,
-        "fri": null,
-        "sat": null
+        "sun": [
+          "08:00",
+          "17:00"
+        ],
+        "mon": [
+          "08:00",
+          "17:00"
+        ],
+        "tue": [
+          "08:00",
+          "17:00"
+        ],
+        "wed": [
+          "08:00",
+          "17:00"
+        ],
+        "thu": [
+          "08:00",
+          "17:00"
+        ],
+        "fri": [
+          "08:00",
+          "16:00"
+        ],
+        "sat": [
+          "08:00",
+          "17:00"
+        ]
       },
-      "hours_verified": false,
+      "hours_verified": true,
       "closed_on_shabbat": false,
-      "kid_friendly": false,
-      "accessible": false,
-      "tags": [],
+      "kid_friendly": true,
+      "accessible": true,
+      "tags": [
+        "paid",
+        "swimming",
+        "coast"
+      ],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%94%d7%98%d7%91%d7%a2-%d7%9e%d7%92%d7%a8%d7%a1%d7%94-%d7%94%d7%91%d7%98%d7%99%d7%97%d7%94-%d7%91%d7%a7%d7%a2%d7%aa-%d7%91%d7%99%d7%aa-%d7%a6%d7%99%d7%99/",
       "_scraped_on": "2026-08-31"
@@ -4083,7 +4263,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/jerusalem-walls-national-park/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-83e16649c8",
@@ -4093,7 +4274,7 @@
       "description_source": "generated",
       "category": "nature",
       "region": "north",
-      "access": "gated",
+      "access": "open",
       "lat": 32.88166123734252,
       "lng": 35.621057929560905,
       "duration_min": 90,
@@ -4108,9 +4289,12 @@
       },
       "hours_verified": false,
       "closed_on_shabbat": false,
-      "kid_friendly": false,
+      "kid_friendly": true,
       "accessible": false,
-      "tags": [],
+      "tags": [
+        "spring",
+        "free"
+      ],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%94-%d7%99%d7%9e%d7%99%d7%aa-%d7%94%d7%91%d7%98%d7%99%d7%97%d7%94-%d7%a2%d7%95%d7%9c%d7%9d-%d7%a7%d7%a1%d7%95%d7%9d-%d7%a9%d7%9c-%d7%9e%d7%99%d7%9d-%d7%9e%d7%aa%d7%95/",
       "_scraped_on": "2026-08-31"
@@ -4143,7 +4327,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/susita/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-50e2dfa3ca",
@@ -4153,7 +4338,7 @@
       "description_source": "generated",
       "category": "nature",
       "region": "central",
-      "access": "gated",
+      "access": "open",
       "lat": 32.26353289516828,
       "lng": 34.836832070253685,
       "duration_min": 90,
@@ -4168,9 +4353,11 @@
       },
       "hours_verified": false,
       "closed_on_shabbat": false,
-      "kid_friendly": false,
+      "kid_friendly": true,
       "accessible": false,
-      "tags": [],
+      "tags": [
+        "spring"
+      ],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/n-poleg/",
       "_scraped_on": "2026-08-31"
@@ -4183,7 +4370,7 @@
       "description_source": "generated",
       "category": "nature",
       "region": "central",
-      "access": "gated",
+      "access": "open",
       "lat": 31.606533774355654,
       "lng": 34.51214719501526,
       "duration_min": 90,
@@ -4198,9 +4385,11 @@
       },
       "hours_verified": false,
       "closed_on_shabbat": false,
-      "kid_friendly": false,
+      "kid_friendly": true,
       "accessible": false,
-      "tags": [],
+      "tags": [
+        "free"
+      ],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/zikim/",
       "_scraped_on": "2026-08-31"
@@ -4213,7 +4402,7 @@
       "description_source": "generated",
       "category": "nature",
       "region": "south",
-      "access": "gated",
+      "access": "open",
       "lat": 31.497813515732958,
       "lng": 34.68485048421047,
       "duration_min": 90,
@@ -4228,9 +4417,11 @@
       },
       "hours_verified": false,
       "closed_on_shabbat": false,
-      "kid_friendly": false,
+      "kid_friendly": true,
       "accessible": false,
-      "tags": [],
+      "tags": [
+        "free"
+      ],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/jmama/",
       "_scraped_on": "2026-08-31"
@@ -4243,7 +4434,7 @@
       "description_source": "generated",
       "category": "nature",
       "region": "central",
-      "access": "gated",
+      "access": "open",
       "lat": 31.836498978508626,
       "lng": 34.70498734387354,
       "duration_min": 90,
@@ -4258,9 +4449,11 @@
       },
       "hours_verified": false,
       "closed_on_shabbat": false,
-      "kid_friendly": false,
+      "kid_friendly": true,
       "accessible": false,
-      "tags": [],
+      "tags": [
+        "free"
+      ],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/shita-malbina-ashdod/",
       "_scraped_on": "2026-08-31"
@@ -4273,7 +4466,7 @@
       "description_source": "generated",
       "category": "nature",
       "region": "central",
-      "access": "gated",
+      "access": "open",
       "lat": 31.706105939435453,
       "lng": 34.8480567284023,
       "duration_min": 90,
@@ -4288,9 +4481,12 @@
       },
       "hours_verified": false,
       "closed_on_shabbat": false,
-      "kid_friendly": false,
+      "kid_friendly": true,
       "accessible": false,
-      "tags": [],
+      "tags": [
+        "archaeology",
+        "free"
+      ],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/tel-tzafit/",
       "_scraped_on": "2026-08-31"
@@ -4303,7 +4499,7 @@
       "description_source": "generated",
       "category": "nature",
       "region": "central",
-      "access": "gated",
+      "access": "open",
       "lat": 32.28687245058537,
       "lng": 34.9216321877689,
       "duration_min": 90,
@@ -4318,9 +4514,11 @@
       },
       "hours_verified": false,
       "closed_on_shabbat": false,
-      "kid_friendly": false,
+      "kid_friendly": true,
       "accessible": false,
-      "tags": [],
+      "tags": [
+        "free"
+      ],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/a-kadima/",
       "_scraped_on": "2026-08-31"
@@ -4333,7 +4531,7 @@
       "description_source": "generated",
       "category": "nature",
       "region": "central",
-      "access": "gated",
+      "access": "open",
       "lat": 31.93324091835657,
       "lng": 34.75197776155253,
       "duration_min": 90,
@@ -4348,9 +4546,11 @@
       },
       "hours_verified": false,
       "closed_on_shabbat": false,
-      "kid_friendly": false,
+      "kid_friendly": true,
       "accessible": false,
-      "tags": [],
+      "tags": [
+        "free"
+      ],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/eiris/",
       "_scraped_on": "2026-08-31"
@@ -4383,7 +4583,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/telem/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-240f53d6e5",
@@ -4413,7 +4614,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/trashey-tzfat/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-df8008234a",
@@ -4443,7 +4645,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/park-hayarden/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-b9f525a642",
@@ -4473,7 +4676,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/yavne/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-060a223165",
@@ -4503,7 +4707,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/m-gibton/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-ef09385475",
@@ -4533,7 +4738,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%99%d7%9d-%d7%a8%d7%90%d7%a9-%d7%9b%d7%a8%d7%9e%d7%9c/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-tel-gezer-national-park",
@@ -4565,7 +4771,8 @@
       "_source": "https://www.parks.org.il/reserve-park/tel-gezer/",
       "_scraped_on": "2026-08-31",
       "_osm_id": 85704060,
-      "_osm_type": "way"
+      "_osm_type": "way",
+      "_stale": true
     },
     {
       "id": "north-seed-dd43c04008",
@@ -4595,7 +4802,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/shlosha/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-342704a632",
@@ -4625,7 +4833,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%9e%d7%a2%d7%a8%d7%9b%d7%aa-%d7%94%d7%a8%d7%99%d7%a9%d7%95%d7%9d-%d7%9c%d7%a0%d7%97%d7%9c-%d7%93%d7%a8%d7%92%d7%94/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-e2d7d589de",
@@ -4655,7 +4864,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/teldor/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-ce6731f43f",
@@ -4685,7 +4895,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/gay-2/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-216222c5f9",
@@ -4715,7 +4926,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/migdal-tzedek/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "south-seed-28bf613165",
@@ -4745,7 +4957,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/gev/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "south-seed-911e1f9f98",
@@ -4775,7 +4988,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/david/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "south-seed-8a1bbfcf17",
@@ -4823,7 +5037,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/arugot/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "south-seed-5cd809eed5",
@@ -4871,7 +5086,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/engedi/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "south-seed-27837d93df",
@@ -4901,7 +5117,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/yam-almogim/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "south-seed-1b8e499fb1",
@@ -4931,7 +5148,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/yam-dromi/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-2b7d59c4c8",
@@ -4961,7 +5179,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/yarkon-3/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-669a58ea86",
@@ -4991,7 +5210,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/yarkon-2/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-7982bd04f5",
@@ -5021,7 +5241,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/nmal-casariya/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-177c8c7de6",
@@ -5051,7 +5272,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/banias-mapal/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-40c5af0dc8",
@@ -5081,7 +5303,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/banias/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "south-seed-d6330dc976",
@@ -5111,7 +5334,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/ramon/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "south-seed-68684d9e65",
@@ -5141,7 +5365,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/fura/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "south-seed-cbe5d32f8f",
@@ -5171,7 +5396,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%9e%d7%99%d7%a9%d7%95%d7%a8-%d7%99%d7%9e%d7%99%d7%9f/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-be6c208813",
@@ -5201,7 +5427,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%9e%d7%91%d7%a6%d7%a8-%d7%9e%d7%95%d7%a0%d7%a4%d7%95%d7%a8/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "south-seed-d37a830382",
@@ -5231,7 +5458,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%9e%d7%93%d7%91%d7%a8-%d7%99%d7%94%d7%95%d7%93%d7%94/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "south-seed-2c82d3ad08",
@@ -5261,7 +5489,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%9e%d7%a1%d7%99%d7%91-%d7%94%d7%a8%d7%99-%d7%90%d7%99%d7%9c%d7%aa/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "south-seed-77546e2e37",
@@ -5291,7 +5520,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%9e%d7%9b%d7%aa%d7%a9%d7%99%d7%9d-%d7%a2%d7%99%d7%9f-%d7%99%d7%94%d7%91/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "south-seed-ea6b3241fb",
@@ -5321,7 +5551,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%a0%d7%97%d7%9c-%d7%a2%d7%a9%d7%95%d7%a9/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-a1bb4c733a",
@@ -5351,7 +5582,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%9e%d7%a8%d7%97%d7%91-%d7%93%d7%95%d7%9c%d7%91/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-86a91e8698",
@@ -5381,7 +5613,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%91%d7%99%d7%aa%d7%9f-%d7%90%d7%94%d7%a8%d7%95%d7%9f/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-5a948b7340",
@@ -5411,7 +5644,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%91%d7%a0%d7%99-%d7%a6%d7%99%d7%95%d7%9f/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-a1f8216a3f",
@@ -5441,7 +5675,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%94%d7%a8-%d7%98%d7%99%d7%99%d7%a1%d7%99%d7%9d/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-c7ae0bfabd",
@@ -5471,7 +5706,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%97%d7%95%d7%a8%d7%a9-%d7%a2%d7%93%d7%95%d7%9c%d7%9d/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-77869c55e5",
@@ -5501,7 +5737,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%99%d7%a2%d7%a8-%d7%94%d7%9b%d7%a4%d7%99%d7%a8%d7%94/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-52aa1fc20d",
@@ -5531,7 +5768,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%a0%d7%97%d7%9c-%d7%90%d7%95%d7%92/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-344edd07d2",
@@ -5561,7 +5799,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%a0%d7%97%d7%9c-%d7%a6%d7%9c%d7%9e%d7%95%d7%9f/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-b2977ce054",
@@ -5591,7 +5830,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a4%d7%90%d7%a8%d7%a7-%d7%94%d7%9e%d7%a2%d7%99%d7%99%d7%a0%d7%95%d7%aa/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-7938b553e9",
@@ -5621,7 +5861,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%9e%d7%95%d7%a8%d7%93%d7%95%d7%aa-%d7%94%d7%92%d7%95%d7%9c%d7%9f/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-847def4e7e",
@@ -5651,7 +5892,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%a0%d7%97%d7%9c-%d7%aa%d7%91%d7%95%d7%a8/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-8c1de7a5f8",
@@ -5681,7 +5923,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%a0%d7%97%d7%9c-%d7%a9%d7%99%d7%9c%d7%94-%d7%a2%d7%99%d7%9c%d7%99/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-f7808bb880",
@@ -5711,7 +5954,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%95%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%97%d7%95%d7%a3-%d7%92%d7%93%d7%95%d7%a8/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-nahal-kziv-nature-reserve",
@@ -5743,7 +5987,8 @@
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%a0%d7%97%d7%9c-%d7%9b%d7%96%d7%99%d7%91/",
       "_scraped_on": "2026-08-31",
       "_osm_id": 5912741,
-      "_osm_type": "relation"
+      "_osm_type": "relation",
+      "_stale": true
     },
     {
       "id": "north-seed-f149f33fa5",
@@ -5773,7 +6018,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%a0%d7%97%d7%9c-%d7%90%d7%9c-%d7%a2%d7%9c/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-fef22c1266",
@@ -5803,7 +6049,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/dor-michael/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-edbed58814",
@@ -5833,7 +6080,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%99%d7%9d-%d7%93%d7%95%d7%a8-%d7%94%d7%91%d7%95%d7%a0%d7%99%d7%9d/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-221281f593",
@@ -5863,7 +6111,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/shikma/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-4bad1d5f40",
@@ -5893,7 +6142,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/gdor/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-f15d0d35c9",
@@ -5923,7 +6173,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/avtach/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-e0f9e0ee8d",
@@ -5953,7 +6204,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/nikra/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-dad4a948bc",
@@ -5983,7 +6235,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/shikmona/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "south-seed-e169791f45",
@@ -6013,7 +6266,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%aa%d7%9c-%d7%97%d7%91%d7%a8%d7%95%d7%9f/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-0d8cf85ca5",
@@ -6043,7 +6297,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%a2%d7%99%d7%9f-%d7%9b%d7%a8%d7%9d/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-31dbf537a6",
@@ -6073,7 +6328,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%a2%d7%9e%d7%a7-%d7%a6%d7%95%d7%a8%d7%99%d7%9d/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-902e3e1195",
@@ -6103,7 +6359,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%a0%d7%97%d7%9c-%d7%a8%d7%a4%d7%90%d7%99%d7%9d/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-6afb384a70",
@@ -6133,7 +6390,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%94%d7%9e%d7%a1%d7%a8%d7%a7/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-ef8bd23c8c",
@@ -6163,7 +6421,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/lifta/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-8957e07247",
@@ -6193,7 +6452,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%a9%d7%a2%d7%a8-%d7%a4%d7%95%d7%9c%d7%92/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-f64ce7f4c9",
@@ -6223,7 +6483,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/lachish/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-reches-admi-nature-reserve",
@@ -6255,7 +6516,8 @@
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%a8%d7%9b%d7%a1-%d7%90%d7%93%d7%9e%d7%99/",
       "_scraped_on": "2026-08-31",
       "_osm_id": 392154043,
-      "_osm_type": "way"
+      "_osm_type": "way",
+      "_stale": true
     },
     {
       "id": "south-seed-34f560dee0",
@@ -6285,7 +6547,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%9e%d7%a6%d7%95%d7%a7-%d7%94%d7%a6%d7%99%d7%a0%d7%99%d7%9d/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "south-seed-931969e7b0",
@@ -6315,7 +6578,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%97%d7%99-%d7%91%d7%a8-%d7%99%d7%95%d7%98%d7%91%d7%aa%d7%94-2/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "south-seed-51bc30e32e",
@@ -6345,7 +6609,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%a0%d7%97%d7%9c-%d7%a9%d7%99%d7%96%d7%a3/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "south-seed-233d86f787",
@@ -6375,7 +6640,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%97%d7%95%d7%a3-%d7%94%d7%90%d7%9c%d7%9e%d7%95%d7%92%d7%99%d7%9d/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "south-seed-0762aee883",
@@ -6405,7 +6671,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%a2%d7%91%d7%93%d7%aa/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "south-seed-d68919307d",
@@ -6435,7 +6702,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%9e%d7%a6%d7%93%d7%94/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "south-seed-414555249d",
@@ -6465,7 +6733,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%a2%d7%99%d7%9f-%d7%a2%d7%91%d7%93%d7%aa/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "south-seed-84844a66cd",
@@ -6495,7 +6764,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%aa%d7%9c-%d7%a2%d7%a8%d7%93/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "south-seed-01edfb322c",
@@ -6525,7 +6795,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%94%d7%9e%d7%9b%d7%aa%d7%a9-%d7%94%d7%92%d7%93%d7%95%d7%9c/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "south-seed-f1d973fc97",
@@ -6555,7 +6826,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%94%d7%a8-%d7%94%d7%a0%d7%92%d7%91/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "south-seed-50a298bdb4",
@@ -6585,7 +6857,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%94%d7%91%d7%a9%d7%95%d7%a8-%d7%a4%d7%90%d7%a8%d7%a7-%d7%90%d7%a9%d7%9b%d7%95%d7%9c/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "south-seed-e8fa4957b7",
@@ -6615,7 +6888,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/ramon-mm/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "south-seed-5b230db098",
@@ -6645,7 +6919,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%a7%d7%91%d7%a8-%d7%91%d7%9f-%d7%92%d7%95%d7%a8%d7%99%d7%95%d7%9f/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "south-seed-3a39d2c527",
@@ -6675,7 +6950,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%a0%d7%99%d7%a6%d7%a0%d7%94/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "south-seed-45677d0886",
@@ -6705,7 +6981,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%aa%d7%9c-%d7%91%d7%90%d7%a8-%d7%a9%d7%91%d7%a2/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "south-seed-c0feaa3059",
@@ -6735,7 +7012,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%90%d7%99%d7%a8%d7%95%d7%a1-%d7%99%d7%a8%d7%95%d7%97%d7%9d/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "south-seed-af9ff8262a",
@@ -6765,7 +7043,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%91%d7%aa%d7%a8%d7%95%d7%a0%d7%95%d7%aa-%d7%91%d7%90%d7%a8%d7%99/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "south-seed-65ccbae1cf",
@@ -6795,7 +7074,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%9e%d7%9e%d7%a9%d7%99%d7%aa/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "south-seed-9db5d88da5",
@@ -6843,7 +7123,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%a9%d7%91%d7%98%d7%94/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "south-seed-7721012276",
@@ -6873,7 +7154,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%a2%d7%99%d7%9f-%d7%92%d7%93%d7%99/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-f32f5eda0b",
@@ -6903,7 +7185,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%a0%d7%97%d7%9c-%d7%a4%d7%a8%d7%aa-%d7%a2%d7%99%d7%9f-%d7%a4%d7%a8%d7%aa/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-58dfd383c4",
@@ -6933,7 +7216,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a4%d7%90%d7%a8%d7%a7-%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%a9%d7%95%d7%9e%d7%a8%d7%95%d7%9f-%d7%a1%d7%91%d7%a1%d7%98%d7%99%d7%94/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-8ef4125166",
@@ -6963,7 +7247,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%a0%d7%97%d7%9c-%d7%a4%d7%a8%d7%aa-%d7%a2%d7%99%d7%9f-%d7%9e%d7%91%d7%95%d7%a2/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-26fbfd527a",
@@ -6993,7 +7278,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a4%d7%90%d7%a8%d7%a7-%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%94%d7%a8%d7%95%d7%93%d7%99%d7%95%d7%9f/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-4f784f24a4",
@@ -7023,7 +7309,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%94%d7%a8-%d7%92%d7%a8%d7%99%d7%96%d7%99%d7%9d/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-3e8026f020",
@@ -7053,7 +7340,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%a0%d7%97%d7%9c-%d7%aa%d7%a7%d7%95%d7%a2/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-c490524adf",
@@ -7083,7 +7371,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a4%d7%90%d7%a8%d7%a7-%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%a7%d7%95%d7%9e%d7%a8%d7%90%d7%9f/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-dd264249d5",
@@ -7131,7 +7420,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%90%d7%aa%d7%a8-%d7%94%d7%98%d7%91%d7%99%d7%9c%d7%94-%d7%a7%d7%90%d7%a1%d7%a8-%d7%90%d7%9c-%d7%99%d7%94%d7%95%d7%93/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-dbc05a5264",
@@ -7161,7 +7451,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%a2%d7%99%d7%99%d7%a0%d7%95%d7%aa-%d7%a6%d7%95%d7%a7%d7%99%d7%9d-%d7%a2%d7%99%d7%9f-%d7%a4%d7%a9%d7%97%d7%94/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-820e5de93b",
@@ -7191,7 +7482,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%9e%d7%95%d7%96%d7%99%d7%90%d7%95%d7%9f-%d7%94%d7%a9%d7%95%d7%9e%d7%a8%d7%95%d7%a0%d7%99-%d7%94%d7%98%d7%95%d7%91/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-87cbc0cd34",
@@ -7221,7 +7513,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%94%d7%98%d7%91%d7%a2-%d7%a0%d7%97%d7%9c-%d7%a4%d7%a8%d7%aa-%d7%95%d7%90%d7%93%d7%99-%d7%a7%d7%9c%d7%98/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-d44b21d5e4",
@@ -7251,7 +7544,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%a0%d7%97%d7%9c-%d7%a7%d7%a0%d7%94/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-6d9f6fd65e",
@@ -7281,7 +7575,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%9e%d7%a6%d7%95%d7%a7-%d7%94%d7%94%d7%a2%d7%aa%d7%a7%d7%99%d7%9d-%d7%a0%d7%97%d7%9c-%d7%93%d7%a8%d7%92%d7%94/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-b80484047d",
@@ -7311,7 +7606,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%9e%d7%a0%d7%96%d7%a8-%d7%90%d7%95%d7%aa%d7%99%d7%9e%d7%99%d7%95%d7%a1/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-1813d86bdf",
@@ -7341,7 +7637,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a4%d7%90%d7%a8%d7%a7-%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%a0%d7%91%d7%99-%d7%a1%d7%9e%d7%95%d7%90%d7%9c/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-bb71fecd93",
@@ -7371,7 +7668,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%91%d7%99%d7%aa-%d7%92%d7%95%d7%91%d7%a8%d7%99%d7%9f/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-c886ff570d",
@@ -7401,7 +7699,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%97%d7%95%d7%9c%d7%95%d7%aa-%d7%a0%d7%99%d7%a6%d7%a0%d7%99%d7%9d/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-90cf7050a1",
@@ -7431,7 +7730,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%a2%d7%99%d7%a8-%d7%93%d7%95%d7%93/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-c443c3be13",
@@ -7461,7 +7761,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%90%d7%a4%d7%95%d7%9c%d7%95%d7%a0%d7%99%d7%94-%d7%aa%d7%9c-%d7%90%d7%a8%d7%a9%d7%a3/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-32477a0bc3",
@@ -7491,7 +7792,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%a0%d7%97%d7%9c-%d7%90%d7%9c%d7%9b%d7%a1%d7%a0%d7%93%d7%a8-%d7%97%d7%95%d7%a3-%d7%91%d7%99%d7%aa-%d7%99%d7%a0%d7%90%d7%99/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-9f76224187",
@@ -7521,7 +7823,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%90%d7%aa%d7%a8-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%94%d7%a7%d7%a1%d7%98%d7%9c/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-9c9d44fe78",
@@ -7551,7 +7854,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%97%d7%95%d7%a3-%d7%a4%d7%9c%d7%9e%d7%97%d7%99%d7%9d/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-629b158734",
@@ -7581,7 +7885,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%90%d7%a9%d7%a7%d7%9c%d7%95%d7%9f/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-f3f1da0b98",
@@ -7611,7 +7916,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%97%d7%95%d7%a3-%d7%94%d7%a9%d7%a8%d7%95%d7%9f/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-794f9880cc",
@@ -7641,7 +7947,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%9e%d7%a2%d7%a8%d7%aa-%d7%94%d7%a0%d7%98%d7%99%d7%a4%d7%99%d7%9d/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-yarkon-national-park",
@@ -7673,7 +7980,8 @@
       "_source": "https://www.parks.org.il/reserve-park/yarkon/",
       "_scraped_on": "2026-08-31",
       "_osm_id": 10725642,
-      "_osm_type": "relation"
+      "_osm_type": "relation",
+      "_stale": true
     },
     {
       "id": "central-seed-44764f86ce",
@@ -7703,7 +8011,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%a2%d7%99%d7%9f-%d7%97%d7%9e%d7%93/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-2fe8390a32",
@@ -7733,7 +8042,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%92%d7%9f-%d7%94%d7%a9%d7%9c%d7%95%d7%a9%d7%94-%d7%94%d7%a1%d7%97%d7%a0%d7%94/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-a0152c81d6",
@@ -7763,7 +8073,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%9b%d7%95%d7%a8%d7%a1%d7%99/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-2a19f8ef66",
@@ -7793,7 +8104,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%91%d7%a8%d7%a2%d7%9d/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-8f18426836",
@@ -7823,7 +8135,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a4%d7%90%d7%a8%d7%a7-%d7%94%d7%9b%d7%a8%d7%9e%d7%9c/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-a476ea037e",
@@ -7853,7 +8166,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%a6%d7%99%d7%a4%d7%95%d7%a8%d7%99/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-d92d88246a",
@@ -7883,7 +8197,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%94%d7%a8-%d7%9e%d7%99%d7%a8%d7%95%d7%9f/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-5518af08ad",
@@ -7913,7 +8228,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%a0%d7%97%d7%9c-%d7%a2%d7%99%d7%95%d7%9f-%d7%94%d7%aa%d7%a0%d7%95%d7%a8/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-5c518e1bbc",
@@ -7943,7 +8259,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%a0%d7%97%d7%9c-%d7%94%d7%9e%d7%a2%d7%a8%d7%95%d7%aa/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-68c459f71d",
@@ -7973,7 +8290,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%92%d7%9c%d7%91%d7%95%d7%a2/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-5af262810c",
@@ -8003,7 +8321,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%aa%d7%9c-%d7%97%d7%a6%d7%95%d7%a8/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-36b85ab90e",
@@ -8033,7 +8352,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%99%d7%95%d7%93%d7%a4%d7%aa-%d7%94%d7%a2%d7%aa%d7%99%d7%a7%d7%94/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-35d8ac1654",
@@ -8063,7 +8383,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/arbel/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-651945d417",
@@ -8093,7 +8414,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%94%d7%97%d7%95%d7%9c%d7%94/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-0f0a781d53",
@@ -8123,7 +8445,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%a2%d7%99%d7%9f-%d7%90%d7%a4%d7%a7/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-be3476de28",
@@ -8153,7 +8476,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%92%d7%9e%d7%9c%d7%90/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-39d8ae2831",
@@ -8183,7 +8507,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%a0%d7%97%d7%9c-%d7%a2%d7%9e%d7%95%d7%93/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-dd83b60b86",
@@ -8213,7 +8538,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%a0%d7%97%d7%9c-%d7%94%d7%9e%d7%a9%d7%95%d7%a9%d7%99%d7%9d/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-7ade8f07ef",
@@ -8243,7 +8569,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%9e%d7%91%d7%a6%d7%a8-%d7%a0%d7%9e%d7%a8%d7%95%d7%93-%d7%a7%d7%9c%d7%a2%d7%aa-%d7%a0%d7%9e%d7%a8%d7%95%d7%93/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-63e509a5db",
@@ -8273,7 +8600,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%94%d7%a8-%d7%a2%d7%a6%d7%9e%d7%95%d7%9f/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-723d090f24",
@@ -8303,7 +8631,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%9e%d7%91%d7%a6%d7%a8-%d7%99%d7%97%d7%99%d7%a2%d7%9d/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-1cd785a295",
@@ -8333,7 +8662,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%aa%d7%9c-%d7%93%d7%9f/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-837e7f76e0",
@@ -8363,7 +8693,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%a0%d7%97%d7%9c-%d7%aa%d7%a0%d7%99%d7%a0%d7%99%d7%9d/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-dbc8841a78",
@@ -8393,7 +8724,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%9b%d7%95%d7%a8%d7%96%d7%99%d7%9d/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-e88746aaec",
@@ -8423,7 +8755,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%a7%d7%99%d7%a1%d7%a8%d7%99%d7%94/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-ceb89b7ba4",
@@ -8453,7 +8786,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%90%d7%9c%d7%95%d7%aa-%d7%a1%d7%99%d7%a8%d7%99%d7%9f/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-d061fb9e2c",
@@ -8483,7 +8817,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%97%d7%95%d7%a3-%d7%93%d7%95%d7%a8-%d7%94%d7%91%d7%95%d7%a0%d7%99%d7%9d/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-5ca1b60977",
@@ -8513,7 +8848,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%91%d7%99%d7%aa-%d7%a9%d7%90%d7%9f/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-b8beb9fd5c",
@@ -8543,7 +8879,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%97%d7%95%d7%a8%d7%a9%d7%aa-%d7%98%d7%9c/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-b8c69f2e27",
@@ -8573,7 +8910,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%9b%d7%a4%d7%a8-%d7%a0%d7%97%d7%95%d7%9d/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-4f8a64b098",
@@ -8603,7 +8941,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%91%d7%99%d7%aa-%d7%90%d7%9c%d7%a4%d7%90/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-9eaad4b97a",
@@ -8633,7 +8972,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%9b%d7%95%d7%9b%d7%91-%d7%94%d7%99%d7%a8%d7%93%d7%9f/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-ce090ac524",
@@ -8663,7 +9003,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%9e%d7%a2%d7%99%d7%99%d7%9f-%d7%97%d7%a8%d7%95%d7%93/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-f911a10b26",
@@ -8693,7 +9034,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%97%d7%99-%d7%91%d7%a8-%d7%91%d7%9b%d7%a8%d7%9e%d7%9c/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "central-seed-c01dfacdd2",
@@ -8723,7 +9065,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%aa%d7%9c-%d7%9e%d7%92%d7%99%d7%93%d7%95/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-1d525e7e35",
@@ -8753,7 +9096,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%a9%d7%93%d7%94-%d7%a2%d7%9e%d7%95%d7%93%d7%99%d7%9d/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-59d6517f4d",
@@ -8783,7 +9127,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/yahudiya/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-44eaf252e6",
@@ -8813,7 +9158,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%a0%d7%97%d7%9c-%d7%97%d7%a8%d7%9e%d7%95%d7%9f-%d7%91%d7%a0%d7%99%d7%90%d7%a1/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-b26d68c1fb",
@@ -8843,7 +9189,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%91%d7%99%d7%aa-%d7%a9%d7%a2%d7%a8%d7%99%d7%9d/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-1c1a02cb64",
@@ -8873,7 +9220,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%90%d7%9b%d7%96%d7%99%d7%91-%d7%95%d7%97%d7%95%d7%a3-%d7%90%d7%9b%d7%96%d7%99%d7%91/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-50cf36a554",
@@ -8903,7 +9251,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%a0%d7%97%d7%9c-%d7%a9%d7%a0%d7%99%d7%a8-%d7%97%d7%a6%d7%91%d7%90%d7%a0%d7%99/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-9f1d79f5ee",
@@ -8933,7 +9282,8 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%97%d7%9e%d7%aa-%d7%98%d7%91%d7%a8%d7%99%d7%94/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "_stale": true
     },
     {
       "id": "north-seed-4c257be56e",
@@ -8963,6 +9313,411 @@
       "tags": [],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%98%d7%91%d7%a2-%d7%95%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%94%d7%a8-%d7%aa%d7%91%d7%95%d7%a8/",
+      "_scraped_on": "2026-08-31",
+      "_stale": true
+    },
+    {
+      "id": "central-seed-2740f0ad4d",
+      "name_he": "מו ומו - Moo V Moo",
+      "description_he": "",
+      "tip_he": "",
+      "description_source": "generated",
+      "category": "meal",
+      "region": "central",
+      "access": "gated",
+      "lat": 31.898223131541478,
+      "lng": 34.81037940400483,
+      "duration_min": 60,
+      "opening_hours": {
+        "sun": null,
+        "mon": [
+          "17:00",
+          "22:00"
+        ],
+        "tue": [
+          "17:00",
+          "22:00"
+        ],
+        "wed": [
+          "17:00",
+          "22:00"
+        ],
+        "thu": [
+          "17:00",
+          "22:00"
+        ],
+        "fri": [
+          "17:00",
+          "21:30"
+        ],
+        "sat": null
+      },
+      "hours_verified": true,
+      "closed_on_shabbat": true,
+      "kid_friendly": true,
+      "accessible": true,
+      "tags": [
+        "paid"
+      ],
+      "season": "year_round",
+      "_source": "manual",
+      "_scraped_on": "2026-08-31"
+    },
+    {
+      "id": "north-seed-2d436a3c17",
+      "name_he": "המסעדה של אבי - Avi's Restaurant",
+      "description_he": "",
+      "tip_he": "",
+      "description_source": "generated",
+      "category": "meal",
+      "region": "north",
+      "access": "gated",
+      "lat": 32.786091,
+      "lng": 35.540864,
+      "duration_min": 60,
+      "opening_hours": {
+        "sun": [
+          "11:30",
+          "22:00"
+        ],
+        "mon": [
+          "11:30",
+          "22:00"
+        ],
+        "tue": [
+          "11:30",
+          "22:00"
+        ],
+        "wed": [
+          "11:30",
+          "22:00"
+        ],
+        "thu": [
+          "11:30",
+          "22:00"
+        ],
+        "fri": null,
+        "sat": null
+      },
+      "hours_verified": true,
+      "closed_on_shabbat": true,
+      "kid_friendly": true,
+      "accessible": true,
+      "tags": [
+        "paid"
+      ],
+      "season": "year_round",
+      "_source": "manual",
+      "_scraped_on": "2026-08-31"
+    },
+    {
+      "id": "south-seed-21e19a180f",
+      "name_he": "עומר'ס - סנדוויץ' בר שף",
+      "description_he": "",
+      "tip_he": "",
+      "description_source": "generated",
+      "category": "meal",
+      "region": "south",
+      "access": "gated",
+      "lat": 29.56009160929425,
+      "lng": 34.95138399205526,
+      "duration_min": 60,
+      "opening_hours": {
+        "sun": [
+          "11:00",
+          "21:00"
+        ],
+        "mon": [
+          "11:00",
+          "21:00"
+        ],
+        "tue": [
+          "11:00",
+          "21:00"
+        ],
+        "wed": [
+          "11:00",
+          "21:00"
+        ],
+        "thu": [
+          "11:00",
+          "21:00"
+        ],
+        "fri": null,
+        "sat": null
+      },
+      "hours_verified": true,
+      "closed_on_shabbat": true,
+      "kid_friendly": true,
+      "accessible": true,
+      "tags": [
+        "paid"
+      ],
+      "season": "year_round",
+      "_source": "manual",
+      "_scraped_on": "2026-08-31"
+    },
+    {
+      "id": "central-seed-7b8ba8a15a",
+      "name_he": "מוזיאון ישראל",
+      "description_he": "",
+      "tip_he": "",
+      "description_source": "generated",
+      "category": "museum",
+      "region": "central",
+      "access": "gated",
+      "lat": 31.77212839518143,
+      "lng": 35.20408942281614,
+      "duration_min": 120,
+      "opening_hours": {
+        "sun": null,
+        "mon": [
+          "10:00",
+          "16:00"
+        ],
+        "tue": [
+          "16:00",
+          "20:00"
+        ],
+        "wed": [
+          "10:00",
+          "16:00"
+        ],
+        "thu": [
+          "10:00",
+          "18:00"
+        ],
+        "fri": [
+          "10:00",
+          "14:00"
+        ],
+        "sat": [
+          "10:00",
+          "18:00"
+        ]
+      },
+      "hours_verified": true,
+      "closed_on_shabbat": false,
+      "kid_friendly": true,
+      "accessible": true,
+      "tags": [
+        "indoor",
+        "paid",
+        "parking-onsite"
+      ],
+      "season": "year_round",
+      "_source": "https://www.imj.org.il/he/visit",
+      "_scraped_on": "2026-08-31"
+    },
+    {
+      "id": "central-seed-65ac45ce7e",
+      "name_he": "מוזיאון יד ושם",
+      "description_he": "",
+      "tip_he": "",
+      "description_source": "generated",
+      "category": "museum",
+      "region": "central",
+      "access": "gated",
+      "lat": 31.77436689702692,
+      "lng": 35.1753018,
+      "duration_min": 120,
+      "opening_hours": {
+        "sun": [
+          "09:00",
+          "16:00"
+        ],
+        "mon": [
+          "09:00",
+          "19:00"
+        ],
+        "tue": [
+          "09:00",
+          "14:00"
+        ],
+        "wed": [
+          "09:00",
+          "16:00"
+        ],
+        "thu": [
+          "09:00",
+          "19:00"
+        ],
+        "fri": [
+          "09:00",
+          "13:00"
+        ],
+        "sat": null
+      },
+      "hours_verified": true,
+      "closed_on_shabbat": true,
+      "kid_friendly": true,
+      "accessible": true,
+      "tags": [
+        "indoor",
+        "paid",
+        "parking-onsite"
+      ],
+      "season": "year_round",
+      "_source": "https://www.yadvashem.org/he/museum",
+      "_scraped_on": "2026-08-31"
+    },
+    {
+      "id": "north-seed-ae332f3d9b",
+      "name_he": "מוזיאון ראלי",
+      "description_he": "",
+      "tip_he": "",
+      "description_source": "generated",
+      "category": "museum",
+      "region": "north",
+      "access": "gated",
+      "lat": 32.51457719585206,
+      "lng": 34.907405473016375,
+      "duration_min": 120,
+      "opening_hours": {
+        "sun": null,
+        "mon": [
+          "10:30",
+          "17:00"
+        ],
+        "tue": [
+          "10:30",
+          "17:00"
+        ],
+        "wed": null,
+        "thu": [
+          "10:30",
+          "17:00"
+        ],
+        "fri": [
+          "10:30",
+          "15:00"
+        ],
+        "sat": [
+          "10:30",
+          "17:00"
+        ]
+      },
+      "hours_verified": true,
+      "closed_on_shabbat": false,
+      "kid_friendly": true,
+      "accessible": true,
+      "tags": [
+        "indoor",
+        "free",
+        "parking-onsite"
+      ],
+      "season": "year_round",
+      "_source": "https://www.rallimuseums.com/Information",
+      "_scraped_on": "2026-08-31"
+    },
+    {
+      "id": "north-seed-58fbcc2b19",
+      "name_he": "יער הקופים יודפת",
+      "description_he": "",
+      "tip_he": "",
+      "description_source": "generated",
+      "category": "kids",
+      "region": "north",
+      "access": "gated",
+      "lat": 32.83858835990575,
+      "lng": 35.274549542327875,
+      "duration_min": 120,
+      "opening_hours": {
+        "sun": [
+          "10:00",
+          "14:00"
+        ],
+        "mon": [
+          "09:00",
+          "14:00"
+        ],
+        "tue": [
+          "09:00",
+          "14:00"
+        ],
+        "wed": [
+          "09:00",
+          "14:00"
+        ],
+        "thu": [
+          "09:00",
+          "14:00"
+        ],
+        "fri": [
+          "09:00",
+          "14:00"
+        ],
+        "sat": [
+          "09:00",
+          "15:00"
+        ]
+      },
+      "hours_verified": true,
+      "closed_on_shabbat": false,
+      "kid_friendly": true,
+      "accessible": false,
+      "tags": [
+        "animals",
+        "paid",
+        "parking-onsite"
+      ],
+      "season": "year_round",
+      "_source": "https://www.kofim.co.il/",
+      "_scraped_on": "2026-08-31"
+    },
+    {
+      "id": "central-seed-272ad17aa8",
+      "name_he": "פארק המים שפיים",
+      "description_he": "",
+      "tip_he": "",
+      "description_source": "generated",
+      "category": "kids",
+      "region": "central",
+      "access": "gated",
+      "lat": 32.217542823672375,
+      "lng": 34.82189473075908,
+      "duration_min": 240,
+      "opening_hours": {
+        "sun": [
+          "09:00",
+          "16:00"
+        ],
+        "mon": [
+          "09:00",
+          "16:00"
+        ],
+        "tue": [
+          "09:00",
+          "16:00"
+        ],
+        "wed": [
+          "09:00",
+          "16:00"
+        ],
+        "thu": [
+          "09:00",
+          "16:00"
+        ],
+        "fri": [
+          "09:00",
+          "16:00"
+        ],
+        "sat": [
+          "09:00",
+          "16:00"
+        ]
+      },
+      "hours_verified": true,
+      "closed_on_shabbat": false,
+      "kid_friendly": true,
+      "accessible": true,
+      "tags": [
+        "swimming",
+        "paid",
+        "parking-onsite"
+      ],
+      "season": "summer_only",
+      "_source": "https://waterpark.co.il/",
       "_scraped_on": "2026-08-31"
     }
   ]

@@ -1,5 +1,5 @@
 [
-    {
+  {
     "name_he": "שמורת טבע עינות פחם",
     "region": "north",
     "category": "nature",
@@ -11,136 +11,217 @@
     "closed_on_shabbat": false,
     "kid_friendly": true,
     "accessible": false,
-    "tags": ["spring"],
+    "tags": [
+      "spring"
+    ],
     "season": "year_round",
     "source": "https://www.parks.org.il/reserve-park/aynot-fakhum/",
     "scraped_on": "2026-08-30"
   },
   {
-  "name_he": "גן לאומי חורבת עומרית",
-  "region": "north",
-  "category": "nature",
-  "access": "open",
-  "lat": 33.1614,
-  "lng": 35.6789,
-  "opening_hours": null,
-  "hours_verified": false,
-  "closed_on_shabbat": false,
-  "kid_friendly": true,
-  "accessible": false,
-  "tags": ["archaeology", "free"],
-  "season": "year_round",
-  "source": "https://www.parks.org.il/reserve-park/omrit/",
-  "scraped_on": "2026-08-31"
+    "name_he": "גן לאומי חורבת עומרית",
+    "region": "north",
+    "category": "nature",
+    "access": "open",
+    "lat": 33.1614,
+    "lng": 35.6789,
+    "opening_hours": null,
+    "hours_verified": false,
+    "closed_on_shabbat": false,
+    "kid_friendly": true,
+    "accessible": false,
+    "tags": [
+      "archaeology",
+      "free"
+    ],
+    "season": "year_round",
+    "source": "https://www.parks.org.il/reserve-park/omrit/",
+    "scraped_on": "2026-08-31"
   },
   {
-  "name_he": "גן לאומי תל קאקון",
-  "region": "central",
-  "category": "nature",
-  "access": "open",
-  "lat": 32.359878764915436,
-  "lng": 34.99548266251341,
-  "opening_hours": null,
-  "hours_verified": false,
-  "closed_on_shabbat": false,
-  "kid_friendly": true,
-  "accessible": false,
-  "tags": ["archaeology", "free"],
-  "season": "year_round",
-  "source": "https://www.parks.org.il/reserve-park/tel-kakun/",
-  "scraped_on": "2026-08-31"
+    "name_he": "גן לאומי תל קאקון",
+    "region": "central",
+    "category": "nature",
+    "access": "open",
+    "lat": 32.359878764915436,
+    "lng": 34.99548266251341,
+    "opening_hours": null,
+    "hours_verified": false,
+    "closed_on_shabbat": false,
+    "kid_friendly": true,
+    "accessible": false,
+    "tags": [
+      "archaeology",
+      "free"
+    ],
+    "season": "year_round",
+    "source": "https://www.parks.org.il/reserve-park/tel-kakun/",
+    "scraped_on": "2026-08-31"
   },
   {
-  "name_he": "עין בוקק – שמורת טבע מדבר יהודה",
-  "region": "south",
-  "category": "nature",
-  "access": "gated",
-  "lat": 31.200614890010396,
-  "lng": 35.35945515612475,
-  "opening_hours": {
-    "sun": ["08:00", "17:00"],
-    "mon": ["08:00", "17:00"],
-    "tue": ["08:00", "17:00"],
-    "wed": ["08:00", "17:00"],
-    "thu": ["08:00", "17:00"],
-    "fri": ["08:00", "16:00"],
-    "sat": ["08:00", "17:00"]
-  },
-  "hours_verified": true,
-  "closed_on_shabbat": false,
-  "kid_friendly": true,
-  "accessible": false,
-  "tags": ["spring", "desert", "paid"],
-  "season": "year_round",
-  "source": "https://www.parks.org.il/reserve-park/en-bokek/",
-  "scraped_on": "2026-08-31"
-  },
-  {
-  "name_he": "גן לאומי עובדיה",
-  "region": "north",
-  "category": "nature",
-  "access": "open",
-  "lat": 32.6880845370201, 
-  "lng": 35.55680580240956,
-  "opening_hours": null,
-  "hours_verified": false,
-  "closed_on_shabbat": false,
-  "kid_friendly": true,
-  "accessible": false,
-  "tags": ["free", "archaeology"],
-  "season": "year_round",
-  "source": "https://www.parks.org.il/reserve-park/ubedya/",
-  "scraped_on": "2026-08-31"
-  },
-  {
-  "name_he": "גן לאומי עין יהודה",
-  "region": "central",
-  "category": "nature",
-  "access": "gated",
-  "lat": 32.471332286996834,
-  "lng": 35.50376359841612,
-  "opening_hours": {
-    "sun": ["08:00", "17:00"],
-    "mon": ["08:00", "17:00"],
-    "tue": ["08:00", "17:00"],
-    "wed": ["08:00", "17:00"],
-    "thu": ["08:00", "17:00"],
-    "fri": ["08:00", "16:00"],
-    "sat": null
-  },
-  "hours_verified": true,
-  "closed_on_shabbat": true,
-  "kid_friendly": true,
-  "accessible": true,
-  "tags": ["spring"],
-  "season": "year_round",
-  "source": "https://www.parks.org.il/reserve-park/en-judah/",
-  "scraped_on": "2026-08-31"
+    "name_he": "עין בוקק – שמורת טבע מדבר יהודה",
+    "region": "south",
+    "category": "nature",
+    "access": "gated",
+    "lat": 31.200614890010396,
+    "lng": 35.35945515612475,
+    "opening_hours": {
+      "sun": [
+        "08:00",
+        "17:00"
+      ],
+      "mon": [
+        "08:00",
+        "17:00"
+      ],
+      "tue": [
+        "08:00",
+        "17:00"
+      ],
+      "wed": [
+        "08:00",
+        "17:00"
+      ],
+      "thu": [
+        "08:00",
+        "17:00"
+      ],
+      "fri": [
+        "08:00",
+        "16:00"
+      ],
+      "sat": [
+        "08:00",
+        "17:00"
+      ]
+    },
+    "hours_verified": true,
+    "closed_on_shabbat": false,
+    "kid_friendly": true,
+    "accessible": false,
+    "tags": [
+      "spring",
+      "desert",
+      "paid"
+    ],
+    "season": "year_round",
+    "source": "https://www.parks.org.il/reserve-park/en-bokek/",
+    "scraped_on": "2026-08-31"
   },
   {
-  "name_he": "שמורת טבע מג'רסה – שפך נחל דליות",
-  "region": "north",
-  "category": "nature",
-  "access": "gated",
-  "lat": 32.885772015202235,
-  "lng": 35.642418185939114,
-  "opening_hours": {
-    "sun": ["08:00", "17:00"],
-    "mon": ["08:00", "17:00"],
-    "tue": ["08:00", "17:00"],
-    "wed": ["08:00", "17:00"],
-    "thu": ["08:00", "17:00"],
-    "fri": ["08:00", "16:00"],
-    "sat": ["08:00", "17:00"]
+    "name_he": "גן לאומי עובדיה",
+    "region": "north",
+    "category": "nature",
+    "access": "open",
+    "lat": 32.6880845370201,
+    "lng": 35.55680580240956,
+    "opening_hours": null,
+    "hours_verified": false,
+    "closed_on_shabbat": false,
+    "kid_friendly": true,
+    "accessible": false,
+    "tags": [
+      "free",
+      "archaeology"
+    ],
+    "season": "year_round",
+    "source": "https://www.parks.org.il/reserve-park/ubedya/",
+    "scraped_on": "2026-08-31"
   },
-  "hours_verified": true,
-  "closed_on_shabbat": false,
-  "kid_friendly": true,
-  "accessible": true,
-  "tags": ["paid", "swimming", "coast"],
-  "season": "year_round",
-  "source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%94%d7%98%d7%91%d7%a2-%d7%9e%d7%92%d7%a8%d7%a1%d7%94-%d7%94%d7%91%d7%98%d7%99%d7%97%d7%94-%d7%91%d7%a7%d7%a2%d7%aa-%d7%91%d7%99%d7%aa-%d7%a6%d7%99%d7%99/",
-  "scraped_on": "2026-08-31"
+  {
+    "name_he": "גן לאומי עין יהודה",
+    "region": "central",
+    "category": "nature",
+    "access": "gated",
+    "lat": 32.471332286996834,
+    "lng": 35.50376359841612,
+    "opening_hours": {
+      "sun": [
+        "08:00",
+        "17:00"
+      ],
+      "mon": [
+        "08:00",
+        "17:00"
+      ],
+      "tue": [
+        "08:00",
+        "17:00"
+      ],
+      "wed": [
+        "08:00",
+        "17:00"
+      ],
+      "thu": [
+        "08:00",
+        "17:00"
+      ],
+      "fri": [
+        "08:00",
+        "16:00"
+      ],
+      "sat": null
+    },
+    "hours_verified": true,
+    "closed_on_shabbat": true,
+    "kid_friendly": true,
+    "accessible": true,
+    "tags": [
+      "spring"
+    ],
+    "season": "year_round",
+    "source": "https://www.parks.org.il/reserve-park/en-judah/",
+    "scraped_on": "2026-08-31"
+  },
+  {
+    "name_he": "שמורת טבע מג'רסה – שפך נחל דליות",
+    "region": "north",
+    "category": "nature",
+    "access": "gated",
+    "lat": 32.885772015202235,
+    "lng": 35.642418185939114,
+    "opening_hours": {
+      "sun": [
+        "08:00",
+        "17:00"
+      ],
+      "mon": [
+        "08:00",
+        "17:00"
+      ],
+      "tue": [
+        "08:00",
+        "17:00"
+      ],
+      "wed": [
+        "08:00",
+        "17:00"
+      ],
+      "thu": [
+        "08:00",
+        "17:00"
+      ],
+      "fri": [
+        "08:00",
+        "16:00"
+      ],
+      "sat": [
+        "08:00",
+        "17:00"
+      ]
+    },
+    "hours_verified": true,
+    "closed_on_shabbat": false,
+    "kid_friendly": true,
+    "accessible": true,
+    "tags": [
+      "paid",
+      "swimming",
+      "coast"
+    ],
+    "season": "year_round",
+    "source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%94%d7%98%d7%91%d7%a2-%d7%9e%d7%92%d7%a8%d7%a1%d7%94-%d7%94%d7%91%d7%98%d7%99%d7%97%d7%94-%d7%91%d7%a7%d7%a2%d7%aa-%d7%91%d7%99%d7%aa-%d7%a6%d7%99%d7%99/",
+    "scraped_on": "2026-08-31"
   },
   {
     "name_he": "שמורה ימית הבטיחה – עולם קסום של מים מתוקים",
@@ -153,7 +234,10 @@
     "closed_on_shabbat": false,
     "kid_friendly": true,
     "accessible": false,
-    "tags": ["spring", "free"],
+    "tags": [
+      "spring",
+      "free"
+    ],
     "season": "year_round",
     "source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%94-%d7%99%d7%9e%d7%99%d7%aa-%d7%94%d7%91%d7%98%d7%99%d7%97%d7%94-%d7%a2%d7%95%d7%9c%d7%9d-%d7%a7%d7%a1%d7%95%d7%9d-%d7%a9%d7%9c-%d7%9e%d7%99%d7%9d-%d7%9e%d7%aa%d7%95/",
     "scraped_on": "2026-08-31"
@@ -170,7 +254,9 @@
     "closed_on_shabbat": false,
     "kid_friendly": true,
     "accessible": false,
-    "tags": ["spring"],
+    "tags": [
+      "spring"
+    ],
     "season": "year_round",
     "source": "https://www.parks.org.il/reserve-park/n-poleg/",
     "scraped_on": "2026-08-31"
@@ -187,7 +273,9 @@
     "closed_on_shabbat": false,
     "kid_friendly": true,
     "accessible": false,
-    "tags": ["free"],
+    "tags": [
+      "free"
+    ],
     "season": "year_round",
     "source": "https://www.parks.org.il/reserve-park/zikim/",
     "scraped_on": "2026-08-31"
@@ -204,7 +292,9 @@
     "closed_on_shabbat": false,
     "kid_friendly": true,
     "accessible": false,
-    "tags": ["free"],
+    "tags": [
+      "free"
+    ],
     "season": "year_round",
     "source": "https://www.parks.org.il/reserve-park/jmama/",
     "scraped_on": "2026-08-31"
@@ -221,7 +311,9 @@
     "closed_on_shabbat": false,
     "kid_friendly": true,
     "accessible": false,
-    "tags": ["free"],
+    "tags": [
+      "free"
+    ],
     "season": "year_round",
     "source": "https://www.parks.org.il/reserve-park/shita-malbina-ashdod/",
     "scraped_on": "2026-08-31"
@@ -238,7 +330,10 @@
     "closed_on_shabbat": false,
     "kid_friendly": true,
     "accessible": false,
-    "tags": ["archaeology", "free"],
+    "tags": [
+      "archaeology",
+      "free"
+    ],
     "season": "year_round",
     "source": "https://www.parks.org.il/reserve-park/tel-tzafit/",
     "scraped_on": "2026-08-31"
@@ -255,7 +350,9 @@
     "closed_on_shabbat": false,
     "kid_friendly": true,
     "accessible": false,
-    "tags": ["free"],
+    "tags": [
+      "free"
+    ],
     "season": "year_round",
     "source": "https://www.parks.org.il/reserve-park/a-kadima/",
     "scraped_on": "2026-08-31"
@@ -272,9 +369,376 @@
     "closed_on_shabbat": false,
     "kid_friendly": true,
     "accessible": false,
-    "tags": ["free"],
+    "tags": [
+      "free"
+    ],
     "season": "year_round",
     "source": "https://www.parks.org.il/reserve-park/eiris/",
+    "scraped_on": "2026-08-31"
+  },
+  {
+    "name_he": "מו ומו - Moo V Moo",
+    "region": "central",
+    "category": "meal",
+    "access": "gated",
+    "lat": 31.898223131541478,
+    "lng": 34.81037940400483,
+    "opening_hours": {
+      "sun": null,
+      "mon": [
+        "17:00",
+        "22:00"
+      ],
+      "tue": [
+        "17:00",
+        "22:00"
+      ],
+      "wed": [
+        "17:00",
+        "22:00"
+      ],
+      "thu": [
+        "17:00",
+        "22:00"
+      ],
+      "fri": [
+        "17:00",
+        "21:30"
+      ],
+      "sat": null
+    },
+    "hours_verified": true,
+    "closed_on_shabbat": true,
+    "kid_friendly": true,
+    "accessible": true,
+    "tags": [
+      "paid"
+    ],
+    "season": "year_round",
+    "source": "manual",
+    "scraped_on": "2026-08-31"
+  },
+  {
+    "name_he": "המסעדה של אבי - Avi's Restaurant",
+    "region": "north",
+    "category": "meal",
+    "access": "gated",
+    "lat": 32.786091,
+    "lng": 35.540864,
+    "opening_hours": {
+      "sun": [
+        "11:30",
+        "22:00"
+      ],
+      "mon": [
+        "11:30",
+        "22:00"
+      ],
+      "tue": [
+        "11:30",
+        "22:00"
+      ],
+      "wed": [
+        "11:30",
+        "22:00"
+      ],
+      "thu": [
+        "11:30",
+        "22:00"
+      ],
+      "fri": null,
+      "sat": null
+    },
+    "hours_verified": true,
+    "closed_on_shabbat": true,
+    "kid_friendly": true,
+    "accessible": true,
+    "tags": [
+      "paid"
+    ],
+    "season": "year_round",
+    "source": "manual",
+    "scraped_on": "2026-08-31"
+  },
+  {
+    "name_he": "עומר'ס - סנדוויץ' בר שף",
+    "region": "south",
+    "category": "meal",
+    "access": "gated",
+    "lat": 29.56009160929425,
+    "lng": 34.95138399205526,
+    "opening_hours": {
+      "sun": [
+        "11:00",
+        "21:00"
+      ],
+      "mon": [
+        "11:00",
+        "21:00"
+      ],
+      "tue": [
+        "11:00",
+        "21:00"
+      ],
+      "wed": [
+        "11:00",
+        "21:00"
+      ],
+      "thu": [
+        "11:00",
+        "21:00"
+      ],
+      "fri": null,
+      "sat": null
+    },
+    "hours_verified": true,
+    "closed_on_shabbat": true,
+    "kid_friendly": true,
+    "accessible": true,
+    "tags": [
+      "paid"
+    ],
+    "season": "year_round",
+    "source": "manual",
+    "scraped_on": "2026-08-31"
+  },
+  {
+    "name_he": "מוזיאון ישראל",
+    "region": "central",
+    "category": "museum",
+    "access": "gated",
+    "lat": 31.77212839518143,
+    "lng": 35.20408942281614,
+    "opening_hours": {
+      "sun": null,
+      "mon": [
+        "10:00",
+        "16:00"
+      ],
+      "tue": [
+        "16:00",
+        "20:00"
+      ],
+      "wed": [
+        "10:00",
+        "16:00"
+      ],
+      "thu": [
+        "10:00",
+        "18:00"
+      ],
+      "fri": [
+        "10:00",
+        "14:00"
+      ],
+      "sat": [
+        "10:00",
+        "18:00"
+      ]
+    },
+    "hours_verified": true,
+    "closed_on_shabbat": false,
+    "kid_friendly": true,
+    "accessible": true,
+    "tags": [
+      "indoor",
+      "paid",
+      "parking-onsite"
+    ],
+    "season": "year_round",
+    "source": "https://www.imj.org.il/he/visit",
+    "scraped_on": "2026-08-31"
+  },
+  {
+    "name_he": "מוזיאון יד ושם",
+    "region": "central",
+    "category": "museum",
+    "access": "gated",
+    "lat": 31.77436689702692,
+    "lng": 35.1753018,
+    "opening_hours": {
+      "sun": [
+        "09:00",
+        "16:00"
+      ],
+      "mon": [
+        "09:00",
+        "19:00"
+      ],
+      "tue": [
+        "09:00",
+        "14:00"
+      ],
+      "wed": [
+        "09:00",
+        "16:00"
+      ],
+      "thu": [
+        "09:00",
+        "19:00"
+      ],
+      "fri": [
+        "09:00",
+        "13:00"
+      ],
+      "sat": null
+    },
+    "hours_verified": true,
+    "closed_on_shabbat": true,
+    "kid_friendly": true,
+    "accessible": true,
+    "tags": [
+      "indoor",
+      "paid",
+      "parking-onsite"
+    ],
+    "season": "year_round",
+    "source": "https://www.yadvashem.org/he/museum",
+    "scraped_on": "2026-08-31"
+  },
+  {
+    "name_he": "מוזיאון ראלי",
+    "region": "north",
+    "category": "museum",
+    "access": "gated",
+    "lat": 32.51457719585206,
+    "lng": 34.907405473016375,
+    "opening_hours": {
+      "sun": null,
+      "mon": [
+        "10:30",
+        "17:00"
+      ],
+      "tue": [
+        "10:30",
+        "17:00"
+      ],
+      "wed": null,
+      "thu": [
+        "10:30",
+        "17:00"
+      ],
+      "fri": [
+        "10:30",
+        "15:00"
+      ],
+      "sat": [
+        "10:30",
+        "17:00"
+      ]
+    },
+    "hours_verified": true,
+    "closed_on_shabbat": false,
+    "kid_friendly": true,
+    "accessible": true,
+    "tags": [
+      "indoor",
+      "free",
+      "parking-onsite"
+    ],
+    "season": "year_round",
+    "source": "https://www.rallimuseums.com/Information",
+    "scraped_on": "2026-08-31"
+  },
+  {
+    "name_he": "יער הקופים יודפת",
+    "region": "north",
+    "category": "kids",
+    "access": "gated",
+    "lat": 32.83858835990575,
+    "lng": 35.274549542327875,
+    "opening_hours": {
+      "sun": [
+        "10:00",
+        "14:00"
+      ],
+      "mon": [
+        "09:00",
+        "14:00"
+      ],
+      "tue": [
+        "09:00",
+        "14:00"
+      ],
+      "wed": [
+        "09:00",
+        "14:00"
+      ],
+      "thu": [
+        "09:00",
+        "14:00"
+      ],
+      "fri": [
+        "09:00",
+        "14:00"
+      ],
+      "sat": [
+        "09:00",
+        "15:00"
+      ]
+    },
+    "hours_verified": true,
+    "closed_on_shabbat": false,
+    "kid_friendly": true,
+    "accessible": false,
+    "tags": [
+      "animals",
+      "paid",
+      "parking-onsite"
+    ],
+    "season": "year_round",
+    "source": "https://www.kofim.co.il/",
+    "scraped_on": "2026-08-31"
+  },
+  {
+    "name_he": "פארק המים שפיים",
+    "region": "central",
+    "lat": 32.217542823672375,
+    "lng": 34.82189473075908,
+    "opening_hours": {
+      "sun": [
+        "09:00",
+        "16:00"
+      ],
+      "mon": [
+        "09:00",
+        "16:00"
+      ],
+      "tue": [
+        "09:00",
+        "16:00"
+      ],
+      "wed": [
+        "09:00",
+        "16:00"
+      ],
+      "thu": [
+        "09:00",
+        "16:00"
+      ],
+      "fri": [
+        "09:00",
+        "16:00"
+      ],
+      "sat": [
+        "09:00",
+        "16:00"
+      ]
+    },
+    "hours_verified": true,
+    "closed_on_shabbat": false,
+    "kid_friendly": true,
+    "accessible": true,
+    "category": "kids",
+    "access": "gated",
+    "duration_min": 240,
+    "tags": [
+      "swimming",
+      "paid",
+      "parking-onsite"
+    ],
+    "season": "summer_only",
+    "source": "https://waterpark.co.il/",
     "scraped_on": "2026-08-31"
   }
 ]

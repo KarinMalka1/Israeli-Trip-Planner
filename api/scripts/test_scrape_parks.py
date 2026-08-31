@@ -13,6 +13,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from api.domain import regions
 from api.models import Region, Weekday
 from api.scripts import _scrape_common as common
 from api.scripts import scrape_parks
@@ -42,19 +43,87 @@ def test_itm_to_wgs84_matches_known_en_gedi_location():
 
 def test_ein_gedi_resolves_to_south():
     """The exact bug this whole session started from: Ein Gedi must be south, not central."""
-    lat, _ = scrape_parks.itm_to_wgs84(237322, 596631)
-    assert scrape_parks.region_from_lat(lat) == "south"
+    lat, lng = scrape_parks.itm_to_wgs84(237322, 596631)
+    assert scrape_parks.region_from_coordinates(lat, lng) == "south"
 
 
-def test_region_from_lat_uses_fetch_osm_seams():
+def test_region_from_coordinates_uses_fetch_osm_seams():
+    """Pure seam behaviour, unchanged by the longitude split: a coastal lng stays out of the inland-valley band."""
     from api.scripts import fetch_osm
 
     north_seam = fetch_osm.REGION_BBOXES[Region.NORTH][0]
     central_seam = fetch_osm.REGION_BBOXES[Region.CENTRAL][0]
-    assert scrape_parks.region_from_lat(north_seam) == "north"
-    assert scrape_parks.region_from_lat(north_seam - 0.001) == "central"
-    assert scrape_parks.region_from_lat(central_seam) == "central"
-    assert scrape_parks.region_from_lat(central_seam - 0.001) == "south"
+    coastal_lng = 34.80  # west of the inland-valley split (35.10)
+    assert scrape_parks.region_from_coordinates(north_seam, coastal_lng) == "north"
+    assert scrape_parks.region_from_coordinates(north_seam - 0.001, coastal_lng) == "central"
+    assert scrape_parks.region_from_coordinates(central_seam, coastal_lng) == "central"
+    assert scrape_parks.region_from_coordinates(central_seam - 0.001, coastal_lng) == "south"
+
+
+# --------------------------------------------------------------------------
+# Inland-valley longitude split (32.35 <= lat < 32.60): a single latitude
+# seam put both the Sharon coast and the Jezreel/Beit Shean valleys in
+# central — see region_from_coordinates' module comment for the real places
+# this got wrong.
+# --------------------------------------------------------------------------
+
+
+def test_inland_valley_band_north_of_longitude_seam_is_north():
+    """Beit Shean-like coordinate: lat in the shared band, lng east of 35.10."""
+    assert scrape_parks.region_from_coordinates(32.50, 35.50) == "north"
+
+
+def test_inland_valley_band_west_of_longitude_seam_is_central():
+    """Sharon-coast-like coordinate: same lat band, lng west of 35.10."""
+    assert scrape_parks.region_from_coordinates(32.50, 34.90) == "central"
+
+
+def test_inland_valley_lower_lat_boundary_is_inclusive():
+    assert scrape_parks.region_from_coordinates(32.35, 35.50) == "north"
+    assert scrape_parks.region_from_coordinates(32.349, 35.50) == "central"  # below the band, seam rule applies
+
+
+def test_inland_valley_lng_boundary_is_inclusive():
+    assert scrape_parks.region_from_coordinates(32.50, 35.10) == "north"
+    assert scrape_parks.region_from_coordinates(32.50, 35.099) == "central"
+
+
+def test_known_valley_places_resolve_to_north():
+    """The real places the old single-seam rule got wrong (all central under it)."""
+    known_valley_coordinates = [
+        (32.5495902, 35.3558955),  # עין חרוד
+        (32.50724695218154, 35.44566233857799),  # גן לאומי גן השלושה
+        (32.48860803610427, 35.42607860759947),  # שמורת טבע גלבוע
+        (32.5005838532157, 35.500253230019474),  # גן לאומי בית שאן
+        (32.518813497452065, 35.427578885499244),  # גן לאומי בית אלפא
+        (32.595084004651014, 35.51911905675551),  # גן לאומי כוכב הירדן
+        (32.55072089269808, 35.358720066076266),  # גן לאומי מעיין חרוד
+        (32.58616199611993, 35.18603280341583),  # גן לאומי תל מגידו
+    ]
+    for lat, lng in known_valley_coordinates:
+        assert scrape_parks.region_from_coordinates(lat, lng) == "north"
+
+
+# --------------------------------------------------------------------------
+# Region override: a named place always beats the coordinate rule
+# --------------------------------------------------------------------------
+
+
+def test_override_beats_coordinate_rule(monkeypatch):
+    """A coordinate that would resolve to central must still honour an explicit override."""
+    monkeypatch.setitem(regions.REGION_OVERRIDES_HE, "מקום בדיקה עם דריסה", Region.SOUTH)
+    post = {
+        "id": 999001,
+        "title": "מקום בדיקה עם דריסה",
+        "link": "https://www.parks.org.il/reserve-park/override-test/",
+        "lat": "190000",  # resolves to lat ~32.06 / lng ~34.89 -> central without the override
+        "lon": "663000",
+        "accessible_f": False,
+        "Park_information_on_time": {"Special_Opening_hours_s": ""},
+    }
+    entry = scrape_parks.extract_seed_entry(post, scraped_on="2026-09-01")
+    assert entry is not None
+    assert entry["region"] == "south"
 
 
 # --------------------------------------------------------------------------

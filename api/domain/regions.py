@@ -10,7 +10,7 @@ smoke-test the seed, never to classify at runtime.
 
 from __future__ import annotations
 
-from typing import Iterable
+from typing import Iterable, Optional
 
 from api.models import Place, Region
 
@@ -39,6 +39,27 @@ REGION_LATITUDE_BANDS: dict[Region, tuple[float, float]] = {
     Region.CENTRAL: (31.5, 32.8),
     Region.SOUTH: (29.4, 31.8),
 }
+
+
+# Named places whose correct region is a judgment call no fixed geometric
+# rule can make well — a place that sits right on a seam, or whose region an
+# Israeli would name on cultural/touristic grounds rather than raw lat/lng.
+# Keyed by name_he exactly as it appears in the seed. Checked before any
+# coordinate- or taxonomy-based rule in the scraper: region is a stored,
+# curatable field (SPEC.md section 6), and a fixed rule is only ever a
+# default for a name nobody has reviewed by hand yet.
+REGION_OVERRIDES_HE: dict[str, Region] = {}
+
+
+def region_override(name_he: str) -> Optional[Region]:
+    """
+    An explicit, hand-decided region for a name, or ``None`` if it has none.
+
+    Always wins over ``scrape_parks.region_from_coordinates`` and
+    ``region_from_trip_area`` — see ``REGION_OVERRIDES_HE``'s comment for why
+    a fixed rule can never fully replace this for every name.
+    """
+    return REGION_OVERRIDES_HE.get(name_he)
 
 
 def in_region(place: Place, region: Region) -> bool:

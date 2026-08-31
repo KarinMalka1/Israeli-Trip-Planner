@@ -65,6 +65,7 @@ from typing import Optional
 
 from pyproj import Transformer
 
+from api.domain import regions
 from api.models import Region, Weekday
 from api.scripts import _scrape_common as common
 from api.scripts import fetch_osm
@@ -158,19 +159,35 @@ def region_from_trip_area(trip_area_ids: list[int]) -> Optional[str]:
     return None
 
 
-def region_from_lat(lat: float) -> str:
-    """
-    Region from latitude alone, using fetch_osm.py's own bbox seam (31.55 / 32.60).
+# Below the main north/central seam (32.60) but at or above this latitude,
+# a single lat threshold is wrong on its own: this band holds both the
+# Sharon coast (חדרה/זכרון — central) and the Jezreel/Beit Shean valleys
+# (עפולה/בית שאן — an Israeli calls these north: SPEC.md section 2 lists
+# עמקים under north). Longitude splits the two: the valleys sit inland,
+# east of roughly 35.10, the coast west of it. Confirmed against a live-run
+# bug where עין חרוד, גן לאומי בית שאן, מעיין חרוד, שמורת טבע גלבוע, תל
+# מגידו, כוכב הירדן, בית אלפא and גן השלושה — all lat 32.48-32.60, lng
+# 35.18-35.52 — landed in central under the old single-seam rule.
+_INLAND_VALLEY_LAT_SEAM = 32.35
+_INLAND_VALLEY_LNG_SEAM = 35.10
 
-    A park site is a real point inside Israel, not an arbitrary bbox query —
-    latitude banding is sufficient and avoids re-deriving REGION_BBOXES'
-    longitude extents, which were tuned as Overpass query filters, not as a
-    strict partition of the whole country.
+
+def region_from_coordinates(lat: float, lng: float) -> str:
+    """
+    Region from a coordinate, using fetch_osm.py's bbox seams (31.55 / 32.60)
+    plus a longitude split for the inland-valley band between them.
+
+    A park site is a real point inside Israel, not an arbitrary bbox query,
+    so this is a strict partition rather than REGION_BBOXES' overlapping
+    Overpass query filters. See ``_INLAND_VALLEY_LAT_SEAM``'s comment for why
+    latitude alone isn't enough between 32.35 and 32.60.
     """
     north_south_seam = fetch_osm.REGION_BBOXES[Region.NORTH][0]  # 32.60
     central_south_seam = fetch_osm.REGION_BBOXES[Region.CENTRAL][0]  # 31.55
     if lat >= north_south_seam:
         return "north"
+    if lat >= _INLAND_VALLEY_LAT_SEAM:
+        return "north" if lng >= _INLAND_VALLEY_LNG_SEAM else "central"
     if lat >= central_south_seam:
         return "central"
     return "south"
@@ -337,8 +354,11 @@ def extract_seed_entry(post: dict, *, scraped_on: str) -> Optional[dict]:
             )
             lat, lng = None, None
 
-    if lat is not None:
-        region = region_from_lat(lat)
+    override = regions.region_override(name_he)
+    if override is not None:
+        region = override.value
+    elif lat is not None:
+        region = region_from_coordinates(lat, lng)
     else:
         region = region_from_trip_area(post.get("trip-area") or [])
         if region is None:
