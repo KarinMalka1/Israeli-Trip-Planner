@@ -538,6 +538,58 @@
       "season": "year_round",
       "_source": "https://www.kofim.co.il/",
       "_scraped_on": "2026-08-31"
-    }
+    },
+    {
+  "name_he": "מסעדת אליאסמין",
+  "description_he": "",
+  "tip_he": "",
+  "description_source": "generated",
+  "category": "meal",
+  "region": "north",
+  "access": "gated",
+  "lat": 33.26925248898123,
+  "lng": 35.77209950067146,
+  "duration_min": 60,
+  "opening_hours": {
+    "sun": [
+      "11:00",
+      "20:00"
+    ],
+    "mon": [
+      "11:00",
+      "20:00"
+    ],
+    "tue": [
+      "11:00",
+      "20:00"
+    ],
+    "wed": [
+      "11:00",
+      "20:00"
+    ],
+    "thu": [
+      "11:00",
+      "20:00"
+    ],
+    "fri": [
+      "11:00",
+      "20:00"
+    ],
+    "sat": [
+      "11:00",
+      "20:00"
+    ]
+  },
+  "hours_verified": true,
+  "closed_on_shabbat": false,
+  "kid_friendly": true,
+  "accessible": true,
+  "tags": [
+    "paid"
+  ],
+  "season": "year_round",
+  "_source": "manual",
+  "_scraped_on": "2026-09-01"
+}
   ]
 }
