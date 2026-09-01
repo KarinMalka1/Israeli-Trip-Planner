@@ -18,6 +18,15 @@ export type AccessType = "gated" | "open";
 export type DescriptionSource = "generated" | "human";
 export type Season = "year_round" | "summer_only";
 
+// A local path under /images/ (never a hotlinked commons URL), plus the
+// attribution CC BY/BY-SA legally requires. All three fields are required —
+// the backend refuses to construct a Place with an under-attributed image.
+export interface PlaceImage {
+  url: string;
+  credit: string;
+  source_url: string;
+}
+
 export interface Place {
   id: PlaceId;
   name_he: string;
@@ -39,6 +48,11 @@ export interface Place {
   accessible: boolean;
   tags: string[];
   season: Season;
+  // Up to 3, Wikimedia Commons only. Most places have none — render the
+  // deliberate fallback, not a broken image icon.
+  images: PlaceImage[];
+  // Link to the place's own official page. null renders no anchor at all.
+  official_url: string | null;
 }
 
 export interface Stop {

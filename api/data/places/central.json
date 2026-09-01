@@ -481,6 +481,75 @@
       "season": "summer_only",
       "_source": "https://waterpark.co.il/",
       "_scraped_on": "2026-08-31"
+    },
+    {
+      "id": "central-seed-44764f86ce",
+      "name_he": "גן לאומי עין חמד",
+      "description_he": "",
+      "tip_he": "",
+      "description_source": "generated",
+      "category": "nature",
+      "region": "central",
+      "access": "gated",
+      "lat": 31.794795,
+      "lng": 35.1253773,
+      "duration_min": 120,
+      "opening_hours": {
+        "sun": [
+          "08:00",
+          "16:00"
+        ],
+        "mon": [
+          "08:00",
+          "16:00"
+        ],
+        "tue": [
+          "08:00",
+          "16:00"
+        ],
+        "wed": [
+          "08:00",
+          "16:00"
+        ],
+        "thu": [
+          "08:00",
+          "16:00"
+        ],
+        "fri": [
+          "08:00",
+          "15:00"
+        ],
+        "sat": null
+      },
+      "hours_verified": true,
+      "closed_on_shabbat": true,
+      "kid_friendly": true,
+      "accessible": true,
+      "tags": [
+        "spring",
+        "archaeology"
+      ],
+      "season": "year_round",
+      "images": [
+        {
+          "url": "/images/ein-hemed-1.jpg",
+          "credit": "Nis101, CC BY-SA 4.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:%D7%A2%D7%99%D7%9F_%D7%97%D7%9E%D7%93.jpg"
+        },
+        {
+          "url": "/images/ein-hemed-2.jpg",
+          "credit": "איתמר בבאי, CC BY-SA 4.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:%D7%A9%D7%A8%D7%99%D7%93%D7%99_%D7%94%D7%9E%D7%A0%D7%96%D7%A8_%D7%94%D7%9E%D7%91%D7%95%D7%A6%D7%A8_%D7%91%D7%A2%D7%99%D7%9F_%D7%97%D7%9E%D7%93_-_%D7%9E%D7%91%D7%98_%D7%9E%D7%94%D7%97%D7%96%D7%99%D7%AA.JPG"
+        },
+        {
+          "url": "/images/ein-hemed-3.jpg",
+          "credit": "Tomer hu, CC BY-SA 4.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:%D7%A0%D7%97%D7%9C_%D7%A2%D7%99%D7%9F_%D7%97%D7%9E%D7%93.jpg"
+        }
+      ],
+      "official_url": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%a2%d7%99%d7%9f-%d7%97%d7%9e%d7%93/",
+      "_source": "https://www.parks.org.il/reserve-park/%d7%92%d7%9f-%d7%9c%d7%90%d7%95%d7%9e%d7%99-%d7%a2%d7%99%d7%9f-%d7%97%d7%9e%d7%93/",
+      "_scraped_on": "2026-09-01"
     }
   ]
 }

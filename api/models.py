@@ -103,6 +103,28 @@ MAX_LEG_STEPS: tuple[int, int, int] = (20, 45, 90)
 DEFAULT_MAX_LEG_MIN: int = 45
 
 
+class PlaceImage(BaseModel):
+    """
+    One Commons-sourced photo for a place.
+
+    All three fields are required — never optional. Most Wikimedia Commons
+    files are CC BY or CC BY-SA, which legally require attribution, so an
+    image with no credit and no link back to its source must fail validation
+    rather than silently render un-attributed.
+    """
+
+    # A local path under /images/ (web/public/images/), never a hotlinked
+    # commons.wikimedia.org or upload.wikimedia.org URL — images are
+    # downloaded by hand and committed, never fetched at request time.
+    url: str
+    # e.g. "Hoshvilim, CC BY-SA 4.0" — photographer/uploader plus license.
+    credit: str
+    # The Commons *file page* (e.g. https://commons.wikimedia.org/wiki/File:...),
+    # not the raw upload.wikimedia.org file — the file page is what carries
+    # the actual license and author statement this credit summarizes.
+    source_url: str
+
+
 class Place(BaseModel):
     """
     One curated place from the seed dataset.
@@ -151,6 +173,22 @@ class Place(BaseModel):
     # summer_only outside Apr-Oct) is tracked as a TODO in domain/schedule.py,
     # not implemented here.
     season: Literal["year_round", "summer_only"] = "year_round"
+    # Up to 3, Commons only (see PlaceImage). Most places have none — that is
+    # the common case, not an error, and the client renders a deliberate
+    # fallback for it rather than a broken image icon.
+    images: list[PlaceImage] = Field(default_factory=list)
+    # A link to the place's own official page (e.g. parks.org.il), separate
+    # from the internal `_source` provenance field the seed pipeline writes —
+    # this one is user-facing. None renders no link at all, never a dead one.
+    official_url: Optional[str] = None
+
+    @field_validator("images")
+    @classmethod
+    def _at_most_three_images(cls, images: list[PlaceImage]) -> list[PlaceImage]:
+        """Enforce the 3-image cap here, not just as a UI convention."""
+        if len(images) > 3:
+            raise ValueError(f"at most 3 images allowed, got {len(images)}")
+        return images
 
     @field_validator("opening_hours")
     @classmethod
