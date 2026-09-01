@@ -131,152 +131,217 @@
         "paid"
       ],
       "season": "year_round",
-      "_source": "manual",
+      "_source": "https://omers-eilat.co.il/",
       "_scraped_on": "2026-08-31"
     },
-  {
-  "name_he": "GODA גודה",
-  "description_he": "",
-  "tip_he": "",
-  "description_source": "generated",
-  "category": "meal",
-  "region": "south",
-  "access": "gated",
-  "lat": 31.812702258622174,
-  "lng": 34.64110356307044,
-  "duration_min": 60,
-  "opening_hours": {
-    "sun": null,
-    "mon": [
-      "12:00",
-      "01:00"
-    ],
-    "tue": [
-      "12:00",
-      "01:00"
-    ],
-    "wed": [
-      "12:00",
-      "01:00"
-    ],
-    "thu": [
-      "12:00",
-      "01:00"
-    ],
-    "fri": [
-      "11:00",
-      "01:00"
-    ],
-    "sat": [
-      "11:00",
-      "01:00"
-    ]
-  },
-  "hours_verified": true,
-  "closed_on_shabbat": false,
-  "kid_friendly": true,
-  "accessible": true,
-  "tags": [
-    "paid"
-  ],
-  "season": "year_round",
-  "_source": "manual",
-  "_scraped_on": "2026-09-01"
-},
+    {
+      "name_he": "GODA גודה",
+      "description_he": "",
+      "tip_he": "",
+      "description_source": "generated",
+      "category": "meal",
+      "region": "south",
+      "access": "gated",
+      "lat": 31.812702258622174,
+      "lng": 34.64110356307044,
+      "duration_min": 60,
+      "opening_hours": {
+        "sun": null,
+        "mon": [
+          "12:00",
+          "01:00"
+        ],
+        "tue": [
+          "12:00",
+          "01:00"
+        ],
+        "wed": [
+          "12:00",
+          "01:00"
+        ],
+        "thu": [
+          "12:00",
+          "01:00"
+        ],
+        "fri": [
+          "11:00",
+          "01:00"
+        ],
+        "sat": [
+          "11:00",
+          "01:00"
+        ]
+      },
+      "hours_verified": true,
+      "closed_on_shabbat": false,
+      "kid_friendly": true,
+      "accessible": true,
+      "tags": [
+        "paid"
+      ],
+      "season": "year_round",
+      "_source": "https://www.goda.co.il/",
+      "_scraped_on": "2026-09-01"
+    },
+    {
+      "name_he": "החבית",
+      "description_he": "",
+      "tip_he": "",
+      "description_source": "generated",
+      "category": "meal",
+      "region": "south",
+      "access": "gated",
+      "lat": 30.609769142902152,
+      "lng": 34.802819657672124,
+      "duration_min": 60,
+      "opening_hours": {
+        "sun": [
+          "13:00",
+          "22:00"
+        ],
+        "mon": [
+          "13:00",
+          "22:00"
+        ],
+        "tue": [
+          "13:00",
+          "22:00"
+        ],
+        "wed": [
+          "13:00",
+          "22:00"
+        ],
+        "thu": [
+          "13:00",
+          "22:00"
+        ],
+        "fri": null,
+        "sat": null
+      },
+      "hours_verified": true,
+      "closed_on_shabbat": true,
+      "kid_friendly": true,
+      "accessible": true,
+      "tags": [
+        "paid"
+      ],
+      "season": "year_round",
+      "_source": "https://hahavit.com/",
+      "_scraped_on": "2026-09-01"
+    },
+    {
+      "name_he": "אסאדו במדבר",
+      "description_he": "",
+      "tip_he": "",
+      "description_source": "generated",
+      "category": "meal",
+      "region": "south",
+      "access": "gated",
+      "lat": 31.676065542105015,
+      "lng": 35.44190398650819,
+      "duration_min": 60,
+      "opening_hours": {
+        "sun": [
+          "12:00",
+          "21:00"
+        ],
+        "mon": [
+          "12:00",
+          "21:00"
+        ],
+        "tue": [
+          "12:00",
+          "21:00"
+        ],
+        "wed": [
+          "12:00",
+          "22:00"
+        ],
+        "thu": [
+          "12:00",
+          "22:00"
+        ],
+        "fri": [
+          "12:00",
+          "17:00"
+        ],
+        "sat": null
+      },
+      "hours_verified": true,
+      "closed_on_shabbat": true,
+      "kid_friendly": true,
+      "accessible": true,
+      "tags": [
+        "paid"
+      ],
+      "season": "year_round",
+      "_source": "https://asadobamidbar.co.il/",
+      "_scraped_on": "2026-09-01"
+    },
 {
-  "name_he": "החבית",
-  "description_he": "",
-  "tip_he": "",
-  "description_source": "generated",
-  "category": "meal",
-  "region": "south",
-  "access": "gated",
-  "lat": 30.609769142902152,
-  "lng": 34.802819657672124,
-  "duration_min": 60,
-  "opening_hours": {
-    "sun": [
-      "13:00",
-      "22:00"
-    ],
-    "mon": [
-      "13:00",
-      "22:00"
-    ],
-    "tue": [
-      "13:00",
-      "22:00"
-    ],
-    "wed": [
-      "13:00",
-      "22:00"
-    ],
-    "thu": [
-      "13:00",
-      "22:00"
-    ],
-    "fri": null,
-    "sat": null
-  },
-  "hours_verified": true,
-  "closed_on_shabbat": true,
-  "kid_friendly": true,
-  "accessible": true,
-  "tags": [
-    "paid"
-  ],
-  "season": "year_round",
-  "_source": "manual",
-  "_scraped_on": "2026-09-01"
-},
-{
-  "name_he": "אסאדו במדבר",
-  "description_he": "",
-  "tip_he": "",
-  "description_source": "generated",
-  "category": "meal",
-  "region": "south",
-  "access": "gated",
-  "lat": 31.676065542105015,
-  "lng": 35.44190398650819,
-  "duration_min": 60,
-  "opening_hours": {
-    "sun": [
-      "12:00",
-      "21:00"
-    ],
-    "mon": [
-      "12:00",
-      "21:00"
-    ],
-    "tue": [
-      "12:00",
-      "21:00"
-    ],
-    "wed": [
-      "12:00",
-      "22:00"
-    ],
-    "thu": [
-      "12:00",
-      "22:00"
-    ],
-    "fri": [
-      "12:00",
-      "17:00"
-    ],
-    "sat": null
-  },
-  "hours_verified": true,
-  "closed_on_shabbat": true,
-  "kid_friendly": true,
-  "accessible": true,
-  "tags": [
-    "paid"
-  ],
-  "season": "year_round",
-  "_source": "manual",
-  "_scraped_on": "2026-09-01"
-}
-]
+      "id": "south-makhtesh-ramon",
+      "name_he": "מכתש רמון",
+      "description_he": "",
+      "tip_he": "",
+      "description_source": "generated",
+      "category": "nature",
+      "region": "south",
+      "access": "open",
+      "lat": 30.600586679775077,
+      "lng": 34.77179884150113,
+      "duration_min": 90,
+      "opening_hours": {
+        "sun": ["08:00", "17:00"],
+        "mon": ["08:00", "17:00"],
+        "tue": ["08:00", "17:00"],
+        "wed": ["08:00", "17:00"],
+        "thu": ["08:00", "17:00"],
+        "fri": ["08:00", "16:00"],
+        "sat": ["08:00", "17:00"]
+      },
+      "hours_verified": true,
+      "closed_on_shabbat": false,
+      "kid_friendly": true,
+      "accessible": true,
+      "tags": [
+        "free",
+        "water"
+      ],
+      "season": "year_round",
+      "_source": "https://www.parks.org.il/reserve-park/ramon-mm/",
+      "_scraped_on": "2026-09-01"
+    },
+    {
+      "id": "south-seed-10ef768d6c",
+      "name_he": "שמורת טבע חורבת ג'ממה",
+      "description_he": "",
+      "tip_he": "",
+      "description_source": "generated",
+      "category": "nature",
+      "region": "south",
+      "access": "open",
+      "lat": 31.497813515732958,
+      "lng": 34.68485048421047,
+      "duration_min": 90,
+      "opening_hours": {
+        "sun": null,
+        "mon": null,
+        "tue": null,
+        "wed": null,
+        "thu": null,
+        "fri": null,
+        "sat": null
+      },
+      "hours_verified": false,
+      "closed_on_shabbat": false,
+      "kid_friendly": true,
+      "accessible": false,
+      "tags": [
+        "free"
+      ],
+      "season": "year_round",
+      "_source": "https://www.parks.org.il/reserve-park/jmama/",
+      "_scraped_on": "2026-08-31"
+    }
+  ]
 }
