@@ -132,3 +132,68 @@ def test_id_and_duration_min_are_read_from_the_row(tmp_path):
 
     assert place is not None
     assert place.duration_min == 145
+
+
+# --------------------------------------------------------------------------
+# Fail loudly: the dataset-wide guard (duplicate id, access/hours
+# contradiction, out-of-vocabulary tag)
+# --------------------------------------------------------------------------
+
+
+def test_duplicate_id_across_files_raises(tmp_path):
+    _write(tmp_path, "central.json", [_place_row(id="dup-id", name_he="א", region="central")])
+    _write(tmp_path, "central2.json", [_place_row(id="dup-id", name_he="ב", region="central")])
+
+    with pytest.raises(ValueError) as excinfo:
+        PlaceRepository.load(tmp_path)
+
+    assert "dup-id" in str(excinfo.value)
+
+
+def test_open_access_place_with_opening_hours_raises(tmp_path):
+    row = _place_row(id="central-open-with-hours", region="central", access="open")
+    row["opening_hours"] = {
+        "sun": ["08:00", "17:00"],
+        "mon": None,
+        "tue": None,
+        "wed": None,
+        "thu": None,
+        "fri": None,
+        "sat": None,
+    }
+    _write(tmp_path, "central.json", [row])
+
+    with pytest.raises(ValueError) as excinfo:
+        PlaceRepository.load(tmp_path)
+
+    message = str(excinfo.value)
+    assert "central-open-with-hours" in message
+    assert "open" in message
+
+
+def test_open_access_place_with_all_hours_null_is_fine(tmp_path):
+    row = _place_row(id="central-open-no-hours", region="central", access="open")
+    _write(tmp_path, "central.json", [row])
+
+    repository = PlaceRepository.load(tmp_path)
+    assert repository.get("central-open-no-hours") is not None
+
+
+def test_tag_outside_vocabulary_raises(tmp_path):
+    row = _place_row(id="central-bad-tag", region="central", tags=["not-a-real-tag"])
+    _write(tmp_path, "central.json", [row])
+
+    with pytest.raises(ValueError) as excinfo:
+        PlaceRepository.load(tmp_path)
+
+    message = str(excinfo.value)
+    assert "central-bad-tag" in message
+    assert "not-a-real-tag" in message
+
+
+def test_tag_in_vocabulary_is_fine(tmp_path):
+    row = _place_row(id="central-good-tag", region="central", tags=["free", "parking-onsite"])
+    _write(tmp_path, "central.json", [row])
+
+    repository = PlaceRepository.load(tmp_path)
+    assert repository.get("central-good-tag") is not None

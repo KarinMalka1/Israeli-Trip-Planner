@@ -48,7 +48,12 @@ REGION_LATITUDE_BANDS: dict[Region, tuple[float, float]] = {
 # coordinate- or taxonomy-based rule in the scraper: region is a stored,
 # curatable field (SPEC.md section 6), and a fixed rule is only ever a
 # default for a name nobody has reviewed by hand yet.
-REGION_OVERRIDES_HE: dict[str, Region] = {}
+REGION_OVERRIDES_HE: dict[str, Region] = {
+    # Sits at lat 31.81, ~0.01deg north of the south band's cutoff (31.8) —
+    # a seam case, not a mistyped region: curated as south to group with the
+    # rest of the northern-Negev itinerary rather than central.
+    "GODA גודה": Region.SOUTH,
+}
 
 
 def region_override(name_he: str) -> Optional[Region]:
@@ -81,8 +86,14 @@ def latitude_looks_wrong(place: Place) -> bool:
     overlap on purpose so honest edge cases (Jerusalem, the northern Negev)
     never trip it. A place with no coordinate yet (pending manual entry,
     BRIEF_data_pipeline.md v2) has nothing to check and is never flagged.
+
+    A place listed in ``REGION_OVERRIDES_HE`` is also never flagged: the
+    override *is* the resolution for that seam case, so a standing warning
+    nobody can close would just teach reviewers to skim past it.
     """
     if place.lat is None:
+        return False
+    if region_override(place.name_he) is not None:
         return False
     low, high = REGION_LATITUDE_BANDS[place.region]
     return not (low <= place.lat <= high)

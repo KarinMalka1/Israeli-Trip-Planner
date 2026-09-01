@@ -137,12 +137,21 @@ def visit_fits_opening_hours(place: Place, weekday: Weekday, arrive_at: str) -> 
 
 def is_available_on(place: Place, weekday: Weekday, month: int) -> bool:
     """
-    Combined day-level filter: open at all that weekday, shabbat-eligible
-    (rule 12), and in season (SPEC section 11 amendment).
+    Combined day-level filter: verified, open at all that weekday,
+    shabbat-eligible (rule 12), and in season (SPEC section 11 amendment).
 
     ``month`` is 1-12. A ``summer_only`` place is excluded outside
     April-October; a ``year_round`` place is unaffected by ``month``.
+
+    SPEC section 10: a ``gated`` place with ``hours_verified == False`` is
+    excluded on every weekday, unconditionally — an unverified hours claim
+    is worse than no place at all, so it degrades to "not shown" rather than
+    "shown with invented hours". This never touches an ``open`` place: it has
+    no gate and no hours to verify, so ``hours_verified`` says nothing about
+    it either way (same reasoning as the daylight-window carve-out above).
     """
+    if place.access == AccessType.GATED and not place.hours_verified:
+        return False
     if place.season == "summer_only" and month not in SUMMER_ONLY_MONTHS:
         return False
     is_open_that_day = place.access == AccessType.OPEN or place.opening_hours.get(weekday) is not None

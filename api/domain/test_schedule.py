@@ -109,3 +109,40 @@ def test_year_round_place_is_unaffected_by_month():
     place = _place(access=AccessType.OPEN, season="year_round")
     assert schedule.is_available_on(place, Weekday.TUE, month=11) is True
     assert schedule.is_available_on(place, Weekday.TUE, month=7) is True
+
+
+# --------------------------------------------------------------------------
+# SPEC section 10: a gated place with unverified hours must never be
+# scheduled — an unverified claim is worse than no place at all.
+# --------------------------------------------------------------------------
+
+# Closes by 15:00 every day so Friday's early-close rule (rule 12) never
+# interferes — these tests isolate hours_verified, not shabbat eligibility.
+_ALWAYS_OPEN_UNTIL_1400 = {day: ("09:00", "14:00") for day in Weekday}
+
+
+def test_gated_place_with_unverified_hours_is_excluded_every_weekday():
+    place = _place(
+        access=AccessType.GATED,
+        hours_verified=False,
+        opening_hours=_ALWAYS_OPEN_UNTIL_1400,
+    )
+    for weekday in Weekday:
+        assert schedule.is_available_on(place, weekday, month=6) is False
+
+
+def test_gated_place_with_verified_hours_is_included_every_weekday():
+    place = _place(
+        access=AccessType.GATED,
+        hours_verified=True,
+        opening_hours=_ALWAYS_OPEN_UNTIL_1400,
+    )
+    for weekday in Weekday:
+        assert schedule.is_available_on(place, weekday, month=6) is True
+
+
+def test_open_access_place_is_unaffected_by_hours_verified():
+    """An open place has no gate and no hours to verify — hours_verified is moot for it."""
+    for verified in (True, False):
+        place = _place(access=AccessType.OPEN, hours_verified=verified)
+        assert schedule.is_available_on(place, Weekday.TUE, month=6) is True

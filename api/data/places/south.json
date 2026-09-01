@@ -134,9 +134,11 @@
       ],
       "season": "year_round",
       "_source": "https://omers-eilat.co.il/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "official_url": "https://omers-eilat.co.il/"
     },
     {
+      "id": "south-seed-fa84d22776",
       "name_he": "GODA גודה",
       "description_he": "",
       "tip_he": "",
@@ -151,27 +153,27 @@
         "sun": null,
         "mon": [
           "12:00",
-          "01:00"
+          "23:59"
         ],
         "tue": [
           "12:00",
-          "01:00"
+          "23:59"
         ],
         "wed": [
           "12:00",
-          "01:00"
+          "23:59"
         ],
         "thu": [
           "12:00",
-          "01:00"
+          "23:59"
         ],
         "fri": [
           "11:00",
-          "01:00"
+          "23:59"
         ],
         "sat": [
           "11:00",
-          "01:00"
+          "23:59"
         ]
       },
       "hours_verified": true,
@@ -183,9 +185,11 @@
       ],
       "season": "year_round",
       "_source": "https://www.goda.co.il/",
-      "_scraped_on": "2026-09-01"
+      "_scraped_on": "2026-09-01",
+      "official_url": "https://www.goda.co.il/"
     },
     {
+      "id": "south-seed-28f32c9c7b",
       "name_he": "החבית",
       "description_he": "",
       "tip_he": "",
@@ -229,9 +233,11 @@
       ],
       "season": "year_round",
       "_source": "https://hahavit.com/",
-      "_scraped_on": "2026-09-01"
+      "_scraped_on": "2026-09-01",
+      "official_url": "https://hahavit.com/"
     },
     {
+      "id": "south-seed-94b2175ed5",
       "name_he": "אסאדו במדבר",
       "description_he": "",
       "tip_he": "",
@@ -278,9 +284,10 @@
       ],
       "season": "year_round",
       "_source": "https://asadobamidbar.co.il/",
-      "_scraped_on": "2026-09-01"
+      "_scraped_on": "2026-09-01",
+      "official_url": "https://asadobamidbar.co.il/"
     },
-{
+    {
       "id": "south-makhtesh-ramon",
       "name_he": "מכתש רמון",
       "description_he": "",
@@ -288,62 +295,51 @@
       "description_source": "generated",
       "category": "nature",
       "region": "south",
-      "access": "open",
+      "access": "gated",
       "lat": 30.600586679775077,
       "lng": 34.77179884150113,
       "duration_min": 90,
       "opening_hours": {
-        "sun": ["08:00", "17:00"],
-        "mon": ["08:00", "17:00"],
-        "tue": ["08:00", "17:00"],
-        "wed": ["08:00", "17:00"],
-        "thu": ["08:00", "17:00"],
-        "fri": ["08:00", "16:00"],
-        "sat": ["08:00", "17:00"]
+        "sun": [
+          "08:00",
+          "17:00"
+        ],
+        "mon": [
+          "08:00",
+          "17:00"
+        ],
+        "tue": [
+          "08:00",
+          "17:00"
+        ],
+        "wed": [
+          "08:00",
+          "17:00"
+        ],
+        "thu": [
+          "08:00",
+          "17:00"
+        ],
+        "fri": [
+          "08:00",
+          "16:00"
+        ],
+        "sat": [
+          "08:00",
+          "17:00"
+        ]
       },
       "hours_verified": true,
       "closed_on_shabbat": false,
       "kid_friendly": true,
       "accessible": true,
       "tags": [
-        "free",
-        "water"
-      ],
-      "season": "year_round",
-      "_source": "https://www.parks.org.il/reserve-park/ramon-mm/",
-      "_scraped_on": "2026-09-01"
-    },
-    {
-      "id": "south-seed-10ef768d6c",
-      "name_he": "שמורת טבע חורבת ג'ממה",
-      "description_he": "",
-      "tip_he": "",
-      "description_source": "generated",
-      "category": "nature",
-      "region": "south",
-      "access": "open",
-      "lat": 31.497813515732958,
-      "lng": 34.68485048421047,
-      "duration_min": 90,
-      "opening_hours": {
-        "sun": null,
-        "mon": null,
-        "tue": null,
-        "wed": null,
-        "thu": null,
-        "fri": null,
-        "sat": null
-      },
-      "hours_verified": false,
-      "closed_on_shabbat": false,
-      "kid_friendly": true,
-      "accessible": false,
-      "tags": [
         "free"
       ],
       "season": "year_round",
-      "_source": "https://www.parks.org.il/reserve-park/jmama/",
-      "_scraped_on": "2026-08-31"
+      "_source": "https://www.parks.org.il/reserve-park/ramon-mm/",
+      "_scraped_on": "2026-09-01",
+      "official_url": "https://www.parks.org.il/reserve-park/ramon-mm/"
     }
   ]
 }

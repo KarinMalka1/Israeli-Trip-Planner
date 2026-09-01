@@ -33,9 +33,15 @@ server, restored on load.
 
 ---
 
-## 2. The two user controls
+## 2. The user controls
 
-The entire input surface is two rows of three chips. Nothing else.
+The MVP shipped with two rows of three chips and nothing else. It now ships
+five: region, max drive per leg, meal preference, start time and day length
+(meal preference is a section 10-era addition; start time and day length are
+section 13's — see the change log). This section describes what actually
+ships today; the tension that growth creates with the original
+max-3-options-per-row constraint is addressed at the end of this section
+rather than quietly dropped.
 
 **Region** — a hard boundary. Every stop in an itinerary belongs to the
 selected region. Cross-region itineraries do not exist.
@@ -50,13 +56,45 @@ selected region. Cross-region itineraries do not exist.
 Chips: 20 / 45 / 90 minutes. Default 45. No "unlimited" option.
 
 There is **no total-travel setting**. Total driving is bounded automatically by
-the maximum day length (rule 9 below). One knob, not two.
+the maximum day length (rule 10). One knob, not two.
 
 *Why the cap is per leg:* it is the constraint the user actually holds in their
 head ("I don't want a long drive between stops"), and it makes distant clusters
 self-contained without special-casing them. Eilat needs no exclusion rule: its
 attractions sit within ~30 minutes of each other, so a 45-minute cap keeps an
 Eilat day in Eilat, and the Eilat↔Dead Sea leg is rejected on its own merits.
+
+**Meal preference** (section 10-era addition, undocumented until now) —
+with/without a meal stop. Chips: עם ארוחה / בלי ארוחה. Default with. A
+preference, not a hard constraint (rule 4 still caps the itinerary at one
+meal stop, positioned 12:00-15:00): `with_meal: false` excludes meal places
+from the search entirely, `true` tries to include one before falling back to
+a meal-free day, and the response's `meal_included` says which happened.
+
+**Start time** — when the first stop arrives. Chips: 08:00 / 09:00 / 10:00 /
+11:00. Default 09:00 (rule 8, amended section 13). `ends_at` is still always
+computed server-side; the user never picks it.
+
+**Day length** — a preference for how long the day runs. Chips: יום קצר /
+יום ארוך (short / long). Default long. Targets a narrower band inside rule
+10's hard 4-9h bound (section 13); `length_matched` in the response says
+whether the returned day actually landed inside it.
+
+**Tension with the max-3-options rule.** The original accessibility
+constraint — at most three chip rows, at most three options per row — is now
+broken on both counts: five rows ship, not two or three, and start time
+carries four options, not three (flagged in the component itself,
+`web/src/components/StartTimeChips.tsx`, rather than silently resolved).
+Region, drive time, meal and day length each earn their place by mapping to
+a distinct, otherwise-invisible planner behavior a user would reasonably
+want to steer — which stops exist at all, how far apart they can be, whether
+one is a meal, and how long the day runs — and each stays inside the
+three-option cap. Start time is the odd one out on both counts: it is the
+newest addition, it already exceeds three options, and shifting the whole
+day's clock is a smaller behavioral change than the other four. If this
+constraint has to be restored rather than re-justified, start time is what
+we would cut first — collapsing back to the original fixed 09:00 default —
+not one of the other four.
 
 ---
 
@@ -147,17 +185,35 @@ Explicitly not built. Not "later in the sprint" — not in this deliverable.
 
 ## 6. Data plan
 
-~30–35 places per region, ~100 total. Every place carries `region` as a stored
-field, assigned by hand in the seed — never derived from coordinates at
-runtime.
+The original plan was ~30–35 places per region, ~100 total, seeded by an
+OSM/Overpass acquisition pipeline (`api/scripts/fetch_osm.py`,
+`scrape_parks.py`, `curate_osm_open.py`) into `api/data/candidates.json` /
+`seed_names.json` for later review. That pipeline is no longer the
+acquisition path. It pulled on the order of a thousand auto-collected,
+unverified candidates — far more rows than anyone could actually confirm
+opening hours for — and the dataset shipped today is what survived hand
+verification instead: **37 places** across three regions (13 north, 17
+central, 7 south as of this writing), each with `hours_verified` checked
+against an official source and, where one exists, an `official_url`.
 
-**Verification rule:** do not add a place whose opening hours you have not read
-from an official source (רשות הטבע והגנים, the site's own page, the local
-authority). Never fill a gap from memory. This dataset is the product; the
-planner is only as good as it is.
+**The decision, stated plainly:** a small, hand-verified dataset beats a
+large, unverified one. Rule 1's "never fill a gap from memory" only means
+something if every row it protects was actually checked by a person; a
+thousand auto-collected rows nobody has verified are not a bigger asset than
+37 rows that are all real, they are a thousand latent bugs. `hours_verified`
+exists precisely so a `gated` place with unverified hours can be told apart
+from a checked one — section 10 makes the former unschedulable (better "not
+shown" than "shown with invented hours"). The current dataset has zero such
+rows, so this filter changes nothing today; it exists to block the day one
+does appear.
 
-Central is verifiable in person from campus. North and south rely on official
-sources, which is slower — start them first.
+Every place still carries `region` as a stored field, assigned by hand — never
+derived from coordinates at runtime (`domain/regions.latitude_looks_wrong`
+only smoke-tests that assignment, it never overrides it). The scraping
+scripts remain in the repo, but only as one-off migration tooling run
+against the already-curated set (e.g. `backfill_official_url.py`,
+`clamp_overnight_hours.py`, section 14) — not as a recurring source of new,
+unverified rows.
 
 ---
 
@@ -177,16 +233,40 @@ interface Place {
   name_he: string;
   description_he: string;
   tip_he: string;
+  description_source: "generated" | "human"; // provenance of description_he/tip_he
+                                    // only — not a claim about hours (section 10)
   category: Category;
   region: Region;                  // stored, not computed
-  lat: number;
-  lng: number;
+  access: "gated" | "open";        // "gated": a real gate/ticket/staff — opening_hours
+                                    // applies. "open": free-access trail, spring,
+                                    // viewpoint — opening_hours is always null, and
+                                    // the place is scheduled by a fixed daylight
+                                    // window instead (section 10; DAYLIGHT_START/
+                                    // DAYLIGHT_END in domain/schedule.py)
+  lat: number | null;              // null = not yet resolved; never schedulable
+  lng: number | null;
   duration_min: number;
-  opening_hours: Record<Weekday, [string, string] | null>; // null = closed
+  opening_hours: Record<Weekday, [string, string] | null>; // null = closed;
+                                    // always seven nulls when access == "open"
+  hours_verified: boolean;         // true only when a human read official hours
+                                    // (section 10)
   closed_on_shabbat: boolean;
   kid_friendly: boolean;
   accessible: boolean;
-  tags: string[];                  // English, lowercase
+  tags: string[];                  // English, lowercase; from places.template.json's
+                                    // _tag_vocabulary
+  season: "year_round" | "summer_only"; // default "year_round"; summer_only is
+                                    // excluded outside April-October (section 11;
+                                    // SUMMER_ONLY_MONTHS in domain/schedule.py)
+  images: PlaceImage[];            // up to 3, Commons-sourced; most places have none
+  official_url: string | null;     // the place's own page; null renders no link,
+                                    // never a dead one
+}
+
+interface PlaceImage {
+  url: string;                     // local path under /images/, never hotlinked
+  credit: string;                  // e.g. "Hoshvilim, CC BY-SA 4.0"
+  source_url: string;              // the Commons file page, not the raw upload URL
 }
 
 interface Stop {
@@ -309,11 +389,17 @@ interface Place {
 }
 ```
 
-Scheduler consequence (not yet implemented — tracked separately):
-a `gated` place with `hours_verified == false` must never be scheduled; an
-`open` place is scheduled by daylight (07:00–18:00) rather than by
-`opening_hours`. Rule 11 does not change; this only defines what counts as
-"open" for a place OSM ingest could not verify.
+Scheduler consequence: an `open` place is scheduled by daylight
+(07:00–18:00) rather than by `opening_hours` — implemented in
+`domain/schedule.py` (`DAYLIGHT_START`/`DAYLIGHT_END`, used by `is_open_at`
+and `visit_fits_opening_hours`). Rule 11 does not change; this only defines
+what counts as "open" for a place OSM ingest could not verify.
+
+The other half — a `gated` place with `hours_verified == false` must never
+be scheduled — is implemented in the same function, `is_available_on`,
+checked unconditionally before the weekday/season/shabbat checks so it is
+enforced in `PlaceRepository.candidates()` before the planner's search ever
+runs (section 15).
 
 This is the only exception to the freeze note at the top of this file — the
 fields are additive and no existing rule changes.
@@ -333,11 +419,10 @@ interface Place {
 }
 ```
 
-Scheduler consequence (not yet implemented — tracked as a TODO in
-`domain/schedule.py`): a `summer_only` place must never be scheduled outside
-April–October. This requires a request date, which itineraries do not yet
-carry (only a weekday) — implementing the exclusion is deferred until that
-exists. Additive field, no existing rule changes.
+Scheduler consequence: a `summer_only` place must never be scheduled outside
+April–October — implemented in `domain/schedule.py`'s `is_available_on`,
+gated by `SUMMER_ONLY_MONTHS` (April–October inclusive) against the month the
+request resolves to. Additive field, no existing rule changes.
 
 ---
 
@@ -409,3 +494,68 @@ Opening hours already respect whichever `starts_at` was requested: a gated
 place that opens at 09:00 is filtered out of the candidate pool for an 08:00
 start the same way it always was for a place closed all day — no separate
 rule, just rule 11 applied at the requested clock instead of a fixed one.
+
+---
+
+## 14. Amendment: opening_hours cannot cross midnight (2026-09-02)
+
+`opening_hours` (section 7) is a same-day `[open, close]` pair and stays
+that way: it cannot express a window that runs past midnight (e.g. a bar
+open 12:00-01:00). A place scraped with hours like that is stored with its
+close time clamped to `23:59` instead — `12:00-01:00` becomes `12:00-23:59`
+— via `api/scripts/clamp_overnight_hours.py`, never by hand-editing the
+seed.
+
+This is acceptable, not just a stopgap: the planner only schedules daytime
+visits, and rule 10's hard 4-9h day-length bound means a day that starts at
+`starts_at` (rule 8, section 13) is always over well before midnight. The
+post-midnight tail of a `12:00-01:00` window is consequently never
+schedulable anyway — clamping it away loses nothing rule 1-13 could ever
+have used.
+
+Revisit this if the product ever adds nightlife (late-evening stops, a day
+that can start after dark) — at that point `opening_hours` needs a real
+overnight representation, not a clamp.
+
+---
+
+## 15. Amendment: documentation sync (2026-09-02)
+
+No behavior changed; this SPEC had drifted from the code it describes.
+Corrected in place rather than as a new layer:
+
+- Section 2 rewritten for the five controls actually shipped (region, drive
+  time, meal, start time, day length), including the acknowledged tension
+  with the max-3-options-per-row constraint that start time now breaks.
+- Section 6 rewritten: the ~100-place OSM-pipeline plan was abandoned for a
+  small hand-verified dataset (37 places, three regions) — recorded as a
+  decision, not silently updated as a number.
+- Section 7's `Place` interface now includes every field the later
+  amendments (sections 10, 11) and two previously-undocumented additions
+  (`images`, `official_url`) actually added, so it is readable on its own.
+  The amendments themselves are left as the change log, unchanged.
+- Sections 10 and 11's "not yet implemented" scheduler-consequence notes
+  replaced with pointers to where each rule actually lives
+  (`domain/schedule.py`'s daylight window and `SUMMER_ONLY_MONTHS`). Section
+  10's other consequence — an unverified gated place must never be
+  scheduled — was genuinely still unimplemented at the time this sync was
+  written, and was called out as such rather than bundled with the part
+  that shipped. It was implemented the same day; see section 16.
+
+---
+
+## 16. Amendment: unverified gated places are unschedulable (2026-09-02)
+
+Section 10's other scheduler consequence — a `gated` place with
+`hours_verified == false` must never be scheduled — is now implemented,
+alongside the daylight rule it was documented next to: `domain/schedule.py`'s
+`is_available_on` rejects such a place unconditionally, before the
+weekday/season/shabbat checks, so it is enforced in
+`PlaceRepository.candidates()` before the planner's search ever runs. An
+`open` place is unaffected either way — it has no gate and no hours to
+verify, so `hours_verified` says nothing about it.
+
+The current dataset has zero `gated` places with `hours_verified == false`,
+so this filter changes nothing today, in any region. It exists to block the
+day one does appear rather than let it silently reach a user with invented
+hours.
