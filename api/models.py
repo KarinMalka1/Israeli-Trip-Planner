@@ -102,6 +102,17 @@ MaxLegMin = Literal[20, 45, 90]
 MAX_LEG_STEPS: tuple[int, int, int] = (20, 45, 90)
 DEFAULT_MAX_LEG_MIN: int = 45
 
+# Rule 8 (amended): the day's start time is a request field, not a fixed
+# 09:00. Four allowed values.
+StartsAt = Literal["08:00", "09:00", "10:00", "11:00"]
+DEFAULT_STARTS_AT: StartsAt = "09:00"
+
+# Rule 10 (amended): the hard 4-9h elapsed bound is unchanged; day_length is a
+# PREFERENCE that targets a narrower band inside it (see
+# domain/schedule.DAY_LENGTH_BANDS) — it never relaxes the bound itself.
+DayLength = Literal["short", "long"]
+DEFAULT_DAY_LENGTH: DayLength = "long"
+
 
 class PlaceImage(BaseModel):
     """
@@ -280,6 +291,14 @@ class Itinerary(BaseModel):
     # actually satisfied, so it can say so when it wasn't. False whenever
     # with_meal was False on the request, too.
     meal_included: bool
+    # Whether the day's elapsed time actually landed inside the requested
+    # day_length's target band (domain/schedule.DAY_LENGTH_BANDS). day_length
+    # is a preference, not a hard constraint — a late starts_at plus "long"
+    # will often be impossible once opening hours bite, and that degrades to
+    # the closest valid day rather than failing. False whenever the returned
+    # day is valid (still inside the hard 4-9h rule 10 bound) but outside the
+    # preferred band.
+    length_matched: bool
 
 
 class CreateItineraryRequest(BaseModel):
@@ -306,6 +325,12 @@ class CreateItineraryRequest(BaseModel):
     # including exactly one meal stop (rule 4) before falling back to a
     # meal-free day. False excludes meal places from the search entirely.
     with_meal: bool = True
+    # Rule 8 (amended): when the first stop arrives. The user never picks
+    # ends_at — that stays computed server-side, same as before.
+    starts_at: StartsAt = DEFAULT_STARTS_AT
+    # Rule 10 (amended): a preference for a band inside the hard 4-9h bound —
+    # see Itinerary.length_matched for what happens when it can't be met.
+    day_length: DayLength = DEFAULT_DAY_LENGTH
 
 
 class PlaceRefRequest(BaseModel):

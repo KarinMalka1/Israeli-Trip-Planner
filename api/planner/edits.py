@@ -119,16 +119,22 @@ class ItineraryEditor:
         """
         Rebuild a day from an ordered place list, re-fetching every leg.
 
+        Keeps the itinerary's original ``starts_at`` (rule 8, amended): an
+        edit reshuffles which stops are in the day, never when the day itself
+        begins, so this reads it off the existing day rather than defaulting.
+
         Returns ``None`` when a consecutive pair has no entry in the matrix,
         which would mean inventing a travel time — rule 7 forbids that, so we
         refuse the edit instead. Legs over the cap are allowed through here:
         after a removal the user has effectively accepted a longer drive, and
         the recomputed number is shown to them.
         """
+        starts_at = itinerary.days[0].starts_at
+
         if not places:
             # An empty day is still a coherent answer to "remove everything";
             # the client renders the empty timeline and the undo toast.
-            return schedule.build_day([], [])
+            return schedule.build_day([], [], starts_at=starts_at)
 
         legs = [0]
         for previous, current in zip(places, places[1:]):
@@ -140,7 +146,7 @@ class ItineraryEditor:
                 return None
             legs.append(travel_min)
 
-        day = schedule.build_day(places, legs)
+        day = schedule.build_day(places, legs, starts_at=starts_at)
 
         # Re-timing shifts everything after the edit, so a stop that was open
         # on the old clock can be closed on the new one. Check before returning.

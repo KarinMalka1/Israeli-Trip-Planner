@@ -5,6 +5,8 @@
 export type PlaceId = string;
 export type Region = "north" | "central" | "south";
 export type MaxLegMin = 20 | 45 | 90;
+export type StartsAt = "08:00" | "09:00" | "10:00" | "11:00";
+export type DayLength = "short" | "long";
 export type Weekday = "sun" | "mon" | "tue" | "wed" | "thu" | "fri" | "sat";
 export type Category =
   | "museum"
@@ -82,6 +84,10 @@ export interface Itinerary {
   // this is what the server actually managed, so the client can say so when
   // it asked for one and didn't get it.
   meal_included: boolean;
+  // Whether the day's elapsed time landed inside the requested day_length's
+  // target band. Same shape as meal_included: day_length is a preference,
+  // not a guarantee, and this is what the server actually managed.
+  length_matched: boolean;
 }
 
 export interface CreateItineraryRequest {
@@ -93,6 +99,9 @@ export interface CreateItineraryRequest {
   chip?: string;
   // A preference, not a hard constraint — see Itinerary.meal_included.
   with_meal?: boolean;
+  starts_at?: StartsAt;
+  // A preference, not a hard constraint — see Itinerary.length_matched.
+  day_length?: DayLength;
 }
 
 export interface PlaceRefRequest {

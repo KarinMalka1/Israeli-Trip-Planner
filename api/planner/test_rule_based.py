@@ -62,6 +62,30 @@ def _meal_place(index: int = 0, duration_min: int = 60) -> Place:
     )
 
 
+def _gated_place(
+    index: int, opens: str = "09:00", closes: str = "18:00", duration_min: int = 60
+) -> Place:
+    return Place(
+        id=f"central-gated-{index}",
+        name_he=f"מקום עם שער {index}",
+        description_he="",
+        tip_he="",
+        description_source=DescriptionSource.GENERATED,
+        category=_CATEGORIES[index % len(_CATEGORIES)],
+        region=Region.CENTRAL,
+        access=AccessType.GATED,
+        lat=32.1 + index * 0.01,
+        lng=34.95 + index * 0.01,
+        duration_min=duration_min,
+        opening_hours={day: (opens, closes) for day in Weekday},
+        hours_verified=True,
+        closed_on_shabbat=False,
+        kid_friendly=False,
+        accessible=False,
+        tags=[],
+    )
+
+
 def _dense_matrix(places: list[Place], leg_minutes: int) -> DistanceMatrix:
     """Every place reachable from every other in a flat `leg_minutes`, well under any cap."""
     minutes = {
@@ -190,6 +214,130 @@ def test_with_meal_true_and_no_reachable_meal_still_returns_a_valid_day():
 
     assert len(itinerary.days) == 1, "expected a valid fallback day, not fallback step 2"
     assert itinerary.meal_included is False
+
+    problems = schedule.validate_itinerary(itinerary, {place.id for place in places})
+    assert problems == []
+
+
+# --------------------------------------------------------------------------
+# starts_at / day_length: rule 8 and rule 10 amendments. Both are
+# preferences (day_length) or a direct request field (starts_at) — the hard
+# 4-9h bound from rule 10 never relaxes.
+# --------------------------------------------------------------------------
+
+
+def test_starts_at_puts_first_stop_at_requested_time():
+    places = [_open_place(i) for i in range(20)]
+    repository = PlaceRepository(places)
+    matrix = _dense_matrix(places, leg_minutes=15)
+    planner = RuleBasedPlanner(repository, matrix)
+
+    itinerary = planner.plan(
+        itinerary_id="early-start",
+        region=Region.CENTRAL,
+        max_leg_min=45,
+        weekday=Weekday.TUE,
+        starts_at="08:00",
+        with_meal=False,
+    )
+
+    assert len(itinerary.days) == 1
+    day = itinerary.days[0]
+    assert day.starts_at == "08:00"
+    assert day.stops[0].arrive_at == "08:00"
+
+    problems = schedule.validate_itinerary(itinerary, {place.id for place in places})
+    assert problems == []
+
+
+def test_gated_place_opening_after_start_is_not_first_stop():
+    """A gate that opens 09:00 can never be the first stop of an 08:00 day."""
+    early_places = [_open_place(i) for i in range(5)]  # open-access, daylight 07:00-18:00
+    late_gate = _gated_place(99, opens="09:00", closes="18:00")
+    places = early_places + [late_gate]
+    repository = PlaceRepository(places)
+    matrix = _dense_matrix(places, leg_minutes=15)
+    planner = RuleBasedPlanner(repository, matrix)
+
+    itinerary = planner.plan(
+        itinerary_id="early-start-with-late-gate",
+        region=Region.CENTRAL,
+        max_leg_min=45,
+        weekday=Weekday.TUE,
+        starts_at="08:00",
+        with_meal=False,
+    )
+
+    assert len(itinerary.days) == 1
+    assert itinerary.days[0].stops[0].place_id != late_gate.id
+
+    problems = schedule.validate_itinerary(itinerary, {place.id for place in places})
+    assert problems == []
+
+
+def test_short_day_length_returns_fewer_stops_than_long():
+    """
+    duration_min=90, leg=15min: 3 stops = 300min (fits 'short' 240-330, not
+    'long'), 4 stops = 405min and 5 stops = 510min (both fit 'long' 390-540,
+    neither fits 'short'). So 'short' can only ever complete at 3 stops and
+    'long' only at 4 or 5 — always strictly more than 'short'.
+    """
+    places = [_open_place(i, duration_min=90) for i in range(10)]
+    repository = PlaceRepository(places)
+    matrix = _dense_matrix(places, leg_minutes=15)
+    planner = RuleBasedPlanner(repository, matrix)
+    known_ids = {place.id for place in places}
+
+    short_itinerary = planner.plan(
+        itinerary_id="short",
+        region=Region.CENTRAL,
+        max_leg_min=45,
+        weekday=Weekday.TUE,
+        day_length="short",
+        with_meal=False,
+    )
+    long_itinerary = planner.plan(
+        itinerary_id="long",
+        region=Region.CENTRAL,
+        max_leg_min=45,
+        weekday=Weekday.TUE,
+        day_length="long",
+        with_meal=False,
+    )
+
+    assert len(short_itinerary.days) == 1 and len(long_itinerary.days) == 1
+    assert short_itinerary.length_matched is True
+    assert long_itinerary.length_matched is True
+    assert len(short_itinerary.days[0].stops) < len(long_itinerary.days[0].stops)
+
+    assert schedule.validate_itinerary(short_itinerary, known_ids) == []
+    assert schedule.validate_itinerary(long_itinerary, known_ids) == []
+
+
+def test_late_start_plus_long_returns_valid_day_with_length_matched_false():
+    """
+    Every place closes at 16:00. Starting at 11:00, only 5 hours of daylight
+    remain — nowhere near the 6.5-9h 'long' band — but 4 stops (60min visits,
+    15min legs = 285min) clears the hard 4h minimum and finishes at 15:45,
+    before closing. Must degrade to that valid day, not fail.
+    """
+    places = [_gated_place(i, opens="09:00", closes="16:00") for i in range(6)]
+    repository = PlaceRepository(places)
+    matrix = _dense_matrix(places, leg_minutes=15)
+    planner = RuleBasedPlanner(repository, matrix)
+
+    itinerary = planner.plan(
+        itinerary_id="late-start-long-day",
+        region=Region.CENTRAL,
+        max_leg_min=45,
+        weekday=Weekday.TUE,
+        starts_at="11:00",
+        day_length="long",
+        with_meal=False,
+    )
+
+    assert len(itinerary.days) == 1, "expected a valid degraded day, not fallback step 2"
+    assert itinerary.length_matched is False
 
     problems = schedule.validate_itinerary(itinerary, {place.id for place in places})
     assert problems == []

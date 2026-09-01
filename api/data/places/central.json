@@ -289,15 +289,15 @@
       "lng": 34.82994409395156,
       "duration_min": 60,
       "opening_hours": {
-        "sun": ["00:00", "24:00"],
-        "mon": ["00:00", "24:00"],
-        "tue": ["00:00", "24:00"],
-        "wed": ["00:00", "24:00"],
-        "thu": ["00:00", "24:00"],
-        "fri": ["00:00", "24:00"],
-        "sat": ["00:00", "24:00"]
+        "sun": null,
+        "mon": null,
+        "tue": null,
+        "wed": null,
+        "thu": null,
+        "fri": null,
+        "sat": null
       },
-      "hours_verified": true,
+      "hours_verified": false,
       "closed_on_shabbat": false,
       "kid_friendly": true,
       "accessible": false,
@@ -528,19 +528,40 @@
       "lng": 34.85827367943405,
       "duration_min": 60,
       "opening_hours": {
-        "sun": ["12:00", "23:00"],
-        "mon": ["12:00", "23:00"],
-        "tue": ["12:00", "23:00"],
-        "wed": ["12:00", "23:00"],
-        "thu": ["12:00", "23:00"],
-        "fri": ["09:00", "12:30"],
+        "sun": [
+          "12:00",
+          "23:00"
+        ],
+        "mon": [
+          "12:00",
+          "23:00"
+        ],
+        "tue": [
+          "12:00",
+          "23:00"
+        ],
+        "wed": [
+          "12:00",
+          "23:00"
+        ],
+        "thu": [
+          "12:00",
+          "23:00"
+        ],
+        "fri": [
+          "09:00",
+          "12:30"
+        ],
         "sat": null
       },
       "hours_verified": true,
       "closed_on_shabbat": false,
       "kid_friendly": true,
       "accessible": true,
-      "tags": ["paid", "parking-onsite"],
+      "tags": [
+        "paid",
+        "parking-onsite"
+      ],
       "season": "year_round",
       "_source": "https://tabitisrael.co.il/online-reservations/create-reservation?step=search&orgId=60ffb52a1e09e9107e64f75f",
       "_scraped_on": "2026-09-01"
@@ -558,11 +579,26 @@
       "lng": 34.9634999067135,
       "duration_min": 60,
       "opening_hours": {
-        "sun": ["11:30", "22:30"],
-        "mon": ["11:30", "23:00"],
-        "tue": ["11:30", "23:00"],
-        "wed": ["11:30", "23:00"],
-        "thu": ["11:30", "23:30"],
+        "sun": [
+          "11:30",
+          "22:30"
+        ],
+        "mon": [
+          "11:30",
+          "23:00"
+        ],
+        "tue": [
+          "11:30",
+          "23:00"
+        ],
+        "wed": [
+          "11:30",
+          "23:00"
+        ],
+        "thu": [
+          "11:30",
+          "23:30"
+        ],
         "fri": null,
         "sat": null
       },
@@ -570,15 +606,13 @@
       "closed_on_shabbat": true,
       "kid_friendly": true,
       "accessible": true,
-      "tags": ["paid", "parking-onsite"],
+      "tags": [
+        "paid",
+        "parking-onsite"
+      ],
       "season": "year_round",
       "_source": "https://tabitisrael.co.il/site/%D7%A8%D7%95%D7%96%D7%94-%D7%9E%D7%95%D7%93%D7%99%D7%A2%D7%99%D7%9F",
       "_scraped_on": "2026-09-01"
     }
-
-    
   ]
-
-
-
 }
