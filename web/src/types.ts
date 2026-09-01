@@ -63,6 +63,11 @@ export interface Itinerary {
   days: Day[];
   places: Place[];
   relaxed_to: MaxLegMin | null;
+  // Whether the day actually includes a meal stop. with_meal on the request
+  // is a preference, not a guarantee (only 3 meal places exist nationwide) —
+  // this is what the server actually managed, so the client can say so when
+  // it asked for one and didn't get it.
+  meal_included: boolean;
 }
 
 export interface CreateItineraryRequest {
@@ -72,6 +77,8 @@ export interface CreateItineraryRequest {
   weekday: Weekday;
   prompt_he?: string;
   chip?: string;
+  // A preference, not a hard constraint — see Itinerary.meal_included.
+  with_meal?: boolean;
 }
 
 export interface PlaceRefRequest {

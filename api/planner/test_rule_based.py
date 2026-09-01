@@ -40,6 +40,28 @@ def _open_place(index: int, duration_min: int = 60) -> Place:
     )
 
 
+def _meal_place(index: int = 0, duration_min: int = 60) -> Place:
+    return Place(
+        id=f"central-meal-{index}",
+        name_he=f"מסעדה {index}",
+        description_he="",
+        tip_he="",
+        description_source=DescriptionSource.GENERATED,
+        category=Category.MEAL,
+        region=Region.CENTRAL,
+        access=AccessType.OPEN,
+        lat=32.05 + index * 0.01,
+        lng=34.95 + index * 0.01,
+        duration_min=duration_min,
+        opening_hours={day: None for day in Weekday},
+        hours_verified=False,
+        closed_on_shabbat=False,
+        kid_friendly=False,
+        accessible=False,
+        tags=[],
+    )
+
+
 def _dense_matrix(places: list[Place], leg_minutes: int) -> DistanceMatrix:
     """Every place reachable from every other in a flat `leg_minutes`, well under any cap."""
     minutes = {
@@ -95,3 +117,79 @@ def test_summer_only_place_dropped_from_candidates_outside_season():
 
     day = itinerary.days[0]
     assert places[0].id not in {stop.place_id for stop in day.stops}
+
+
+# --------------------------------------------------------------------------
+# Meal preference: with_meal is a preference, not a hard constraint — only 3
+# meal places exist nationwide, so requiring one would often fail the search.
+# --------------------------------------------------------------------------
+
+
+def test_with_meal_false_returns_a_day_with_zero_meal_stops():
+    places = [_open_place(i) for i in range(11)] + [_meal_place()]
+    repository = PlaceRepository(places)
+    matrix = _dense_matrix(places, leg_minutes=15)
+    planner = RuleBasedPlanner(repository, matrix)
+
+    itinerary = planner.plan(
+        itinerary_id="no-meal",
+        region=Region.CENTRAL,
+        max_leg_min=45,
+        weekday=Weekday.TUE,
+        with_meal=False,
+    )
+
+    assert len(itinerary.days) == 1
+    day = itinerary.days[0]
+    assert all(stop.place.category != Category.MEAL for stop in day.stops)
+    assert itinerary.meal_included is False
+
+    problems = schedule.validate_itinerary(itinerary, {place.id for place in places})
+    assert problems == []
+
+
+def test_with_meal_true_and_reachable_meal_returns_exactly_one_in_window():
+    places = [_open_place(i) for i in range(11)] + [_meal_place()]
+    repository = PlaceRepository(places)
+    matrix = _dense_matrix(places, leg_minutes=15)
+    planner = RuleBasedPlanner(repository, matrix)
+
+    itinerary = planner.plan(
+        itinerary_id="with-meal",
+        region=Region.CENTRAL,
+        max_leg_min=45,
+        weekday=Weekday.TUE,
+        with_meal=True,
+    )
+
+    assert len(itinerary.days) == 1
+    day = itinerary.days[0]
+    meal_stops = [stop for stop in day.stops if stop.place.category == Category.MEAL]
+    assert len(meal_stops) == 1
+    assert schedule.MEAL_WINDOW_START <= meal_stops[0].arrive_at <= schedule.MEAL_WINDOW_END
+    assert itinerary.meal_included is True
+
+    problems = schedule.validate_itinerary(itinerary, {place.id for place in places})
+    assert problems == []
+
+
+def test_with_meal_true_and_no_reachable_meal_still_returns_a_valid_day():
+    """No meal place exists at all — the preference must degrade to a valid meal-free day, not fail."""
+    places = [_open_place(i) for i in range(20)]
+    repository = PlaceRepository(places)
+    matrix = _dense_matrix(places, leg_minutes=15)
+    planner = RuleBasedPlanner(repository, matrix)
+
+    itinerary = planner.plan(
+        itinerary_id="meal-unreachable",
+        region=Region.CENTRAL,
+        max_leg_min=45,
+        weekday=Weekday.TUE,
+        with_meal=True,
+    )
+
+    assert len(itinerary.days) == 1, "expected a valid fallback day, not fallback step 2"
+    assert itinerary.meal_included is False
+
+    problems = schedule.validate_itinerary(itinerary, {place.id for place in places})
+    assert problems == []

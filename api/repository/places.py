@@ -21,10 +21,11 @@ from api.models import Place, Region, Weekday
 
 logger = logging.getLogger(__name__)
 
-# Seed location. Overridable so tests and local smoke runs can point at a
-# fixture without touching the real dataset.
-DEFAULT_PLACES_PATH = Path(__file__).resolve().parent.parent / "data" / "places.json"
-PLACES_PATH_ENV_VAR = "PLACES_FILE"
+# Seed location: one *.json file per region, not one shared file. Overridable
+# so tests and local smoke runs can point at a fixture directory without
+# touching the real dataset.
+DEFAULT_PLACES_DIR = Path(__file__).resolve().parent.parent / "data" / "places"
+PLACES_DIR_ENV_VAR = "PLACES_DIR"
 
 
 class PlaceRepository:
@@ -50,33 +51,74 @@ class PlaceRepository:
     @classmethod
     def load(cls, path: Path | str | None = None) -> "PlaceRepository":
         """
-        Read and validate the seed file.
+        Read and validate every ``*.json`` file in the seed directory, concatenated
+        in filename order (so ``central.json``, ``north.json``, ``south.json``).
 
-        Resolution order: explicit argument, then ``$PLACES_FILE``, then the
-        default path. Keys beginning with an underscore (``_README``, ``_enums``,
+        Resolution order: explicit argument, then ``$PLACES_DIR``, then the
+        default directory. One file per region — ``north.json``, ``central.json``,
+        ``south.json`` — so two people editing different regions' places never
+        collide on the same file (a single ``places.json`` used to guarantee a
+        merge conflict the moment both touched the seed in the same session).
+
+        Two things fail loudly rather than silently passing through, since both
+        would otherwise surface as a confusing itinerary bug days later instead
+        of a startup error naming the exact rows at fault:
+
+          * an entry whose ``region`` doesn't match the file it's in (a copy-paste
+            into the wrong file);
+          * the same ``(region, name_he)`` appearing in two different files (a
+            real duplicate to resolve by hand, not something to silently dedupe).
+
+        Keys beginning with an underscore (``_README``, ``_enums``,
         ``_tag_vocabulary``) are editor notes and are ignored; the same
         convention applies to per-place ``_source`` and ``_verified_on``, which
         Pydantic drops because the model does not declare them.
         """
-        resolved = Path(path or os.environ.get(PLACES_PATH_ENV_VAR) or DEFAULT_PLACES_PATH)
-        if not resolved.exists():
+        resolved = Path(path or os.environ.get(PLACES_DIR_ENV_VAR) or DEFAULT_PLACES_DIR)
+        if not resolved.is_dir():
             raise FileNotFoundError(
-                f"seed dataset not found at {resolved}. "
-                f"Copy places.template.json to {DEFAULT_PLACES_PATH} to start."
+                f"seed directory not found at {resolved}. "
+                f"Create it with one *.json file per region — see api/data/places/."
             )
 
-        raw = json.loads(resolved.read_text(encoding="utf-8"))
-        rows = raw.get("places", [])
-
         places: list[Place] = []
-        for index, row in enumerate(rows):
-            try:
-                places.append(Place.model_validate(row))
-            except Exception as error:
-                # Fail loudly and name the offending row: a bad seed entry is a
-                # data bug to fix by hand, not something to route around.
+        # (region, name_he) -> the file it was first seen in, so a duplicate
+        # across files can name both.
+        seen_keys: dict[tuple[str, str], Path] = {}
+
+        for file_path in sorted(resolved.glob("*.json")):
+            file_region = file_path.stem
+            raw = json.loads(file_path.read_text(encoding="utf-8"))
+            rows = raw.get("places", [])
+
+            for index, row in enumerate(rows):
                 place_id = row.get("id", f"<row {index}>")
-                raise ValueError(f"invalid place {place_id!r} in {resolved}: {error}") from error
+                row_region = row.get("region")
+
+                # Checked before the filename match below: a duplicate is the
+                # more actionable problem when both are true at once (a place
+                # copy-pasted into a second, wrongly-named file is still first
+                # and foremost a duplicate to resolve).
+                key = (row_region, row.get("name_he"))
+                if key in seen_keys:
+                    raise ValueError(
+                        f"duplicate place (region={row_region!r}, name_he={row.get('name_he')!r}) "
+                        f"in both {seen_keys[key]} and {file_path}"
+                    )
+                seen_keys[key] = file_path
+
+                if row_region != file_region:
+                    raise ValueError(
+                        f"invalid place {place_id!r} in {file_path}: region {row_region!r} "
+                        f"does not match its file (expected {file_region!r})"
+                    )
+
+                try:
+                    places.append(Place.model_validate(row))
+                except Exception as error:
+                    # Fail loudly and name the offending row: a bad seed entry is
+                    # a data bug to fix by hand, not something to route around.
+                    raise ValueError(f"invalid place {place_id!r} in {file_path}: {error}") from error
 
         repository = cls(places)
         repository._warn_on_suspect_rows()

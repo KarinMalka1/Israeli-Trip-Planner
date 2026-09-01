@@ -253,7 +253,10 @@ module.
   repository/
     places.py                # PlaceRepository, JSON-backed for now
   data/
-    places.json
+    places/                  # one *.json file per region, not one shared file
+      north.json
+      central.json
+      south.json
     distance_matrix.json     # generated
   scripts/
     build_matrix.py
@@ -331,3 +334,25 @@ Scheduler consequence (not yet implemented — tracked as a TODO in
 April–October. This requires a request date, which itineraries do not yet
 carry (only a weekday) — implementing the exclusion is deferred until that
 exists. Additive field, no existing rule changes.
+
+---
+
+## 12. Amendment: one seed file per region (2026-09-01)
+
+`api/data/places.json` is split into `api/data/places/north.json`,
+`central.json` and `south.json` — same `{"places": [...]}` shape as before,
+partitioned by each place's `region` field. Two people editing different
+regions no longer collide on one shared file.
+
+`PlaceRepository.load()` (section 8) reads every `*.json` file in the
+directory (`$PLACES_DIR`, default `api/data/places/`) and concatenates them
+in filename order. Two checks fail loudly at startup rather than passing a
+bad seed through silently:
+
+- an entry whose `region` doesn't match the file it's in
+- the same `(region, name_he)` appearing in two different files — a real
+  duplicate to resolve by hand, never silently deduped
+
+`id` and `duration_min` are still read straight from each row, unchanged
+from before. No change to the `Place` schema itself (section 7) or to any
+rule 1-13.

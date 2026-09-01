@@ -157,6 +157,7 @@ def create_itinerary(
         prompt_he=body.prompt_he,
         chip=body.chip,
         seed=body.seed,
+        with_meal=body.with_meal,
     )
 
     _reject_if_invalid(itinerary, places)

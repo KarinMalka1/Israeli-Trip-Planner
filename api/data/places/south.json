@@ -1,0 +1,138 @@
+{
+  "places": [
+    {
+      "id": "south-seed-91a27f61f5",
+      "name_he": "עין בוקק – שמורת טבע מדבר יהודה",
+      "description_he": "",
+      "tip_he": "",
+      "description_source": "generated",
+      "category": "nature",
+      "region": "south",
+      "access": "gated",
+      "lat": 31.200614890010396,
+      "lng": 35.35945515612475,
+      "duration_min": 90,
+      "opening_hours": {
+        "sun": [
+          "08:00",
+          "17:00"
+        ],
+        "mon": [
+          "08:00",
+          "17:00"
+        ],
+        "tue": [
+          "08:00",
+          "17:00"
+        ],
+        "wed": [
+          "08:00",
+          "17:00"
+        ],
+        "thu": [
+          "08:00",
+          "17:00"
+        ],
+        "fri": [
+          "08:00",
+          "16:00"
+        ],
+        "sat": [
+          "08:00",
+          "17:00"
+        ]
+      },
+      "hours_verified": true,
+      "closed_on_shabbat": false,
+      "kid_friendly": true,
+      "accessible": false,
+      "tags": [
+        "spring",
+        "desert",
+        "paid"
+      ],
+      "season": "year_round",
+      "_source": "https://www.parks.org.il/reserve-park/en-bokek/",
+      "_scraped_on": "2026-08-31"
+    },
+    {
+      "id": "south-seed-10ef768d6c",
+      "name_he": "שמורת טבע חורבת ג'ממה",
+      "description_he": "",
+      "tip_he": "",
+      "description_source": "generated",
+      "category": "nature",
+      "region": "south",
+      "access": "open",
+      "lat": 31.497813515732958,
+      "lng": 34.68485048421047,
+      "duration_min": 90,
+      "opening_hours": {
+        "sun": null,
+        "mon": null,
+        "tue": null,
+        "wed": null,
+        "thu": null,
+        "fri": null,
+        "sat": null
+      },
+      "hours_verified": false,
+      "closed_on_shabbat": false,
+      "kid_friendly": true,
+      "accessible": false,
+      "tags": [
+        "free"
+      ],
+      "season": "year_round",
+      "_source": "https://www.parks.org.il/reserve-park/jmama/",
+      "_scraped_on": "2026-08-31"
+    },
+    {
+      "id": "south-seed-21e19a180f",
+      "name_he": "עומר'ס - סנדוויץ' בר שף",
+      "description_he": "",
+      "tip_he": "",
+      "description_source": "generated",
+      "category": "meal",
+      "region": "south",
+      "access": "gated",
+      "lat": 29.56009160929425,
+      "lng": 34.95138399205526,
+      "duration_min": 60,
+      "opening_hours": {
+        "sun": [
+          "11:00",
+          "21:00"
+        ],
+        "mon": [
+          "11:00",
+          "21:00"
+        ],
+        "tue": [
+          "11:00",
+          "21:00"
+        ],
+        "wed": [
+          "11:00",
+          "21:00"
+        ],
+        "thu": [
+          "11:00",
+          "21:00"
+        ],
+        "fri": null,
+        "sat": null
+      },
+      "hours_verified": true,
+      "closed_on_shabbat": true,
+      "kid_friendly": true,
+      "accessible": true,
+      "tags": [
+        "paid"
+      ],
+      "season": "year_round",
+      "_source": "manual",
+      "_scraped_on": "2026-08-31"
+    }
+  ]
+}

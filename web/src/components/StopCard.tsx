@@ -13,13 +13,26 @@ interface StopCardProps {
 // never does time arithmetic."
 export default function StopCard({ stop, index, onRemove, onSwap, disabled = false }: StopCardProps) {
   const { place } = stop;
+  const isMeal = place.category === "meal";
 
   return (
-    <li className="flex flex-col gap-3 rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+    <li
+      className={
+        "flex flex-col gap-3 rounded-xl border p-4 shadow-sm " +
+        (isMeal ? "border-amber-300 bg-amber-50" : "border-slate-200 bg-white")
+      }
+    >
       <div className="flex items-start justify-between gap-3">
         <div>
           <p className="text-xs font-medium text-slate-500">עצירה {index + 1}</p>
-          <h3 className="text-lg font-semibold text-slate-900">{place.name_he}</h3>
+          <div className="flex flex-wrap items-center gap-2">
+            <h3 className="text-lg font-semibold text-slate-900">{place.name_he}</h3>
+            {isMeal && (
+              <span className="rounded-full bg-amber-200 px-2 py-0.5 text-xs font-medium text-amber-900">
+                ארוחה
+              </span>
+            )}
+          </div>
         </div>
         <button
           type="button"

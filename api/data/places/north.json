@@ -1,0 +1,341 @@
+{
+  "places": [
+    {
+      "id": "north-seed-e5f5100140",
+      "name_he": "שמורת טבע עינות פחם",
+      "description_he": "",
+      "tip_he": "",
+      "description_source": "generated",
+      "category": "nature",
+      "region": "north",
+      "access": "open",
+      "lat": 32.96842883863883,
+      "lng": 35.821477201965976,
+      "duration_min": 90,
+      "opening_hours": {
+        "sun": null,
+        "mon": null,
+        "tue": null,
+        "wed": null,
+        "thu": null,
+        "fri": null,
+        "sat": null
+      },
+      "hours_verified": false,
+      "closed_on_shabbat": false,
+      "kid_friendly": true,
+      "accessible": false,
+      "tags": [
+        "spring"
+      ],
+      "season": "year_round",
+      "_source": "https://www.parks.org.il/reserve-park/aynot-fakhum/",
+      "_scraped_on": "2026-08-30"
+    },
+    {
+      "id": "north-seed-3686f95c75",
+      "name_he": "גן לאומי חורבת עומרית",
+      "description_he": "",
+      "tip_he": "",
+      "description_source": "generated",
+      "category": "nature",
+      "region": "north",
+      "access": "open",
+      "lat": 33.1614,
+      "lng": 35.6789,
+      "duration_min": 90,
+      "opening_hours": {
+        "sun": null,
+        "mon": null,
+        "tue": null,
+        "wed": null,
+        "thu": null,
+        "fri": null,
+        "sat": null
+      },
+      "hours_verified": false,
+      "closed_on_shabbat": false,
+      "kid_friendly": true,
+      "accessible": false,
+      "tags": [
+        "archaeology",
+        "free"
+      ],
+      "season": "year_round",
+      "_source": "https://www.parks.org.il/reserve-park/omrit/",
+      "_scraped_on": "2026-08-31"
+    },
+    {
+      "id": "north-seed-da9b27b966",
+      "name_he": "גן לאומי עובדיה",
+      "description_he": "",
+      "tip_he": "",
+      "description_source": "generated",
+      "category": "nature",
+      "region": "north",
+      "access": "open",
+      "lat": 32.6880845370201,
+      "lng": 35.55680580240956,
+      "duration_min": 90,
+      "opening_hours": {
+        "sun": null,
+        "mon": null,
+        "tue": null,
+        "wed": null,
+        "thu": null,
+        "fri": null,
+        "sat": null
+      },
+      "hours_verified": false,
+      "closed_on_shabbat": false,
+      "kid_friendly": true,
+      "accessible": false,
+      "tags": [
+        "free",
+        "archaeology"
+      ],
+      "season": "year_round",
+      "_source": "https://www.parks.org.il/reserve-park/ubedya/",
+      "_scraped_on": "2026-08-31"
+    },
+    {
+      "id": "north-seed-a6ce875f47",
+      "name_he": "שמורת טבע מג'רסה – שפך נחל דליות",
+      "description_he": "",
+      "tip_he": "",
+      "description_source": "generated",
+      "category": "nature",
+      "region": "north",
+      "access": "gated",
+      "lat": 32.885772015202235,
+      "lng": 35.642418185939114,
+      "duration_min": 90,
+      "opening_hours": {
+        "sun": [
+          "08:00",
+          "17:00"
+        ],
+        "mon": [
+          "08:00",
+          "17:00"
+        ],
+        "tue": [
+          "08:00",
+          "17:00"
+        ],
+        "wed": [
+          "08:00",
+          "17:00"
+        ],
+        "thu": [
+          "08:00",
+          "17:00"
+        ],
+        "fri": [
+          "08:00",
+          "16:00"
+        ],
+        "sat": [
+          "08:00",
+          "17:00"
+        ]
+      },
+      "hours_verified": true,
+      "closed_on_shabbat": false,
+      "kid_friendly": true,
+      "accessible": true,
+      "tags": [
+        "paid",
+        "swimming",
+        "coast"
+      ],
+      "season": "year_round",
+      "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%94%d7%98%d7%91%d7%a2-%d7%9e%d7%92%d7%a8%d7%a1%d7%94-%d7%94%d7%91%d7%98%d7%99%d7%97%d7%94-%d7%91%d7%a7%d7%a2%d7%aa-%d7%91%d7%99%d7%aa-%d7%a6%d7%99%d7%99/",
+      "_scraped_on": "2026-08-31"
+    },
+    {
+      "id": "north-seed-83e16649c8",
+      "name_he": "שמורה ימית הבטיחה – עולם קסום של מים מתוקים",
+      "description_he": "",
+      "tip_he": "",
+      "description_source": "generated",
+      "category": "nature",
+      "region": "north",
+      "access": "open",
+      "lat": 32.88166123734252,
+      "lng": 35.621057929560905,
+      "duration_min": 90,
+      "opening_hours": {
+        "sun": null,
+        "mon": null,
+        "tue": null,
+        "wed": null,
+        "thu": null,
+        "fri": null,
+        "sat": null
+      },
+      "hours_verified": false,
+      "closed_on_shabbat": false,
+      "kid_friendly": true,
+      "accessible": false,
+      "tags": [
+        "spring",
+        "free"
+      ],
+      "season": "year_round",
+      "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%94-%d7%99%d7%9e%d7%99%d7%aa-%d7%94%d7%91%d7%98%d7%99%d7%97%d7%94-%d7%a2%d7%95%d7%9c%d7%9d-%d7%a7%d7%a1%d7%95%d7%9d-%d7%a9%d7%9c-%d7%9e%d7%99%d7%9d-%d7%9e%d7%aa%d7%95/",
+      "_scraped_on": "2026-08-31"
+    },
+    {
+      "id": "north-seed-2d436a3c17",
+      "name_he": "המסעדה של אבי - Avi's Restaurant",
+      "description_he": "",
+      "tip_he": "",
+      "description_source": "generated",
+      "category": "meal",
+      "region": "north",
+      "access": "gated",
+      "lat": 32.786091,
+      "lng": 35.540864,
+      "duration_min": 60,
+      "opening_hours": {
+        "sun": [
+          "11:30",
+          "22:00"
+        ],
+        "mon": [
+          "11:30",
+          "22:00"
+        ],
+        "tue": [
+          "11:30",
+          "22:00"
+        ],
+        "wed": [
+          "11:30",
+          "22:00"
+        ],
+        "thu": [
+          "11:30",
+          "22:00"
+        ],
+        "fri": null,
+        "sat": null
+      },
+      "hours_verified": true,
+      "closed_on_shabbat": true,
+      "kid_friendly": true,
+      "accessible": true,
+      "tags": [
+        "paid"
+      ],
+      "season": "year_round",
+      "_source": "manual",
+      "_scraped_on": "2026-08-31"
+    },
+    {
+      "id": "north-seed-ae332f3d9b",
+      "name_he": "מוזיאון ראלי",
+      "description_he": "",
+      "tip_he": "",
+      "description_source": "generated",
+      "category": "museum",
+      "region": "north",
+      "access": "gated",
+      "lat": 32.51457719585206,
+      "lng": 34.907405473016375,
+      "duration_min": 120,
+      "opening_hours": {
+        "sun": null,
+        "mon": [
+          "10:30",
+          "17:00"
+        ],
+        "tue": [
+          "10:30",
+          "17:00"
+        ],
+        "wed": null,
+        "thu": [
+          "10:30",
+          "17:00"
+        ],
+        "fri": [
+          "10:30",
+          "15:00"
+        ],
+        "sat": [
+          "10:30",
+          "17:00"
+        ]
+      },
+      "hours_verified": true,
+      "closed_on_shabbat": false,
+      "kid_friendly": true,
+      "accessible": true,
+      "tags": [
+        "indoor",
+        "free",
+        "parking-onsite"
+      ],
+      "season": "year_round",
+      "_source": "https://www.rallimuseums.com/Information",
+      "_scraped_on": "2026-08-31"
+    },
+    {
+      "id": "north-seed-58fbcc2b19",
+      "name_he": "יער הקופים יודפת",
+      "description_he": "",
+      "tip_he": "",
+      "description_source": "generated",
+      "category": "kids",
+      "region": "north",
+      "access": "gated",
+      "lat": 32.83858835990575,
+      "lng": 35.274549542327875,
+      "duration_min": 120,
+      "opening_hours": {
+        "sun": [
+          "10:00",
+          "14:00"
+        ],
+        "mon": [
+          "09:00",
+          "14:00"
+        ],
+        "tue": [
+          "09:00",
+          "14:00"
+        ],
+        "wed": [
+          "09:00",
+          "14:00"
+        ],
+        "thu": [
+          "09:00",
+          "14:00"
+        ],
+        "fri": [
+          "09:00",
+          "14:00"
+        ],
+        "sat": [
+          "09:00",
+          "15:00"
+        ]
+      },
+      "hours_verified": true,
+      "closed_on_shabbat": false,
+      "kid_friendly": true,
+      "accessible": false,
+      "tags": [
+        "animals",
+        "paid",
+        "parking-onsite"
+      ],
+      "season": "year_round",
+      "_source": "https://www.kofim.co.il/",
+      "_scraped_on": "2026-08-31"
+    }
+  ]
+}

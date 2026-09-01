@@ -236,6 +236,12 @@ class Itinerary(BaseModel):
     # doesn't supply it. Reusing this value reproduces the exact same day —
     # the point is to let a specific bad day be reported and replayed.
     seed: int
+    # Whether the day actually includes a meal stop. with_meal=True on the
+    # request is a preference, not a hard constraint (only 3 meal places
+    # exist nationwide) — this tells the client whether that preference was
+    # actually satisfied, so it can say so when it wasn't. False whenever
+    # with_meal was False on the request, too.
+    meal_included: bool
 
 
 class CreateItineraryRequest(BaseModel):
@@ -258,6 +264,10 @@ class CreateItineraryRequest(BaseModel):
     # Omit to get a random day; repeat a specific value to reproduce one
     # exactly (e.g. to report a bug against a particular itinerary).
     seed: Optional[int] = None
+    # A preference, not a hard constraint: True asks the planner to try
+    # including exactly one meal stop (rule 4) before falling back to a
+    # meal-free day. False excludes meal places from the search entirely.
+    with_meal: bool = True
 
 
 class PlaceRefRequest(BaseModel):

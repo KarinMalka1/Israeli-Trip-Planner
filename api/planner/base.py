@@ -42,6 +42,7 @@ class ItineraryPlanner(ABC):
         prompt_he: Optional[str] = None,
         chip: Optional[str] = None,
         seed: Optional[int] = None,
+        with_meal: bool = True,
     ) -> Itinerary:
         """
         Build one itinerary for the given region, leg cap and weekday.
@@ -59,6 +60,13 @@ class ItineraryPlanner(ABC):
         Randomness only ever chooses between valid options — it never relaxes
         a rule — and the seed actually used is always returned on the
         ``Itinerary`` so a specific day can be reproduced.
+
+        ``with_meal`` is a preference, not a hard constraint: True asks the
+        implementation to prefer a day with exactly one meal stop (rule 4)
+        over one without, but a valid meal-free day is still a success when no
+        meal fits — never a reason to fail down to the section 4 fallback.
+        False excludes meal places from consideration entirely. Either way,
+        ``Itinerary.meal_included`` reports what actually happened.
 
         Implementations must not raise on a sparse region: too few places is a
         normal outcome that the section 4 fallback ladder handles.

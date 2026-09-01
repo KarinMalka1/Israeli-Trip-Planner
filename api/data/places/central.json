@@ -1,0 +1,486 @@
+{
+  "places": [
+    {
+      "id": "central-seed-64fc6e4fd6",
+      "name_he": "גן לאומי תל קאקון",
+      "description_he": "",
+      "tip_he": "",
+      "description_source": "generated",
+      "category": "nature",
+      "region": "central",
+      "access": "open",
+      "lat": 32.359878764915436,
+      "lng": 34.99548266251341,
+      "duration_min": 90,
+      "opening_hours": {
+        "sun": null,
+        "mon": null,
+        "tue": null,
+        "wed": null,
+        "thu": null,
+        "fri": null,
+        "sat": null
+      },
+      "hours_verified": false,
+      "closed_on_shabbat": false,
+      "kid_friendly": true,
+      "accessible": false,
+      "tags": [
+        "archaeology",
+        "free"
+      ],
+      "season": "year_round",
+      "_source": "https://www.parks.org.il/reserve-park/tel-kakun/",
+      "_scraped_on": "2026-08-31"
+    },
+    {
+      "id": "central-seed-b38c628671",
+      "name_he": "גן לאומי עין יהודה",
+      "description_he": "",
+      "tip_he": "",
+      "description_source": "generated",
+      "category": "nature",
+      "region": "central",
+      "access": "gated",
+      "lat": 32.471332286996834,
+      "lng": 35.50376359841612,
+      "duration_min": 90,
+      "opening_hours": {
+        "sun": [
+          "08:00",
+          "17:00"
+        ],
+        "mon": [
+          "08:00",
+          "17:00"
+        ],
+        "tue": [
+          "08:00",
+          "17:00"
+        ],
+        "wed": [
+          "08:00",
+          "17:00"
+        ],
+        "thu": [
+          "08:00",
+          "17:00"
+        ],
+        "fri": [
+          "08:00",
+          "16:00"
+        ],
+        "sat": null
+      },
+      "hours_verified": true,
+      "closed_on_shabbat": true,
+      "kid_friendly": true,
+      "accessible": true,
+      "tags": [
+        "spring"
+      ],
+      "season": "year_round",
+      "_source": "https://www.parks.org.il/reserve-park/en-judah/",
+      "_scraped_on": "2026-08-31"
+    },
+    {
+      "id": "central-seed-50e2dfa3ca",
+      "name_he": "שמורת טבע נחל פולג",
+      "description_he": "",
+      "tip_he": "",
+      "description_source": "generated",
+      "category": "nature",
+      "region": "central",
+      "access": "open",
+      "lat": 32.26353289516828,
+      "lng": 34.836832070253685,
+      "duration_min": 90,
+      "opening_hours": {
+        "sun": null,
+        "mon": null,
+        "tue": null,
+        "wed": null,
+        "thu": null,
+        "fri": null,
+        "sat": null
+      },
+      "hours_verified": false,
+      "closed_on_shabbat": false,
+      "kid_friendly": true,
+      "accessible": false,
+      "tags": [
+        "spring"
+      ],
+      "season": "year_round",
+      "_source": "https://www.parks.org.il/reserve-park/n-poleg/",
+      "_scraped_on": "2026-08-31"
+    },
+    {
+      "id": "central-seed-cceb345207",
+      "name_he": "שמורת טבע חולות זיקים",
+      "description_he": "",
+      "tip_he": "",
+      "description_source": "generated",
+      "category": "nature",
+      "region": "central",
+      "access": "open",
+      "lat": 31.606533774355654,
+      "lng": 34.51214719501526,
+      "duration_min": 90,
+      "opening_hours": {
+        "sun": null,
+        "mon": null,
+        "tue": null,
+        "wed": null,
+        "thu": null,
+        "fri": null,
+        "sat": null
+      },
+      "hours_verified": false,
+      "closed_on_shabbat": false,
+      "kid_friendly": true,
+      "accessible": false,
+      "tags": [
+        "free"
+      ],
+      "season": "year_round",
+      "_source": "https://www.parks.org.il/reserve-park/zikim/",
+      "_scraped_on": "2026-08-31"
+    },
+    {
+      "id": "central-seed-88811b1907",
+      "name_he": "שמורת טבע שיטה מלבינה אשדוד",
+      "description_he": "",
+      "tip_he": "",
+      "description_source": "generated",
+      "category": "nature",
+      "region": "central",
+      "access": "open",
+      "lat": 31.836498978508626,
+      "lng": 34.70498734387354,
+      "duration_min": 90,
+      "opening_hours": {
+        "sun": null,
+        "mon": null,
+        "tue": null,
+        "wed": null,
+        "thu": null,
+        "fri": null,
+        "sat": null
+      },
+      "hours_verified": false,
+      "closed_on_shabbat": false,
+      "kid_friendly": true,
+      "accessible": false,
+      "tags": [
+        "free"
+      ],
+      "season": "year_round",
+      "_source": "https://www.parks.org.il/reserve-park/shita-malbina-ashdod/",
+      "_scraped_on": "2026-08-31"
+    },
+    {
+      "id": "central-seed-9e2f07ed19",
+      "name_he": "גן לאומי תל צפית",
+      "description_he": "",
+      "tip_he": "",
+      "description_source": "generated",
+      "category": "nature",
+      "region": "central",
+      "access": "open",
+      "lat": 31.706105939435453,
+      "lng": 34.8480567284023,
+      "duration_min": 90,
+      "opening_hours": {
+        "sun": null,
+        "mon": null,
+        "tue": null,
+        "wed": null,
+        "thu": null,
+        "fri": null,
+        "sat": null
+      },
+      "hours_verified": false,
+      "closed_on_shabbat": false,
+      "kid_friendly": true,
+      "accessible": false,
+      "tags": [
+        "archaeology",
+        "free"
+      ],
+      "season": "year_round",
+      "_source": "https://www.parks.org.il/reserve-park/tel-tzafit/",
+      "_scraped_on": "2026-08-31"
+    },
+    {
+      "id": "central-seed-aea0e44110",
+      "name_he": "שמורת טבע אלוני קדימה",
+      "description_he": "",
+      "tip_he": "",
+      "description_source": "generated",
+      "category": "nature",
+      "region": "central",
+      "access": "open",
+      "lat": 32.28687245058537,
+      "lng": 34.9216321877689,
+      "duration_min": 90,
+      "opening_hours": {
+        "sun": null,
+        "mon": null,
+        "tue": null,
+        "wed": null,
+        "thu": null,
+        "fri": null,
+        "sat": null
+      },
+      "hours_verified": false,
+      "closed_on_shabbat": false,
+      "kid_friendly": true,
+      "accessible": false,
+      "tags": [
+        "free"
+      ],
+      "season": "year_round",
+      "_source": "https://www.parks.org.il/reserve-park/a-kadima/",
+      "_scraped_on": "2026-08-31"
+    },
+    {
+      "id": "central-seed-aebf1599e9",
+      "name_he": "שמורת טבע איריס הארגמן – בית חנן",
+      "description_he": "",
+      "tip_he": "",
+      "description_source": "generated",
+      "category": "nature",
+      "region": "central",
+      "access": "open",
+      "lat": 31.93324091835657,
+      "lng": 34.75197776155253,
+      "duration_min": 90,
+      "opening_hours": {
+        "sun": null,
+        "mon": null,
+        "tue": null,
+        "wed": null,
+        "thu": null,
+        "fri": null,
+        "sat": null
+      },
+      "hours_verified": false,
+      "closed_on_shabbat": false,
+      "kid_friendly": true,
+      "accessible": false,
+      "tags": [
+        "free"
+      ],
+      "season": "year_round",
+      "_source": "https://www.parks.org.il/reserve-park/eiris/",
+      "_scraped_on": "2026-08-31"
+    },
+    {
+      "id": "central-seed-2740f0ad4d",
+      "name_he": "מו ומו - Moo V Moo",
+      "description_he": "",
+      "tip_he": "",
+      "description_source": "generated",
+      "category": "meal",
+      "region": "central",
+      "access": "gated",
+      "lat": 31.898223131541478,
+      "lng": 34.81037940400483,
+      "duration_min": 60,
+      "opening_hours": {
+        "sun": null,
+        "mon": [
+          "17:00",
+          "22:00"
+        ],
+        "tue": [
+          "17:00",
+          "22:00"
+        ],
+        "wed": [
+          "17:00",
+          "22:00"
+        ],
+        "thu": [
+          "17:00",
+          "22:00"
+        ],
+        "fri": [
+          "17:00",
+          "21:30"
+        ],
+        "sat": null
+      },
+      "hours_verified": true,
+      "closed_on_shabbat": true,
+      "kid_friendly": true,
+      "accessible": true,
+      "tags": [
+        "paid"
+      ],
+      "season": "year_round",
+      "_source": "manual",
+      "_scraped_on": "2026-08-31"
+    },
+    {
+      "id": "central-seed-7b8ba8a15a",
+      "name_he": "מוזיאון ישראל",
+      "description_he": "",
+      "tip_he": "",
+      "description_source": "generated",
+      "category": "museum",
+      "region": "central",
+      "access": "gated",
+      "lat": 31.77212839518143,
+      "lng": 35.20408942281614,
+      "duration_min": 120,
+      "opening_hours": {
+        "sun": null,
+        "mon": [
+          "10:00",
+          "16:00"
+        ],
+        "tue": [
+          "16:00",
+          "20:00"
+        ],
+        "wed": [
+          "10:00",
+          "16:00"
+        ],
+        "thu": [
+          "10:00",
+          "18:00"
+        ],
+        "fri": [
+          "10:00",
+          "14:00"
+        ],
+        "sat": [
+          "10:00",
+          "18:00"
+        ]
+      },
+      "hours_verified": true,
+      "closed_on_shabbat": false,
+      "kid_friendly": true,
+      "accessible": true,
+      "tags": [
+        "indoor",
+        "paid",
+        "parking-onsite"
+      ],
+      "season": "year_round",
+      "_source": "https://www.imj.org.il/he/visit",
+      "_scraped_on": "2026-08-31"
+    },
+    {
+      "id": "central-seed-65ac45ce7e",
+      "name_he": "מוזיאון יד ושם",
+      "description_he": "",
+      "tip_he": "",
+      "description_source": "generated",
+      "category": "museum",
+      "region": "central",
+      "access": "gated",
+      "lat": 31.77436689702692,
+      "lng": 35.1753018,
+      "duration_min": 120,
+      "opening_hours": {
+        "sun": [
+          "09:00",
+          "16:00"
+        ],
+        "mon": [
+          "09:00",
+          "19:00"
+        ],
+        "tue": [
+          "09:00",
+          "14:00"
+        ],
+        "wed": [
+          "09:00",
+          "16:00"
+        ],
+        "thu": [
+          "09:00",
+          "19:00"
+        ],
+        "fri": [
+          "09:00",
+          "13:00"
+        ],
+        "sat": null
+      },
+      "hours_verified": true,
+      "closed_on_shabbat": true,
+      "kid_friendly": true,
+      "accessible": true,
+      "tags": [
+        "indoor",
+        "paid",
+        "parking-onsite"
+      ],
+      "season": "year_round",
+      "_source": "https://www.yadvashem.org/he/museum",
+      "_scraped_on": "2026-08-31"
+    },
+    {
+      "id": "central-seed-272ad17aa8",
+      "name_he": "פארק המים שפיים",
+      "description_he": "",
+      "tip_he": "",
+      "description_source": "generated",
+      "category": "kids",
+      "region": "central",
+      "access": "gated",
+      "lat": 32.217542823672375,
+      "lng": 34.82189473075908,
+      "duration_min": 240,
+      "opening_hours": {
+        "sun": [
+          "09:00",
+          "16:00"
+        ],
+        "mon": [
+          "09:00",
+          "16:00"
+        ],
+        "tue": [
+          "09:00",
+          "16:00"
+        ],
+        "wed": [
+          "09:00",
+          "16:00"
+        ],
+        "thu": [
+          "09:00",
+          "16:00"
+        ],
+        "fri": [
+          "09:00",
+          "16:00"
+        ],
+        "sat": [
+          "09:00",
+          "16:00"
+        ]
+      },
+      "hours_verified": true,
+      "closed_on_shabbat": false,
+      "kid_friendly": true,
+      "accessible": true,
+      "tags": [
+        "swimming",
+        "paid",
+        "parking-onsite"
+      ],
+      "season": "summer_only",
+      "_source": "https://waterpark.co.il/",
+      "_scraped_on": "2026-08-31"
+    }
+  ]
+}

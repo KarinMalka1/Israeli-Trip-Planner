@@ -86,6 +86,7 @@ class RuleBasedPlanner(ItineraryPlanner):
         prompt_he: Optional[str] = None,
         chip: Optional[str] = None,
         seed: Optional[int] = None,
+        with_meal: bool = True,
     ) -> Itinerary:
         """
         Build an itinerary, degrading through the section 4 ladder as needed.
@@ -97,6 +98,13 @@ class RuleBasedPlanner(ItineraryPlanner):
         ``prompt_he`` and ``chip`` are accepted and ignored: they belong to the
         future LLM planner, and the contract carries them today so it will not
         need to change when that lands.
+
+        ``with_meal`` is tried as a preference, not a constraint (see
+        ``_search_across_ladder``): a meal-requiring search runs the whole
+        relaxation ladder first, and only if that never succeeds does a
+        second, meal-free pass run its own full ladder. Either pass can still
+        need to relax the leg cap; ``relaxed_to`` reflects whichever one
+        actually produced the returned day.
         """
         if seed is None:
             seed = random.randrange(_RANDOM_SEED_UPPER_BOUND)
@@ -104,31 +112,51 @@ class RuleBasedPlanner(ItineraryPlanner):
 
         candidates = self._places.candidates(region, weekday, month)
         logger.debug(
-            "planning %s/%s cap=%dmin seed=%d: %d candidate places",
+            "planning %s/%s cap=%dmin seed=%d with_meal=%s: %d candidate places",
             region.value,
             weekday.value,
             max_leg_min,
             seed,
+            with_meal,
             len(candidates),
         )
 
-        # Step 0 and step 1 share one loop: the requested cap is simply the
-        # first rung of the ladder, and every rung above it is a relaxation.
-        for attempt_cap in self._relaxation_ladder(max_leg_min):
-            day = self._search_day(candidates, attempt_cap, weekday, rng)
-            if day is not None:
-                return Itinerary(
-                    id=itinerary_id,
-                    region=region,
-                    max_leg_min=attempt_cap,
-                    weekday=weekday,
-                    days=[day],
-                    places=[],
-                    # Only set when we actually had to relax, so the client
-                    # toasts exactly once and only when it is true.
-                    relaxed_to=attempt_cap if attempt_cap != max_leg_min else None,
-                    seed=seed,
-                )
+        meal_included = False
+        result: Optional[tuple[Day, int]] = None
+
+        if with_meal:
+            result = self._search_across_ladder(
+                candidates, max_leg_min, weekday, rng, require_meal=True
+            )
+            meal_included = result is not None
+
+        if result is None:
+            # Either with_meal was False from the start, or a meal-inclusive
+            # day was never found (only 3 meal places exist nationwide — this
+            # is expected, not exceptional). Either way, a meal-free day must
+            # not include one by accident, so it is excluded from the pool
+            # entirely rather than merely not required.
+            meal_free_candidates = [c for c in candidates if c.category != Category.MEAL]
+            result = self._search_across_ladder(
+                meal_free_candidates, max_leg_min, weekday, rng, require_meal=False
+            )
+            meal_included = False
+
+        if result is not None:
+            day, attempt_cap = result
+            return Itinerary(
+                id=itinerary_id,
+                region=region,
+                max_leg_min=attempt_cap,
+                weekday=weekday,
+                days=[day],
+                places=[],
+                # Only set when we actually had to relax, so the client
+                # toasts exactly once and only when it is true.
+                relaxed_to=attempt_cap if attempt_cap != max_leg_min else None,
+                seed=seed,
+                meal_included=meal_included,
+            )
 
         # Fallback step 2: no schedule is possible, so hand back the region's
         # places as unscheduled cards. Note this deliberately returns everything
@@ -148,7 +176,23 @@ class RuleBasedPlanner(ItineraryPlanner):
             places=self._places.by_region(region),
             relaxed_to=None,
             seed=seed,
+            meal_included=False,
         )
+
+    def _search_across_ladder(
+        self,
+        candidates: Sequence[Place],
+        max_leg_min: int,
+        weekday: Weekday,
+        rng: random.Random,
+        require_meal: bool,
+    ) -> Optional[tuple[Day, int]]:
+        """Walk the relaxation ladder once, returning the first (day, cap used) that succeeds."""
+        for attempt_cap in self._relaxation_ladder(max_leg_min):
+            day = self._search_day(candidates, attempt_cap, weekday, rng, require_meal)
+            if day is not None:
+                return day, attempt_cap
+        return None
 
     # -- Fallback ladder ---------------------------------------------------
 
@@ -171,6 +215,7 @@ class RuleBasedPlanner(ItineraryPlanner):
         max_leg_min: int,
         weekday: Weekday,
         rng: random.Random,
+        require_meal: bool,
     ) -> Optional[Day]:
         """
         Find one valid day among ``candidates`` at this leg cap, or ``None``.
@@ -185,6 +230,11 @@ class RuleBasedPlanner(ItineraryPlanner):
         variety): still biased toward 4-5 stops on average since that shuffle
         starts from ``PREFERRED_STOP_COUNTS``' own order, but a 3- or 6-stop
         day is no longer permanently deprioritised.
+
+        ``require_meal`` rejects any completed chain with no meal stop — see
+        ``_extend``. Combined with ``_meal_is_placeable`` (at most one meal,
+        rule 4), this means "require_meal=True" finds a chain with exactly
+        one meal stop, never more, never fewer.
         """
         if len(candidates) < MIN_STOPS:
             return None
@@ -216,6 +266,7 @@ class RuleBasedPlanner(ItineraryPlanner):
                     weekday=weekday,
                     budget=budget,
                     rng=rng,
+                    require_meal=require_meal,
                 )
                 if found is not None:
                     chain, legs = found
@@ -236,6 +287,7 @@ class RuleBasedPlanner(ItineraryPlanner):
         weekday: Weekday,
         budget: list[int],
         rng: random.Random,
+        require_meal: bool,
     ) -> Optional[tuple[list[Place], list[int]]]:
         """
         Depth-first extension of a partial chain, one stop at a time.
@@ -256,9 +308,11 @@ class RuleBasedPlanner(ItineraryPlanner):
             elapsed = finish_min - schedule.to_minutes(schedule.DAY_START)
             # Rule 10, lower half: only checked on a complete chain, because a
             # short prefix is not a failure — it is simply unfinished.
-            if MIN_DAY_MINUTES <= elapsed <= MAX_DAY_MINUTES:
-                return chain, legs
-            return None
+            if not (MIN_DAY_MINUTES <= elapsed <= MAX_DAY_MINUTES):
+                return None
+            if require_meal and not any(place.category == Category.MEAL for place in chain):
+                return None
+            return chain, legs
 
         chosen = {place.id for place in chain}
         meal_used = any(place.category == Category.MEAL for place in chain)
@@ -287,6 +341,7 @@ class RuleBasedPlanner(ItineraryPlanner):
                 weekday=weekday,
                 budget=budget,
                 rng=rng,
+                require_meal=require_meal,
             )
             if found is not None:
                 return found

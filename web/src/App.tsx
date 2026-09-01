@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { ApiError, createItinerary, getItinerary, removeStop, swapStop, undoEdit } from "./api/client";
 import DriveTimeChips from "./components/DriveTimeChips";
+import MealChips from "./components/MealChips";
 import RegionChips from "./components/RegionChips";
 import Timeline from "./components/Timeline";
 import Toast from "./components/Toast";
@@ -27,13 +28,14 @@ function App() {
   // network call resolves (US-1: "I never see an empty screen").
   const [region, setRegion] = useState<Region>("central");
   const [maxLegMin, setMaxLegMin] = useState<MaxLegMin>(45);
+  const [withMeal, setWithMeal] = useState<boolean>(true);
   const [itinerary, setItinerary] = useState<Itinerary | null>(null);
   const [status, setStatus] = useState<Status>("loading");
   const [errorText, setErrorText] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [toast, setToast] = useState<ToastState | null>(null);
 
-  const planNew = useCallback(async (nextRegion: Region, nextMaxLeg: MaxLegMin) => {
+  const planNew = useCallback(async (nextRegion: Region, nextMaxLeg: MaxLegMin, nextWithMeal: boolean) => {
     setBusy(true);
     setStatus("loading");
     setErrorText(null);
@@ -43,6 +45,7 @@ function App() {
         region: nextRegion,
         max_leg_min: nextMaxLeg,
         weekday: getTodayWeekday(),
+        with_meal: nextWithMeal,
       });
       setStoredItineraryId(created.id);
       setItinerary(created);
@@ -69,7 +72,7 @@ function App() {
   useEffect(() => {
     const savedId = getStoredItineraryId();
     if (!savedId) {
-      void planNew(region, maxLegMin);
+      void planNew(region, maxLegMin, withMeal);
       return;
     }
     getItinerary(savedId)
@@ -82,27 +85,34 @@ function App() {
       .catch((err: unknown) => {
         if (err instanceof ApiError && err.status === 404) {
           clearStoredItineraryId();
-          void planNew(region, maxLegMin);
+          void planNew(region, maxLegMin, withMeal);
         } else {
           setStatus("error");
           setErrorText(errorMessage(err));
         }
       });
-    // Runs once on mount only — planNew/region/maxLegMin intentionally
-    // excluded so a resumed itinerary isn't immediately replanned.
+    // Runs once on mount only — planNew/region/maxLegMin/withMeal
+    // intentionally excluded so a resumed itinerary isn't immediately
+    // replanned.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function handleRegionSelect(next: Region) {
     if (busy || next === region) return;
     setRegion(next);
-    void planNew(next, maxLegMin);
+    void planNew(next, maxLegMin, withMeal);
   }
 
   function handleMaxLegSelect(next: MaxLegMin) {
     if (busy || next === maxLegMin) return;
     setMaxLegMin(next);
-    void planNew(region, next);
+    void planNew(region, next, withMeal);
+  }
+
+  function handleMealSelect(next: boolean) {
+    if (busy || next === withMeal) return;
+    setWithMeal(next);
+    void planNew(region, maxLegMin, next);
   }
 
   async function handleUndo() {
@@ -149,6 +159,8 @@ function App() {
 
   const day = itinerary?.days[0];
   const hasFallbackPlaces = itinerary !== null && itinerary.days.length === 0 && itinerary.places.length > 0;
+  const wantedMealButNoneFound =
+    withMeal && itinerary !== null && day !== undefined && day.stops.length > 0 && !itinerary.meal_included;
 
   return (
     <div dir="rtl" lang="he" className="min-h-screen bg-slate-50 text-slate-900">
@@ -166,6 +178,10 @@ function App() {
             <p className="mb-2 text-sm font-medium text-slate-600">זמן נסיעה מקסימלי בין עצירות</p>
             <DriveTimeChips selected={maxLegMin} onSelect={handleMaxLegSelect} disabled={busy} />
           </div>
+          <div>
+            <p className="mb-2 text-sm font-medium text-slate-600">ארוחה</p>
+            <MealChips selected={withMeal} onSelect={handleMealSelect} disabled={busy} />
+          </div>
         </div>
 
         {status === "loading" && !itinerary && <p className="text-center text-slate-500">בונים מסלול…</p>}
@@ -178,6 +194,10 @@ function App() {
 
         {day && day.stops.length > 0 && (
           <Timeline day={day} onRemove={handleRemove} onSwap={handleSwap} disabled={busy} />
+        )}
+
+        {wantedMealButNoneFound && (
+          <p className="text-sm text-slate-500">לא נמצאה מסעדה מתאימה במרחק הנסיעה שנבחר</p>
         )}
 
         {hasFallbackPlaces && itinerary && (
