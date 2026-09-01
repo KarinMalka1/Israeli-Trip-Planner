@@ -1,3 +1,4 @@
+import { forwardRef, useEffect, useRef, useState } from "react";
 import type { Place, PlaceImage, Stop } from "../types";
 
 interface StopCardProps {
@@ -18,21 +19,28 @@ export default function StopCard({ stop, index, onRemove, onSwap, disabled = fal
   return (
     <li
       className={
-        "flex gap-3 rounded-xl border p-4 shadow-sm " +
-        (isMeal ? "border-amber-300 bg-amber-50" : "border-slate-200 bg-white")
+        "flex flex-col items-stretch gap-3 rounded-xl border p-4 shadow-sm md:flex-row md:gap-4 md:p-6 " +
+        (isMeal ? "border-amber-300 bg-amber-50" : "border-emerald-600 bg-white")
       }
     >
       {/* The text column is first in document order, the images block second —
-          in a flex row under dir="rtl" that alone puts images at the
-          inline-end (visually left), no ml-/mr-/left- needed. */}
-      <div className="flex flex-1 flex-col gap-3">
+          in a flex row under dir="rtl" that alone puts text at the inline-start
+          (visually right) and images at the inline-end (visually left), no
+          ml-/mr-/left- anywhere. Below 768px (Tailwind's md: breakpoint, used
+          throughout this card and in App.tsx's own page-width/type-scale
+          switch so everything moves together) the row becomes a column, so
+          the same document order stacks text above images.
+          items-stretch (the flex default, stated explicitly here since it's
+          load-bearing) is what makes the image column's height follow the
+          text column's height at md:, rather than a fixed px square. */}
+      <div className="flex min-w-0 flex-col gap-3 md:w-2/3 md:flex-none">
         <div className="flex items-start justify-between gap-3">
           <div>
-            <p className="text-xs font-medium text-slate-500">עצירה {index + 1}</p>
+            <p className="text-xs font-medium text-slate-500 md:text-sm">עצירה {index + 1}</p>
             <div className="flex flex-wrap items-center gap-2">
               <StopName place={place} />
               {isMeal && (
-                <span className="rounded-full bg-amber-200 px-2 py-0.5 text-xs font-medium text-amber-900">
+                <span className="rounded-full bg-amber-200 px-2 py-0.5 text-xs font-medium text-amber-900 md:text-sm">
                   ארוחה
                 </span>
               )}
@@ -50,10 +58,10 @@ export default function StopCard({ stop, index, onRemove, onSwap, disabled = fal
         </div>
 
         {stop.travel_min_from_prev > 0 && (
-          <p className="text-sm text-slate-500">{stop.travel_min_from_prev} דק׳ נסיעה מהעצירה הקודמת</p>
+          <p className="text-sm text-slate-500 md:text-base">{stop.travel_min_from_prev} דק׳ נסיעה מהעצירה הקודמת</p>
         )}
 
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-slate-600">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-slate-600 md:text-base">
           <span>מגיעים בשעה {stop.arrive_at}</span>
           <span>משך ביקור: {stop.duration_min} דק׳</span>
         </div>
@@ -62,7 +70,7 @@ export default function StopCard({ stop, index, onRemove, onSwap, disabled = fal
           type="button"
           onClick={() => onSwap(stop.place_id)}
           disabled={disabled}
-          className="self-start rounded-full border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 transition-colors hover:border-emerald-400 hover:text-emerald-700 disabled:cursor-not-allowed disabled:opacity-60"
+          className="self-start rounded-full border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 transition-colors hover:border-emerald-400 hover:text-emerald-700 disabled:cursor-not-allowed disabled:opacity-60 md:text-base"
         >
           החלף עצירה
         </button>
@@ -74,18 +82,22 @@ export default function StopCard({ stop, index, onRemove, onSwap, disabled = fal
 }
 
 // Links the name to the place's official page when there is one. No anchor
-// at all when official_url is absent — never a link to nowhere.
+// at all when official_url is absent — never a link to nowhere. Both
+// branches share the exact same h3 className (weight, colour, size) so the
+// heading never changes size depending on whether a link exists — only the
+// hover underline differs.
 function StopName({ place }: { place: Place }) {
+  const headingClass = "text-lg font-semibold text-slate-900 md:text-2xl";
   if (!place.official_url) {
-    return <h3 className="text-lg font-semibold text-slate-900">{place.name_he}</h3>;
+    return <h3 className={headingClass}>{place.name_he}</h3>;
   }
   return (
-    <h3 className="text-lg font-semibold text-slate-900">
+    <h3 className={headingClass}>
       <a
         href={place.official_url}
         target="_blank"
         rel="noopener noreferrer"
-        className="underline decoration-slate-300 underline-offset-2 hover:decoration-slate-500"
+        className="underline-offset-2 hover:underline hover:decoration-slate-400"
       >
         {place.name_he}
       </a>
@@ -93,36 +105,87 @@ function StopName({ place }: { place: Place }) {
   );
 }
 
-// Up to 3 Commons photos: one ~96px hero, up to two smaller ones beneath it.
-// No carousel, no lightbox, no arrows — every photo is a plain link to its
-// own Commons file page, nothing hidden behind interaction. Empty images is
-// the common case (most restaurants and small sites have no Commons
-// coverage), so the fallback is a deliberate grey initial, not a broken icon.
+// Shared by both PlaceImages branches so the card's width — and, at md:,
+// its height — never depends on whether the place has images: an
+// aspect-ratio box below md: (there is no sibling to stretch to yet), full
+// height matched to the text column at and above it via the <li>'s
+// items-stretch — deliberately NOT an explicit h-full here too: a flex
+// item's stretched cross size is definite for its own children's
+// flex-basis/flex-grow resolution, but layering a redundant height:100% on
+// top of that pushed it back into an indefinite-height context in testing,
+// silently breaking the hero:small-row 3:1 ratio below (confirmed by
+// removing it and watching the ratio resolve correctly).
+const IMAGE_COLUMN_CLASS = "aspect-[16/9] w-full md:aspect-auto md:w-1/3 md:flex-none";
+
+// One large hero, up to two smaller ones beneath it, side by side. Clicking
+// a small image swaps it into the hero slot (pure local state — no API
+// call, no URL change); nothing is ever hidden, so this isn't a carousel.
+// The hero:small-row height ratio (flex-[3]:flex-[1]) fills whatever height
+// the column ends up with rather than a fixed px, so this scales with the
+// text column instead of imposing its own height on the card. Empty images
+// is the common case (most restaurants and small sites have no Commons
+// coverage), so the fallback is a deliberate grey initial filling the same
+// column, not a broken icon.
 function PlaceImages({ images, name }: { images: PlaceImage[]; name: string }) {
+  const [featuredIndex, setFeaturedIndex] = useState(0);
+  // Swapping moves a button from the small row into the hero slot, a
+  // different position in the tree, so React remounts it and the browser
+  // drops focus to <body>. Refocus the new hero button after a user-driven
+  // swap so keyboard users don't lose their place — but not on first mount,
+  // where nothing has been interacted with yet.
+  const heroRef = useRef<HTMLButtonElement>(null);
+  const swappedByUser = useRef(false);
+
+  useEffect(() => {
+    if (swappedByUser.current) heroRef.current?.focus();
+  }, [featuredIndex]);
+
+  function handleSelect(index: number) {
+    swappedByUser.current = true;
+    setFeaturedIndex(index);
+  }
+
   if (images.length === 0) {
     return (
-      <div
-        aria-hidden="true"
-        className="flex h-24 w-24 shrink-0 items-center justify-center rounded-lg bg-slate-200 text-2xl font-semibold text-slate-400"
-      >
-        {name.charAt(0)}
+      <div className={IMAGE_COLUMN_CLASS}>
+        <div
+          aria-hidden="true"
+          className="flex h-full w-full items-center justify-center rounded-lg bg-slate-200 text-2xl font-semibold text-slate-400"
+        >
+          {name.charAt(0)}
+        </div>
       </div>
     );
   }
 
-  const [hero, ...rest] = images;
+  const hero = images[featuredIndex];
+  const smallIndices = images.map((_, i) => i).filter((i) => i !== featuredIndex);
 
   return (
-    <div className="flex shrink-0 flex-col items-center gap-1">
-      <a href={hero.source_url} target="_blank" rel="noopener noreferrer">
-        <img src={hero.url} alt={name} className="h-24 w-24 rounded-lg object-cover" />
-      </a>
-      {rest.length > 0 && (
-        <div className="flex gap-1">
-          {rest.map((image) => (
-            <a key={image.url} href={image.source_url} target="_blank" rel="noopener noreferrer">
-              <img src={image.url} alt={name} className="h-10 w-10 rounded-md object-cover" />
-            </a>
+    <div className={`${IMAGE_COLUMN_CLASS} flex flex-col gap-1`}>
+      <ImageButton
+        ref={heroRef}
+        image={hero}
+        index={featuredIndex}
+        total={images.length}
+        name={name}
+        rounded="rounded-lg"
+        onSelect={handleSelect}
+        className="min-h-0 flex-[3]"
+      />
+      {smallIndices.length > 0 && (
+        <div className="flex min-h-0 flex-[1] gap-1">
+          {smallIndices.map((i) => (
+            <ImageButton
+              key={images[i].url}
+              image={images[i]}
+              index={i}
+              total={images.length}
+              name={name}
+              rounded="rounded-md"
+              onSelect={handleSelect}
+              className="h-full min-h-0 min-w-0 flex-1"
+            />
           ))}
         </div>
       )}
@@ -131,10 +194,41 @@ function PlaceImages({ images, name }: { images: PlaceImage[]; name: string }) {
         target="_blank"
         rel="noopener noreferrer"
         title={hero.credit}
-        className="max-w-24 truncate text-center text-[10px] text-slate-400 hover:text-slate-600"
+        className="shrink-0 truncate text-center text-[10px] text-slate-400 hover:text-slate-600 md:text-sm"
       >
         {hero.credit}
       </a>
     </div>
   );
 }
+
+// index/total refer to the image's fixed position within the place's own
+// images array, not its current slot — so "תמונה 2 מתוך 3" keeps naming the
+// same photo whether it's currently featured or small.
+const ImageButton = forwardRef<
+  HTMLButtonElement,
+  {
+    image: PlaceImage;
+    index: number;
+    total: number;
+    name: string;
+    rounded: string;
+    onSelect: (index: number) => void;
+    className: string;
+  }
+>(function ImageButton({ image, index, total, name, rounded, onSelect, className }, ref) {
+  return (
+    <button
+      ref={ref}
+      type="button"
+      onClick={() => onSelect(index)}
+      aria-label={`תמונה ${index + 1} מתוך ${total}`}
+      className={
+        `${className} ${rounded} flex w-full overflow-hidden border-0 bg-transparent p-0 focus-visible:outline ` +
+        "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+      }
+    >
+      <img src={image.url} alt={name} className={`h-full w-full min-h-0 min-w-0 object-cover ${rounded}`} />
+    </button>
+  );
+});

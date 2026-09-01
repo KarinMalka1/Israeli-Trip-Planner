@@ -192,11 +192,11 @@ function App() {
 
   return (
     <div dir="rtl" lang="he" className="min-h-screen bg-slate-50 text-slate-900">
-      <header className="mx-auto max-w-2xl px-4 pt-8 pb-2">
-        <h1 className="text-2xl font-bold">מסלול יום בישראל</h1>
+      <header className="mx-auto max-w-2xl px-4 pt-8 pb-2 md:max-w-6xl md:px-8">
+        <h1 className="text-2xl font-bold md:text-3xl">מסלול יום בישראל</h1>
       </header>
 
-      <main className="mx-auto flex max-w-2xl flex-col gap-6 px-4 pb-24">
+      <main className="mx-auto flex max-w-2xl flex-col gap-6 px-4 pb-24 md:max-w-6xl md:px-8">
         <div className="flex flex-col gap-4 rounded-xl bg-white p-4 shadow-sm">
           <div>
             <p className="mb-2 text-sm font-medium text-slate-600">אורך היום</p>

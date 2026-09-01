@@ -30,7 +30,8 @@
       ],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/aynot-fakhum/",
-      "_scraped_on": "2026-08-30"
+      "_scraped_on": "2026-08-30",
+      "official_url": "https://www.parks.org.il/reserve-park/aynot-fakhum/"
     },
     {
       "id": "north-seed-3686f95c75",
@@ -63,7 +64,8 @@
       ],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/omrit/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "official_url": "https://www.parks.org.il/reserve-park/omrit/"
     },
     {
       "id": "north-seed-da9b27b966",
@@ -96,7 +98,8 @@
       ],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/ubedya/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "official_url": "https://www.parks.org.il/reserve-park/ubedya/"
     },
     {
       "id": "north-seed-a6ce875f47",
@@ -151,7 +154,8 @@
       ],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%94%d7%98%d7%91%d7%a2-%d7%9e%d7%92%d7%a8%d7%a1%d7%94-%d7%94%d7%91%d7%98%d7%99%d7%97%d7%94-%d7%91%d7%a7%d7%a2%d7%aa-%d7%91%d7%99%d7%aa-%d7%a6%d7%99%d7%99/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "official_url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%aa-%d7%94%d7%98%d7%91%d7%a2-%d7%9e%d7%92%d7%a8%d7%a1%d7%94-%d7%94%d7%91%d7%98%d7%99%d7%97%d7%94-%d7%91%d7%a7%d7%a2%d7%aa-%d7%91%d7%99%d7%aa-%d7%a6%d7%99%d7%99/"
     },
     {
       "id": "north-seed-83e16649c8",
@@ -184,7 +188,8 @@
       ],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%94-%d7%99%d7%9e%d7%99%d7%aa-%d7%94%d7%91%d7%98%d7%99%d7%97%d7%94-%d7%a2%d7%95%d7%9c%d7%9d-%d7%a7%d7%a1%d7%95%d7%9d-%d7%a9%d7%9c-%d7%9e%d7%99%d7%9d-%d7%9e%d7%aa%d7%95/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "official_url": "https://www.parks.org.il/reserve-park/%d7%a9%d7%9e%d7%95%d7%a8%d7%94-%d7%99%d7%9e%d7%99%d7%aa-%d7%94%d7%91%d7%98%d7%99%d7%97%d7%94-%d7%a2%d7%95%d7%9c%d7%9d-%d7%a7%d7%a1%d7%95%d7%9d-%d7%a9%d7%9c-%d7%9e%d7%99%d7%9d-%d7%9e%d7%aa%d7%95/"
     },
     {
       "id": "north-seed-2d436a3c17",
@@ -486,7 +491,8 @@
       ],
       "season": "year_round",
       "_source": "https://www.rallimuseums.com/Information",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "official_url": "https://www.rallimuseums.com/Information"
     },
     {
       "id": "north-seed-58fbcc2b19",
@@ -541,7 +547,8 @@
       ],
       "season": "year_round",
       "_source": "https://www.kofim.co.il/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "official_url": "https://www.kofim.co.il/"
     }
   ]
 }

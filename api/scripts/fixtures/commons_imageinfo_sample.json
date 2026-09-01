@@ -1,0 +1,43 @@
+{
+  "File:Ein Hemed pools.jpg": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/a/ab/Ein_Hemed_pools.jpg",
+    "mime": "image/jpeg",
+    "extmetadata": {
+      "Artist": {
+        "value": "<a href=\"//commons.wikimedia.org/wiki/User:Someone\" title=\"User:Someone\">Someone</a>"
+      },
+      "LicenseShortName": { "value": "CC BY-SA 4.0" }
+    }
+  },
+  "File:Ein Hemed map.svg": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/x/xy/Ein_Hemed_map.svg",
+    "mime": "image/svg+xml",
+    "extmetadata": {
+      "Artist": { "value": "Someone" },
+      "LicenseShortName": { "value": "CC BY-SA 4.0" }
+    }
+  },
+  "File:No credit photo.jpg": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/c/cd/No_credit_photo.jpg",
+    "mime": "image/jpeg",
+    "extmetadata": {
+      "LicenseShortName": { "value": "CC BY 4.0" }
+    }
+  },
+  "File:NC licensed photo.jpg": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/e/ef/NC_licensed_photo.jpg",
+    "mime": "image/jpeg",
+    "extmetadata": {
+      "Artist": { "value": "Someone Else" },
+      "LicenseShortName": { "value": "CC BY-NC 4.0" }
+    }
+  },
+  "File:CC0 photo.jpg": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/f/fa/CC0_photo.jpg",
+    "mime": "image/jpeg",
+    "extmetadata": {
+      "Artist": { "value": "Jane Doe" },
+      "LicenseShortName": { "value": "CC0 1.0" }
+    }
+  }
+}

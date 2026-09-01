@@ -31,7 +31,8 @@
       ],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/tel-kakun/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "official_url": "https://www.parks.org.il/reserve-park/tel-kakun/"
     },
     {
       "id": "central-seed-b38c628671",
@@ -81,7 +82,8 @@
       ],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/en-judah/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "official_url": "https://www.parks.org.il/reserve-park/en-judah/"
     },
     {
       "id": "central-seed-50e2dfa3ca",
@@ -113,7 +115,94 @@
       ],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/n-poleg/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "official_url": "https://www.parks.org.il/reserve-park/n-poleg/"
+    },
+    {
+      "id": "central-tel-maresha",
+      "name_he": "תל מרשה",
+      "description_he": "",
+      "tip_he": "",
+      "description_source": "generated",
+      "category": "historic",
+      "region": "central",
+      "access": "open",
+      "lat": 31.593234616849458,
+      "lng": 34.898646282116324,
+      "duration_min": 60,
+      "opening_hours": {
+        "sun": [
+          "08:00",
+          "16:00"
+        ],
+        "mon": [
+          "08:00",
+          "17:00"
+        ],
+        "tue": [
+          "08:00",
+          "17:00"
+        ],
+        "wed": [
+          "08:00",
+          "17:00"
+        ],
+        "thu": [
+          "08:00",
+          "17:00"
+        ],
+        "fri": [
+          "08:00",
+          "16:00"
+        ],
+        "sat": null
+      },
+      "hours_verified": true,
+      "closed_on_shabbat": true,
+      "kid_friendly": true,
+      "accessible": false,
+      "tags": [
+        "free",
+        "archaeology"
+      ],
+      "season": "year_round",
+      "_source": "https://he.wikipedia.org/wiki/%D7%9E%D7%A8%D7%A9%D7%94",
+      "_scraped_on": "2026-09-01",
+      "official_url": "https://he.wikipedia.org/wiki/%D7%9E%D7%A8%D7%A9%D7%94"
+    },
+    {
+      "id": "central-ein-levan",
+      "name_he": "עין לבן",
+      "description_he": "",
+      "tip_he": "",
+      "description_source": "generated",
+      "category": "nature",
+      "region": "central",
+      "access": "open",
+      "lat": 31.75693511193621,
+      "lng": 35.157653398905786,
+      "duration_min": 60,
+      "opening_hours": {
+        "sun": null,
+        "mon": null,
+        "tue": null,
+        "wed": null,
+        "thu": null,
+        "fri": null,
+        "sat": null
+      },
+      "hours_verified": true,
+      "closed_on_shabbat": false,
+      "kid_friendly": true,
+      "accessible": false,
+      "tags": [
+        "free",
+        "spring"
+      ],
+      "season": "year_round",
+      "_source": "https://www.tiuli.com/points-of-interest/62/%D7%A2%D7%99%D7%9F-%D7%9C%D7%91%D7%9F",
+      "_scraped_on": "2026-09-01",
+      "official_url": "https://www.tiuli.com/points-of-interest/62/%D7%A2%D7%99%D7%9F-%D7%9C%D7%91%D7%9F"
     },
     {
       "id": "central-seed-cceb345207",
@@ -145,7 +234,8 @@
       ],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/zikim/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "official_url": "https://www.parks.org.il/reserve-park/zikim/"
     },
     {
       "id": "central-seed-88811b1907",
@@ -177,7 +267,8 @@
       ],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/shita-malbina-ashdod/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "official_url": "https://www.parks.org.il/reserve-park/shita-malbina-ashdod/"
     },
     {
       "id": "central-seed-9e2f07ed19",
@@ -210,7 +301,8 @@
       ],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/tel-tzafit/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "official_url": "https://www.parks.org.il/reserve-park/tel-tzafit/"
     },
     {
       "id": "central-seed-aea0e44110",
@@ -242,7 +334,8 @@
       ],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/a-kadima/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "official_url": "https://www.parks.org.il/reserve-park/a-kadima/"
     },
     {
       "id": "central-seed-aebf1599e9",
@@ -274,7 +367,8 @@
       ],
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/eiris/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "official_url": "https://www.parks.org.il/reserve-park/eiris/"
     },
     {
       "id": "central-tel-zayit",
@@ -406,7 +500,8 @@
       ],
       "season": "year_round",
       "_source": "https://www.imj.org.il/he/visit",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "official_url": "https://www.imj.org.il/he/visit"
     },
     {
       "id": "central-seed-65ac45ce7e",
@@ -458,7 +553,8 @@
       ],
       "season": "year_round",
       "_source": "https://www.yadvashem.org/he/museum",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "official_url": "https://www.yadvashem.org/he/museum"
     },
     {
       "id": "central-seed-272ad17aa8",
@@ -513,7 +609,8 @@
       ],
       "season": "summer_only",
       "_source": "https://waterpark.co.il/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "official_url": "https://waterpark.co.il/"
     },
     {
       "id": "central-vinino-petah-tikva",
@@ -564,7 +661,8 @@
       ],
       "season": "year_round",
       "_source": "https://tabitisrael.co.il/online-reservations/create-reservation?step=search&orgId=60ffb52a1e09e9107e64f75f",
-      "_scraped_on": "2026-09-01"
+      "_scraped_on": "2026-09-01",
+      "official_url": "https://tabitisrael.co.il/online-reservations/create-reservation?step=search&orgId=60ffb52a1e09e9107e64f75f"
     },
     {
       "id": "central-roza-modiin",
@@ -612,7 +710,8 @@
       ],
       "season": "year_round",
       "_source": "https://tabitisrael.co.il/site/%D7%A8%D7%95%D7%96%D7%94-%D7%9E%D7%95%D7%93%D7%99%D7%A2%D7%99%D7%9F",
-      "_scraped_on": "2026-09-01"
+      "_scraped_on": "2026-09-01",
+      "official_url": "https://tabitisrael.co.il/site/%D7%A8%D7%95%D7%96%D7%94-%D7%9E%D7%95%D7%93%D7%99%D7%A2%D7%99%D7%9F"
     }
   ]
 }
