@@ -35,7 +35,7 @@ from api.domain.schedule import (
     MIN_DAY_MINUTES,
     MIN_STOPS,
 )
-from api.models import MAX_LEG_STEPS, Category, Day, Itinerary, Place, Region, Weekday
+from api.models import MAX_LEG_STEPS, Category, Day, DayLength, Itinerary, Place, Region, StartsAt, Weekday
 from api.planner.base import ItineraryPlanner
 from api.repository.places import PlaceRepository
 
@@ -87,6 +87,8 @@ class RuleBasedPlanner(ItineraryPlanner):
         chip: Optional[str] = None,
         seed: Optional[int] = None,
         with_meal: bool = True,
+        starts_at: StartsAt = "09:00",
+        day_length: DayLength = "long",
     ) -> Itinerary:
         """
         Build an itinerary, degrading through the section 4 ladder as needed.
@@ -99,11 +101,14 @@ class RuleBasedPlanner(ItineraryPlanner):
         future LLM planner, and the contract carries them today so it will not
         need to change when that lands.
 
-        ``with_meal`` is tried as a preference, not a constraint (see
-        ``_search_across_ladder``): a meal-requiring search runs the whole
-        relaxation ladder first, and only if that never succeeds does a
-        second, meal-free pass run its own full ladder. Either pass can still
-        need to relax the leg cap; ``relaxed_to`` reflects whichever one
+        ``with_meal`` and ``day_length`` are both preferences, never hard
+        constraints. They combine as an ordered list of attempts, each
+        running its own full leg-cap relaxation ladder, tried until one
+        succeeds: (meal + band), (meal, no band), (no meal, band), (no meal,
+        no band). Meal preference outranks length preference: a
+        meal-inclusive day outside the target length band is preferred over a
+        meal-free day inside it. Either preference can still need to relax
+        the leg cap along the way; ``relaxed_to`` reflects whichever attempt
         actually produced the returned day.
         """
         if seed is None:
@@ -112,35 +117,44 @@ class RuleBasedPlanner(ItineraryPlanner):
 
         candidates = self._places.candidates(region, weekday, month)
         logger.debug(
-            "planning %s/%s cap=%dmin seed=%d with_meal=%s: %d candidate places",
+            "planning %s/%s cap=%dmin seed=%d with_meal=%s starts_at=%s day_length=%s: "
+            "%d candidate places",
             region.value,
             weekday.value,
             max_leg_min,
             seed,
             with_meal,
+            starts_at,
+            day_length,
             len(candidates),
         )
 
-        meal_included = False
-        result: Optional[tuple[Day, int]] = None
+        target_band = schedule.DAY_LENGTH_BANDS[day_length]
+        meal_free_candidates = [c for c in candidates if c.category != Category.MEAL]
 
+        # Priority order: try to satisfy both preferences, then drop length,
+        # then drop meal (implies dropping length too, since a meal-free pool
+        # is already the fallback), then drop everything but validity.
+        attempts: list[tuple[bool, Optional[tuple[int, int]]]] = []
         if with_meal:
-            result = self._search_across_ladder(
-                candidates, max_leg_min, weekday, rng, require_meal=True
-            )
-            meal_included = result is not None
+            attempts.append((True, target_band))
+            attempts.append((True, None))
+        attempts.append((False, target_band))
+        attempts.append((False, None))
 
-        if result is None:
-            # Either with_meal was False from the start, or a meal-inclusive
-            # day was never found (only 3 meal places exist nationwide — this
-            # is expected, not exceptional). Either way, a meal-free day must
-            # not include one by accident, so it is excluded from the pool
-            # entirely rather than merely not required.
-            meal_free_candidates = [c for c in candidates if c.category != Category.MEAL]
+        result: Optional[tuple[Day, int]] = None
+        meal_included = False
+        length_matched = False
+
+        for require_meal, band in attempts:
+            pool = candidates if require_meal else meal_free_candidates
             result = self._search_across_ladder(
-                meal_free_candidates, max_leg_min, weekday, rng, require_meal=False
+                pool, max_leg_min, weekday, rng, starts_at, require_meal, band
             )
-            meal_included = False
+            if result is not None:
+                meal_included = require_meal
+                length_matched = band is not None
+                break
 
         if result is not None:
             day, attempt_cap = result
@@ -156,6 +170,7 @@ class RuleBasedPlanner(ItineraryPlanner):
                 relaxed_to=attempt_cap if attempt_cap != max_leg_min else None,
                 seed=seed,
                 meal_included=meal_included,
+                length_matched=length_matched,
             )
 
         # Fallback step 2: no schedule is possible, so hand back the region's
@@ -177,6 +192,7 @@ class RuleBasedPlanner(ItineraryPlanner):
             relaxed_to=None,
             seed=seed,
             meal_included=False,
+            length_matched=False,
         )
 
     def _search_across_ladder(
@@ -185,11 +201,13 @@ class RuleBasedPlanner(ItineraryPlanner):
         max_leg_min: int,
         weekday: Weekday,
         rng: random.Random,
+        starts_at: str,
         require_meal: bool,
+        target_band: Optional[tuple[int, int]],
     ) -> Optional[tuple[Day, int]]:
         """Walk the relaxation ladder once, returning the first (day, cap used) that succeeds."""
         for attempt_cap in self._relaxation_ladder(max_leg_min):
-            day = self._search_day(candidates, attempt_cap, weekday, rng, require_meal)
+            day = self._search_day(candidates, attempt_cap, weekday, rng, starts_at, require_meal, target_band)
             if day is not None:
                 return day, attempt_cap
         return None
@@ -215,7 +233,9 @@ class RuleBasedPlanner(ItineraryPlanner):
         max_leg_min: int,
         weekday: Weekday,
         rng: random.Random,
+        starts_at: str,
         require_meal: bool,
+        target_band: Optional[tuple[int, int]],
     ) -> Optional[Day]:
         """
         Find one valid day among ``candidates`` at this leg cap, or ``None``.
@@ -235,11 +255,15 @@ class RuleBasedPlanner(ItineraryPlanner):
         ``_extend``. Combined with ``_meal_is_placeable`` (at most one meal,
         rule 4), this means "require_meal=True" finds a chain with exactly
         one meal stop, never more, never fewer.
+
+        ``target_band``, when given, additionally rejects a completed chain
+        whose elapsed time falls outside it — on top of, never instead of,
+        the hard rule 10 bound checked unconditionally in ``_extend``.
         """
         if len(candidates) < MIN_STOPS:
             return None
 
-        starts = self._start_order(candidates, weekday, rng)
+        starts = self._start_order(candidates, weekday, rng, starts_at)
         budget = [self._search_budget]
 
         stop_counts = list(PREFERRED_STOP_COUNTS)
@@ -249,28 +273,30 @@ class RuleBasedPlanner(ItineraryPlanner):
             if target_stops > len(candidates):
                 continue
             for start in starts:
-                # Rule 8: the day begins at 09:00 at the first stop, with no
-                # inbound leg, so the first arrival is the day start itself.
-                # `_start_order` has already dropped anything not open then;
-                # this only rejects a 09:00 lunch (rule 4).
-                if not self._meal_is_placeable(start, schedule.DAY_START, meal_used=False):
+                # Rule 8 (amended): the day begins at starts_at at the first
+                # stop, with no inbound leg, so the first arrival is the day
+                # start itself. `_start_order` has already dropped anything
+                # not open then; this only rejects a same-time lunch (rule 4).
+                if not self._meal_is_placeable(start, starts_at, meal_used=False):
                     continue
 
                 found = self._extend(
                     chain=[start],
                     legs=[0],
-                    finish_min=schedule.to_minutes(schedule.DAY_START) + start.duration_min,
+                    finish_min=schedule.to_minutes(starts_at) + start.duration_min,
                     candidates=candidates,
                     target_stops=target_stops,
                     max_leg_min=max_leg_min,
                     weekday=weekday,
                     budget=budget,
                     rng=rng,
+                    starts_at=starts_at,
                     require_meal=require_meal,
+                    target_band=target_band,
                 )
                 if found is not None:
                     chain, legs = found
-                    return schedule.build_day(chain, legs)
+                    return schedule.build_day(chain, legs, starts_at=starts_at)
                 if budget[0] <= 0:
                     logger.warning("search budget exhausted at cap=%dmin", max_leg_min)
                     return None
@@ -287,7 +313,9 @@ class RuleBasedPlanner(ItineraryPlanner):
         weekday: Weekday,
         budget: list[int],
         rng: random.Random,
+        starts_at: str,
         require_meal: bool,
+        target_band: Optional[tuple[int, int]],
     ) -> Optional[tuple[list[Place], list[int]]]:
         """
         Depth-first extension of a partial chain, one stop at a time.
@@ -299,16 +327,34 @@ class RuleBasedPlanner(ItineraryPlanner):
         Returns the completed ``(places, legs)`` pair, or ``None`` if no
         extension of this prefix reaches ``target_stops`` legally.
         """
+        elapsed_so_far = finish_min - schedule.to_minutes(starts_at)
+
         # Rule 10, upper half: a chain already past nine hours cannot be
         # rescued by adding stops, so prune the whole subtree.
-        if finish_min - schedule.to_minutes(schedule.DAY_START) > MAX_DAY_MINUTES:
+        if elapsed_so_far > MAX_DAY_MINUTES:
+            return None
+
+        # day_length preference, pruned early rather than only at completion:
+        # once the partial chain already exceeds the band's own upper bound,
+        # no further stop (every duration and leg is positive) can bring it
+        # back inside. Without this, a target_stops value the band can never
+        # satisfy (e.g. 4 stops when the band only leaves room for 3) burns
+        # the whole search budget fully exploring every such chain to the end
+        # before ever trying the stop count that could actually fit — found
+        # in practice via a flaky "short" test that kept coming back "long".
+        if target_band is not None and elapsed_so_far > target_band[1]:
             return None
 
         if len(chain) == target_stops:
-            elapsed = finish_min - schedule.to_minutes(schedule.DAY_START)
-            # Rule 10, lower half: only checked on a complete chain, because a
-            # short prefix is not a failure — it is simply unfinished.
-            if not (MIN_DAY_MINUTES <= elapsed <= MAX_DAY_MINUTES):
+            # Rule 10, lower half (the hard bound — always enforced,
+            # regardless of target_band): only checked on a complete chain,
+            # because a short prefix is not a failure — it is simply unfinished.
+            if not (MIN_DAY_MINUTES <= elapsed_so_far <= MAX_DAY_MINUTES):
+                return None
+            # day_length preference: narrows the accepted range further, but
+            # only ever inside the hard bound just checked above. The upper
+            # half was already pruned early; only the lower half is left.
+            if target_band is not None and elapsed_so_far < target_band[0]:
                 return None
             if require_meal and not any(place.category == Category.MEAL for place in chain):
                 return None
@@ -341,7 +387,9 @@ class RuleBasedPlanner(ItineraryPlanner):
                 weekday=weekday,
                 budget=budget,
                 rng=rng,
+                starts_at=starts_at,
                 require_meal=require_meal,
+                target_band=target_band,
             )
             if found is not None:
                 return found
@@ -453,6 +501,7 @@ class RuleBasedPlanner(ItineraryPlanner):
         candidates: Sequence[Place],
         weekday: Weekday,
         rng: random.Random,
+        starts_at: str,
     ) -> list[Place]:
         """
         Every valid first stop, in random order (lever 1 of 3 for variety).
@@ -462,13 +511,18 @@ class RuleBasedPlanner(ItineraryPlanner):
         itinerary. ``_search_day`` tries every start in this list until one
         completes, so shuffling costs nothing but determinism: a small or
         sparse region still finds a day, just not always via the same anchor.
-        Meal places are not filtered out here — a 09:00 lunch is simply
+        Meal places are not filtered out here — a same-time lunch is simply
         rejected a moment later by rule 4's own check in ``_search_day``.
+
+        Filtering against ``starts_at`` (rule 8, amended) is what makes an
+        early start actually exclude a place that isn't open yet: a gated
+        place whose hours begin at 09:00 can never be the first stop of an
+        08:00 day, because it never passes ``visit_fits_opening_hours`` here.
         """
         openable = [
             place
             for place in candidates
-            if schedule.visit_fits_opening_hours(place, weekday, schedule.DAY_START)
+            if schedule.visit_fits_opening_hours(place, weekday, starts_at)
         ]
         rng.shuffle(openable)
         return openable

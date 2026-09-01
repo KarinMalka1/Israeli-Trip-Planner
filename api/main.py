@@ -158,6 +158,8 @@ def create_itinerary(
         chip=body.chip,
         seed=body.seed,
         with_meal=body.with_meal,
+        starts_at=body.starts_at,
+        day_length=body.day_length,
     )
 
     _reject_if_invalid(itinerary, places)

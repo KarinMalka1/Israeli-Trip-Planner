@@ -102,6 +102,39 @@ MaxLegMin = Literal[20, 45, 90]
 MAX_LEG_STEPS: tuple[int, int, int] = (20, 45, 90)
 DEFAULT_MAX_LEG_MIN: int = 45
 
+# Rule 8 (amended): the day's start time is a request field, not a fixed
+# 09:00. Four allowed values.
+StartsAt = Literal["08:00", "09:00", "10:00", "11:00"]
+DEFAULT_STARTS_AT: StartsAt = "09:00"
+
+# Rule 10 (amended): the hard 4-9h elapsed bound is unchanged; day_length is a
+# PREFERENCE that targets a narrower band inside it (see
+# domain/schedule.DAY_LENGTH_BANDS) — it never relaxes the bound itself.
+DayLength = Literal["short", "long"]
+DEFAULT_DAY_LENGTH: DayLength = "long"
+
+
+class PlaceImage(BaseModel):
+    """
+    One Commons-sourced photo for a place.
+
+    All three fields are required — never optional. Most Wikimedia Commons
+    files are CC BY or CC BY-SA, which legally require attribution, so an
+    image with no credit and no link back to its source must fail validation
+    rather than silently render un-attributed.
+    """
+
+    # A local path under /images/ (web/public/images/), never a hotlinked
+    # commons.wikimedia.org or upload.wikimedia.org URL — images are
+    # downloaded by hand and committed, never fetched at request time.
+    url: str
+    # e.g. "Hoshvilim, CC BY-SA 4.0" — photographer/uploader plus license.
+    credit: str
+    # The Commons *file page* (e.g. https://commons.wikimedia.org/wiki/File:...),
+    # not the raw upload.wikimedia.org file — the file page is what carries
+    # the actual license and author statement this credit summarizes.
+    source_url: str
+
 
 class Place(BaseModel):
     """
@@ -151,6 +184,22 @@ class Place(BaseModel):
     # summer_only outside Apr-Oct) is tracked as a TODO in domain/schedule.py,
     # not implemented here.
     season: Literal["year_round", "summer_only"] = "year_round"
+    # Up to 3, Commons only (see PlaceImage). Most places have none — that is
+    # the common case, not an error, and the client renders a deliberate
+    # fallback for it rather than a broken image icon.
+    images: list[PlaceImage] = Field(default_factory=list)
+    # A link to the place's own official page (e.g. parks.org.il), separate
+    # from the internal `_source` provenance field the seed pipeline writes —
+    # this one is user-facing. None renders no link at all, never a dead one.
+    official_url: Optional[str] = None
+
+    @field_validator("images")
+    @classmethod
+    def _at_most_three_images(cls, images: list[PlaceImage]) -> list[PlaceImage]:
+        """Enforce the 3-image cap here, not just as a UI convention."""
+        if len(images) > 3:
+            raise ValueError(f"at most 3 images allowed, got {len(images)}")
+        return images
 
     @field_validator("opening_hours")
     @classmethod
@@ -242,6 +291,14 @@ class Itinerary(BaseModel):
     # actually satisfied, so it can say so when it wasn't. False whenever
     # with_meal was False on the request, too.
     meal_included: bool
+    # Whether the day's elapsed time actually landed inside the requested
+    # day_length's target band (domain/schedule.DAY_LENGTH_BANDS). day_length
+    # is a preference, not a hard constraint — a late starts_at plus "long"
+    # will often be impossible once opening hours bite, and that degrades to
+    # the closest valid day rather than failing. False whenever the returned
+    # day is valid (still inside the hard 4-9h rule 10 bound) but outside the
+    # preferred band.
+    length_matched: bool
 
 
 class CreateItineraryRequest(BaseModel):
@@ -268,6 +325,12 @@ class CreateItineraryRequest(BaseModel):
     # including exactly one meal stop (rule 4) before falling back to a
     # meal-free day. False excludes meal places from the search entirely.
     with_meal: bool = True
+    # Rule 8 (amended): when the first stop arrives. The user never picks
+    # ends_at — that stays computed server-side, same as before.
+    starts_at: StartsAt = DEFAULT_STARTS_AT
+    # Rule 10 (amended): a preference for a band inside the hard 4-9h bound —
+    # see Itinerary.length_matched for what happens when it can't be met.
+    day_length: DayLength = DEFAULT_DAY_LENGTH
 
 
 class PlaceRefRequest(BaseModel):

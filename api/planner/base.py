@@ -24,7 +24,7 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from typing import Optional
 
-from api.models import Itinerary, Region, Weekday
+from api.models import DayLength, Itinerary, Region, StartsAt, Weekday
 
 
 class ItineraryPlanner(ABC):
@@ -43,6 +43,8 @@ class ItineraryPlanner(ABC):
         chip: Optional[str] = None,
         seed: Optional[int] = None,
         with_meal: bool = True,
+        starts_at: StartsAt = "09:00",
+        day_length: DayLength = "long",
     ) -> Itinerary:
         """
         Build one itinerary for the given region, leg cap and weekday.
@@ -67,6 +69,18 @@ class ItineraryPlanner(ABC):
         meal fits — never a reason to fail down to the section 4 fallback.
         False excludes meal places from consideration entirely. Either way,
         ``Itinerary.meal_included`` reports what actually happened.
+
+        ``starts_at`` (rule 8, amended) is when the first stop arrives — the
+        user picks this now instead of a fixed 09:00. ``ends_at`` is still
+        always computed server-side; the user never picks that.
+
+        ``day_length`` (rule 10, amended) is a preference for a band inside
+        the hard 4-9h bound (domain/schedule.DAY_LENGTH_BANDS) — "short"
+        targets 4.0-5.5h, "long" targets 6.5-9.0h. The hard bound itself never
+        relaxes: implementations return the closest valid day when no chain
+        lands in the target band (e.g. a late ``starts_at`` with "long" is
+        often impossible once opening hours bite) and report that via
+        ``Itinerary.length_matched``, never by failing down to fallback step 2.
 
         Implementations must not raise on a sparse region: too few places is a
         normal outcome that the section 4 fallback ladder handles.

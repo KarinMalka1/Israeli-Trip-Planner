@@ -15,10 +15,13 @@ from __future__ import annotations
 from typing import Iterable, Sequence
 
 from api.domain import regions, shabbat
-from api.models import AccessType, Category, Day, Itinerary, Place, Region, Stop, Weekday
+from api.models import AccessType, Category, Day, DayLength, Itinerary, Place, Region, Stop, Weekday
 
-# Rule 8: the day always starts at 09:00 at the first stop. There is no origin
-# and no travel leg before it.
+# Rule 8 (amended): the day starts at the first stop, at whatever start time
+# the request chose (CreateItineraryRequest.starts_at) — there is no origin
+# and no travel leg before it either way. DAY_START is only the default used
+# where no caller-supplied start time is in scope (e.g. rebuild_day after an
+# edit, which has no request of its own).
 DAY_START = "09:00"
 
 # SPEC section 10 amendment: an access=="open" place has no gate, so
@@ -33,9 +36,18 @@ DAYLIGHT_END = "18:00"
 MIN_STOPS = 3
 MAX_STOPS = 6
 
-# Rule 10: total elapsed time, in minutes.
+# Rule 10: total elapsed time, in minutes. The hard bound — never relaxed.
 MIN_DAY_MINUTES = 4 * 60
 MAX_DAY_MINUTES = 9 * 60
+
+# Rule 10 (amended): day_length narrows the search to a preferred band inside
+# the hard bound above; it is never a substitute for it. Deliberately not
+# contiguous — 5.5h to 6.5h is neither a short day nor a long one, so a chain
+# that lands there is no more "preferred" under one label than the other.
+DAY_LENGTH_BANDS: dict[DayLength, tuple[int, int]] = {
+    "short": (240, 330),  # 4.0-5.5h
+    "long": (390, 540),  # 6.5-9.0h
+}
 
 # Rule 4: the single meal stop must be arrived at inside this window.
 MEAL_WINDOW_START = "12:00"
@@ -281,9 +293,10 @@ def validate_day(
             )
 
     # -- Time -------------------------------------------------------------
-    # Rule 8: the day starts at 09:00 at the first stop.
-    if stops and stops[0].arrive_at != DAY_START:
-        problems.append(f"rule 8: first stop arrives at {stops[0].arrive_at}, expected {DAY_START}")
+    # Rule 8 (amended): the day starts at the first stop, at whatever
+    # starts_at the day itself records — no longer a fixed 09:00.
+    if stops and stops[0].arrive_at != day.starts_at:
+        problems.append(f"rule 8: first stop arrives at {stops[0].arrive_at}, expected {day.starts_at}")
 
     # Rule 9: times chain exactly, with no unexplained gaps or overlaps.
     for index in range(len(stops) - 1):

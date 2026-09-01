@@ -1,12 +1,14 @@
 import { useCallback, useEffect, useState } from "react";
 import { ApiError, createItinerary, getItinerary, removeStop, swapStop, undoEdit } from "./api/client";
+import DayLengthChips from "./components/DayLengthChips";
 import DriveTimeChips from "./components/DriveTimeChips";
 import MealChips from "./components/MealChips";
 import RegionChips from "./components/RegionChips";
+import StartTimeChips from "./components/StartTimeChips";
 import Timeline from "./components/Timeline";
 import Toast from "./components/Toast";
 import { clearStoredItineraryId, getOrCreateSessionId, getStoredItineraryId, setStoredItineraryId } from "./session";
-import type { Itinerary, MaxLegMin, Region } from "./types";
+import type { DayLength, Itinerary, MaxLegMin, Region, StartsAt } from "./types";
 import { getTodayWeekday } from "./weekday";
 
 type Status = "loading" | "ready" | "error";
@@ -29,41 +31,54 @@ function App() {
   const [region, setRegion] = useState<Region>("central");
   const [maxLegMin, setMaxLegMin] = useState<MaxLegMin>(45);
   const [withMeal, setWithMeal] = useState<boolean>(true);
+  const [startsAt, setStartsAt] = useState<StartsAt>("09:00");
+  const [dayLength, setDayLength] = useState<DayLength>("long");
   const [itinerary, setItinerary] = useState<Itinerary | null>(null);
   const [status, setStatus] = useState<Status>("loading");
   const [errorText, setErrorText] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [toast, setToast] = useState<ToastState | null>(null);
 
-  const planNew = useCallback(async (nextRegion: Region, nextMaxLeg: MaxLegMin, nextWithMeal: boolean) => {
-    setBusy(true);
-    setStatus("loading");
-    setErrorText(null);
-    try {
-      const created = await createItinerary({
-        session_id: getOrCreateSessionId(),
-        region: nextRegion,
-        max_leg_min: nextMaxLeg,
-        weekday: getTodayWeekday(),
-        with_meal: nextWithMeal,
-      });
-      setStoredItineraryId(created.id);
-      setItinerary(created);
-      setRegion(created.region);
-      setMaxLegMin(created.max_leg_min);
-      setStatus("ready");
-      if (created.relaxed_to) {
-        setToast({
-          message: `הרחבנו את זמן הנסיעה ל-${created.relaxed_to} דקות כדי למצוא מספיק מקומות`,
+  const planNew = useCallback(
+    async (
+      nextRegion: Region,
+      nextMaxLeg: MaxLegMin,
+      nextWithMeal: boolean,
+      nextStartsAt: StartsAt,
+      nextDayLength: DayLength,
+    ) => {
+      setBusy(true);
+      setStatus("loading");
+      setErrorText(null);
+      try {
+        const created = await createItinerary({
+          session_id: getOrCreateSessionId(),
+          region: nextRegion,
+          max_leg_min: nextMaxLeg,
+          weekday: getTodayWeekday(),
+          with_meal: nextWithMeal,
+          starts_at: nextStartsAt,
+          day_length: nextDayLength,
         });
+        setStoredItineraryId(created.id);
+        setItinerary(created);
+        setRegion(created.region);
+        setMaxLegMin(created.max_leg_min);
+        setStatus("ready");
+        if (created.relaxed_to) {
+          setToast({
+            message: `הרחבנו את זמן הנסיעה ל-${created.relaxed_to} דקות כדי למצוא מספיק מקומות`,
+          });
+        }
+      } catch (err) {
+        setStatus("error");
+        setErrorText(errorMessage(err));
+      } finally {
+        setBusy(false);
       }
-    } catch (err) {
-      setStatus("error");
-      setErrorText(errorMessage(err));
-    } finally {
-      setBusy(false);
-    }
-  }, []);
+    },
+    [],
+  );
 
   // US-3: resume on load if a saved itinerary exists; a 404 means the
   // in-memory server store lost it (e.g. a restart), so fall back to
@@ -72,7 +87,7 @@ function App() {
   useEffect(() => {
     const savedId = getStoredItineraryId();
     if (!savedId) {
-      void planNew(region, maxLegMin, withMeal);
+      void planNew(region, maxLegMin, withMeal, startsAt, dayLength);
       return;
     }
     getItinerary(savedId)
@@ -85,34 +100,45 @@ function App() {
       .catch((err: unknown) => {
         if (err instanceof ApiError && err.status === 404) {
           clearStoredItineraryId();
-          void planNew(region, maxLegMin, withMeal);
+          void planNew(region, maxLegMin, withMeal, startsAt, dayLength);
         } else {
           setStatus("error");
           setErrorText(errorMessage(err));
         }
       });
-    // Runs once on mount only — planNew/region/maxLegMin/withMeal
-    // intentionally excluded so a resumed itinerary isn't immediately
-    // replanned.
+    // Runs once on mount only — planNew and every chip state intentionally
+    // excluded so a resumed itinerary isn't immediately replanned.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function handleRegionSelect(next: Region) {
     if (busy || next === region) return;
     setRegion(next);
-    void planNew(next, maxLegMin, withMeal);
+    void planNew(next, maxLegMin, withMeal, startsAt, dayLength);
   }
 
   function handleMaxLegSelect(next: MaxLegMin) {
     if (busy || next === maxLegMin) return;
     setMaxLegMin(next);
-    void planNew(region, next, withMeal);
+    void planNew(region, next, withMeal, startsAt, dayLength);
   }
 
   function handleMealSelect(next: boolean) {
     if (busy || next === withMeal) return;
     setWithMeal(next);
-    void planNew(region, maxLegMin, next);
+    void planNew(region, maxLegMin, next, startsAt, dayLength);
+  }
+
+  function handleStartTimeSelect(next: StartsAt) {
+    if (busy || next === startsAt) return;
+    setStartsAt(next);
+    void planNew(region, maxLegMin, withMeal, next, dayLength);
+  }
+
+  function handleDayLengthSelect(next: DayLength) {
+    if (busy || next === dayLength) return;
+    setDayLength(next);
+    void planNew(region, maxLegMin, withMeal, startsAt, next);
   }
 
   async function handleUndo() {
@@ -161,6 +187,8 @@ function App() {
   const hasFallbackPlaces = itinerary !== null && itinerary.days.length === 0 && itinerary.places.length > 0;
   const wantedMealButNoneFound =
     withMeal && itinerary !== null && day !== undefined && day.stops.length > 0 && !itinerary.meal_included;
+  const dayLengthNotMatched =
+    itinerary !== null && day !== undefined && day.stops.length > 0 && !itinerary.length_matched;
 
   return (
     <div dir="rtl" lang="he" className="min-h-screen bg-slate-50 text-slate-900">
@@ -170,6 +198,14 @@ function App() {
 
       <main className="mx-auto flex max-w-2xl flex-col gap-6 px-4 pb-24">
         <div className="flex flex-col gap-4 rounded-xl bg-white p-4 shadow-sm">
+          <div>
+            <p className="mb-2 text-sm font-medium text-slate-600">אורך היום</p>
+            <DayLengthChips selected={dayLength} onSelect={handleDayLengthSelect} disabled={busy} />
+          </div>
+          <div>
+            <p className="mb-2 text-sm font-medium text-slate-600">שעת יציאה</p>
+            <StartTimeChips selected={startsAt} onSelect={handleStartTimeSelect} disabled={busy} />
+          </div>
           <div>
             <p className="mb-2 text-sm font-medium text-slate-600">אזור</p>
             <RegionChips selected={region} onSelect={handleRegionSelect} disabled={busy} />
@@ -198,6 +234,10 @@ function App() {
 
         {wantedMealButNoneFound && (
           <p className="text-sm text-slate-500">לא נמצאה מסעדה מתאימה במרחק הנסיעה שנבחר</p>
+        )}
+
+        {dayLengthNotMatched && (
+          <p className="text-sm text-slate-500">משך היום יצא קצר יותר מהמבוקש</p>
         )}
 
         {hasFallbackPlaces && itinerary && (

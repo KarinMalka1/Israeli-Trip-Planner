@@ -81,11 +81,15 @@ return one.
 7. Travel times come from the precomputed matrix. Never estimated by a model.
 
 **Time**
-8. `starts_at` is 09:00 at the first stop. There is no origin and no travel
-   leg before the first stop.
+8. `starts_at` (amended, section 13) is a request field — 08:00, 09:00, 10:00
+   or 11:00, default 09:00 — and the first stop arrives exactly at it. There
+   is no origin and no travel leg before the first stop. `ends_at` is always
+   computed server-side; the user never picks it.
 9. Times are strictly increasing:
    `arrive_at[i] + duration[i] + travel_min[i+1] == arrive_at[i+1]`.
-10. Total elapsed time (`ends_at - starts_at`) is between 4 and 9 hours.
+10. Total elapsed time (`ends_at - starts_at`) is between 4 and 9 hours — the
+    hard bound, never relaxed. `day_length` (amended, section 13) targets a
+    narrower band inside it as a preference, not a further constraint.
 11. Every stop is open at `arrive_at` on the requested weekday, per the seed
     `opening_hours`. A place closed that day is never scheduled.
 
@@ -356,3 +360,52 @@ bad seed through silently:
 `id` and `duration_min` are still read straight from each row, unchanged
 from before. No change to the `Place` schema itself (section 7) or to any
 rule 1-13.
+
+---
+
+## 13. Amendment: request-controlled start time and day length (2026-09-01)
+
+`CreateItineraryRequest` (section 7) gains two fields:
+
+```ts
+interface CreateItineraryRequest {
+  // ...as above...
+  starts_at?: "08:00" | "09:00" | "10:00" | "11:00";  // default "09:00"
+  day_length?: "short" | "long";                       // default "long"
+}
+```
+
+`starts_at` is rule 8's start time, now chosen per request instead of fixed.
+`ends_at` is unaffected — still always computed server-side.
+
+`day_length` is a **preference** for a band inside rule 10's hard 4-9h
+bound, never a further hard constraint:
+
+| value   | target band |
+|---------|--------------|
+| `short` | 4.0-5.5h     |
+| `long`  | 6.5-9.0h     |
+
+`Itinerary` gains a matching response field:
+
+```ts
+interface Itinerary {
+  // ...as above...
+  length_matched: boolean;
+}
+```
+
+`length_matched` is `true` only when the returned day's elapsed time actually
+landed inside the requested band. A late `starts_at` combined with `"long"`
+will often be impossible once opening hours bite — the planner returns the
+closest valid day inside the hard bound instead and sets `length_matched:
+false`, the same "preference degrades, never fails" shape as `with_meal` /
+`meal_included` (section 10-era addition, undocumented until now — both
+follow the identical pattern: try to satisfy the preference across the full
+`max_leg_min` relaxation ladder; if nothing lands, retry without the
+preference; only fail to fallback step 2 if that also finds nothing).
+
+Opening hours already respect whichever `starts_at` was requested: a gated
+place that opens at 09:00 is filtered out of the candidate pool for an 08:00
+start the same way it always was for a place closed all day — no separate
+rule, just rule 11 applied at the requested clock instead of a fixed one.
