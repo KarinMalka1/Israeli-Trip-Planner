@@ -19,7 +19,7 @@ export default function StopCard({ stop, index, onRemove, onSwap, disabled = fal
   return (
     <li
       className={
-        "flex flex-col items-stretch gap-3 rounded-xl border p-4 shadow-sm md:flex-row md:gap-4 md:p-6 " +
+        "flex flex-col items-stretch gap-6 rounded-xl border p-8 shadow-sm md:flex-row md:gap-12 md:p-16 " +
         (isMeal ? "border-amber-300 bg-amber-50" : "border-emerald-600 bg-white")
       }
     >
@@ -32,15 +32,18 @@ export default function StopCard({ stop, index, onRemove, onSwap, disabled = fal
           the same document order stacks text above images.
           items-stretch (the flex default, stated explicitly here since it's
           load-bearing) is what makes the image column's height follow the
-          text column's height at md:, rather than a fixed px square. */}
-      <div className="flex min-w-0 flex-col gap-3 md:w-2/3 md:flex-none">
+          text column's height at md:, rather than a fixed px square.
+          The gap here (name/times/button spacing) plus the card's own
+          padding above are what roughly double the card's height — same
+          content, no new fields, just room to breathe. */}
+      <div className="flex min-w-0 flex-col gap-6 md:w-2/3 md:flex-none md:gap-11">
         <div className="flex items-start justify-between gap-3">
           <div>
             <p className="text-xs font-medium text-slate-500 md:text-sm">עצירה {index + 1}</p>
             <div className="flex flex-wrap items-center gap-2">
               <StopName place={place} />
               {isMeal && (
-                <span className="rounded-full bg-amber-200 px-2 py-0.5 text-xs font-medium text-amber-900 md:text-sm">
+                <span className="rounded-full bg-amber-200 px-2 py-0.5 text-xs font-medium text-amber-900 md:text-3xl">
                   ארוחה
                 </span>
               )}
@@ -51,7 +54,7 @@ export default function StopCard({ stop, index, onRemove, onSwap, disabled = fal
             aria-label={`הסר את ${place.name_he} מהמסלול`}
             onClick={() => onRemove(stop.place_id)}
             disabled={disabled}
-            className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-slate-300 text-slate-500 transition-colors hover:border-red-400 hover:text-red-600 disabled:cursor-not-allowed disabled:opacity-60"
+            className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-slate-300 text-slate-500 transition-colors hover:border-red-400 hover:text-red-600 disabled:cursor-not-allowed disabled:opacity-60 md:h-11 md:w-11"
           >
             <span aria-hidden="true">✕</span>
           </button>
@@ -61,7 +64,7 @@ export default function StopCard({ stop, index, onRemove, onSwap, disabled = fal
           <p className="text-sm text-slate-500 md:text-base">{stop.travel_min_from_prev} דק׳ נסיעה מהעצירה הקודמת</p>
         )}
 
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-slate-600 md:text-base">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-base text-slate-600 md:text-lg">
           <span>מגיעים בשעה {stop.arrive_at}</span>
           <span>משך ביקור: {stop.duration_min} דק׳</span>
         </div>
@@ -70,7 +73,7 @@ export default function StopCard({ stop, index, onRemove, onSwap, disabled = fal
           type="button"
           onClick={() => onSwap(stop.place_id)}
           disabled={disabled}
-          className="self-start rounded-full border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 transition-colors hover:border-emerald-400 hover:text-emerald-700 disabled:cursor-not-allowed disabled:opacity-60 md:text-base"
+          className="self-start rounded-full border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 transition-colors hover:border-emerald-400 hover:text-emerald-700 disabled:cursor-not-allowed disabled:opacity-60 md:px-4 md:py-2.5 md:text-base"
         >
           החלף עצירה
         </button>
@@ -87,7 +90,7 @@ export default function StopCard({ stop, index, onRemove, onSwap, disabled = fal
 // heading never changes size depending on whether a link exists — only the
 // hover underline differs.
 function StopName({ place }: { place: Place }) {
-  const headingClass = "text-lg font-semibold text-slate-900 md:text-2xl";
+  const headingClass = "text-lg font-semibold text-slate-900 md:text-4xl";
   if (!place.official_url) {
     return <h3 className={headingClass}>{place.name_he}</h3>;
   }
@@ -120,12 +123,12 @@ const IMAGE_COLUMN_CLASS = "aspect-[16/9] w-full md:aspect-auto md:w-1/3 md:flex
 // One large hero, up to two smaller ones beneath it, side by side. Clicking
 // a small image swaps it into the hero slot (pure local state — no API
 // call, no URL change); nothing is ever hidden, so this isn't a carousel.
-// The hero:small-row height ratio (flex-[3]:flex-[1]) fills whatever height
-// the column ends up with rather than a fixed px, so this scales with the
-// text column instead of imposing its own height on the card. Empty images
-// is the common case (most restaurants and small sites have no Commons
-// coverage), so the fallback is a deliberate grey initial filling the same
-// column, not a broken icon.
+// The hero:small-row height ratio (flex-[3]:flex-[2], ~60%/40%) fills
+// whatever height the column ends up with rather than a fixed px, so this
+// scales with the text column instead of imposing its own height on the
+// card. Empty images is the common case (most restaurants and small sites
+// have no Commons coverage), so the fallback is a deliberate grey initial
+// filling the same column, not a broken icon.
 function PlaceImages({ images, name }: { images: PlaceImage[]; name: string }) {
   const [featuredIndex, setFeaturedIndex] = useState(0);
   // Swapping moves a button from the small row into the hero slot, a
@@ -150,7 +153,7 @@ function PlaceImages({ images, name }: { images: PlaceImage[]; name: string }) {
       <div className={IMAGE_COLUMN_CLASS}>
         <div
           aria-hidden="true"
-          className="flex h-full w-full items-center justify-center rounded-lg bg-slate-200 text-2xl font-semibold text-slate-400"
+          className="flex h-full w-full items-center justify-center rounded-lg bg-slate-200 text-3xl font-semibold text-slate-400"
         >
           {name.charAt(0)}
         </div>
@@ -174,7 +177,7 @@ function PlaceImages({ images, name }: { images: PlaceImage[]; name: string }) {
         className="min-h-0 flex-[3]"
       />
       {smallIndices.length > 0 && (
-        <div className="flex min-h-0 flex-[1] gap-1">
+        <div className="flex min-h-0 flex-[2] gap-1">
           {smallIndices.map((i) => (
             <ImageButton
               key={images[i].url}
@@ -194,7 +197,7 @@ function PlaceImages({ images, name }: { images: PlaceImage[]; name: string }) {
         target="_blank"
         rel="noopener noreferrer"
         title={hero.credit}
-        className="shrink-0 truncate text-center text-[10px] text-slate-400 hover:text-slate-600 md:text-sm"
+        className="shrink-0 truncate text-center text-[10px] text-slate-400 hover:text-slate-600 md:text-3xl"
       >
         {hero.credit}
       </a>
@@ -205,6 +208,17 @@ function PlaceImages({ images, name }: { images: PlaceImage[]; name: string }) {
 // index/total refer to the image's fixed position within the place's own
 // images array, not its current slot — so "תמונה 2 מתוך 3" keeps naming the
 // same photo whether it's currently featured or small.
+//
+// The <img> is position:absolute + inset-0, not a normal-flow flex child of
+// the button. An in-flow <img> with h-full/object-cover still carries its
+// own real intrinsic aspect ratio, and when this button's own height comes
+// from flex-grow inside a column (PlaceImages) whose height is itself only
+// known via items-stretch from a sibling, browsers fall back to that
+// intrinsic ratio while computing the column's un-stretched auto height —
+// confirmed by removing every <img> in that state and watching the whole
+// column collapse toward zero. Taking the <img> out of flow removes it from
+// that auto-size computation entirely, which is what lets the image column
+// actually follow the text column's height instead of the reverse.
 const ImageButton = forwardRef<
   HTMLButtonElement,
   {
@@ -224,11 +238,11 @@ const ImageButton = forwardRef<
       onClick={() => onSelect(index)}
       aria-label={`תמונה ${index + 1} מתוך ${total}`}
       className={
-        `${className} ${rounded} flex w-full overflow-hidden border-0 bg-transparent p-0 focus-visible:outline ` +
+        `${className} ${rounded} relative block w-full overflow-hidden border-0 bg-transparent p-0 focus-visible:outline ` +
         "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
       }
     >
-      <img src={image.url} alt={name} className={`h-full w-full min-h-0 min-w-0 object-cover ${rounded}`} />
+      <img src={image.url} alt={name} className={`absolute inset-0 h-full w-full object-cover ${rounded}`} />
     </button>
   );
 });

@@ -339,6 +339,11 @@
       "tags": [
         "paid"
       ],
+      "images": [
+        {"url": "/images/ein-hemed-1.jpg", "credit": "בדיקה", "source_url": "https://example.com"},
+        {"url": "/images/ein-hemed-2.jpg", "credit": "בדיקה", "source_url": "https://example.com"},
+        {"url": "/images/ein-hemed-3.jpg", "credit": "בדיקה", "source_url": "https://example.com"}
+      ],
       "season": "year_round",
       "_source": "https://www.magdalenarest.co.il/",
       "_scraped_on": "2026-09-01",
@@ -603,8 +608,4 @@
     }
   ]
 }
-      "_scraped_on": "2026-08-31",
-      "official_url": "https://www.kofim.co.il/"
-    }
-  ]
-}
+    
