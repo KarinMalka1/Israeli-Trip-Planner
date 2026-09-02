@@ -17,7 +17,7 @@ from pathlib import Path
 from typing import Iterable, Optional
 
 from api.domain import regions, schedule
-from api.models import Place, Region, Weekday
+from api.models import AccessType, Place, Region, Weekday
 
 logger = logging.getLogger(__name__)
 
@@ -26,6 +26,16 @@ logger = logging.getLogger(__name__)
 # touching the real dataset.
 DEFAULT_PLACES_DIR = Path(__file__).resolve().parent.parent / "data" / "places"
 PLACES_DIR_ENV_VAR = "PLACES_DIR"
+
+# places.template.json (repo root) is the single source of truth for the tag
+# vocabulary (rule in the template's own _README) — read from there rather
+# than duplicating the list, so the two can never drift.
+TAG_VOCABULARY_PATH = Path(__file__).resolve().parent.parent.parent / "places.template.json"
+
+
+def _load_tag_vocabulary(path: Path = TAG_VOCABULARY_PATH) -> set[str]:
+    raw = json.loads(path.read_text(encoding="utf-8"))
+    return set(raw["_tag_vocabulary"])
 
 
 class PlaceRepository:
@@ -120,6 +130,8 @@ class PlaceRepository:
                     # a data bug to fix by hand, not something to route around.
                     raise ValueError(f"invalid place {place_id!r} in {file_path}: {error}") from error
 
+        _validate_dataset(places)
+
         repository = cls(places)
         repository._warn_on_suspect_rows()
         logger.info("loaded %d places from %s", len(places), resolved)
@@ -129,19 +141,17 @@ class PlaceRepository:
         """
         Log seed problems that are wrong but not fatal.
 
-        Duplicate ids would silently shadow one another in the index, and a
-        latitude far outside its region's band usually means a mistyped
-        ``region``. Neither should stop the server from booting, and both should
-        be impossible to miss in the logs.
+        A latitude far outside its region's band usually means a mistyped
+        ``region``. That should not stop the server from booting, but should
+        be impossible to miss in the logs. Anything fatal (duplicate ids,
+        a contradictory access/opening_hours combination, an out-of-vocabulary
+        tag) is caught earlier by ``_validate_dataset`` instead.
         """
-        seen: set[str] = set()
         for place in self._places:
-            if place.id in seen:
-                logger.warning("duplicate place id in seed: %s", place.id)
-            seen.add(place.id)
             if regions.latitude_looks_wrong(place):
                 logger.warning(
-                    "place %s is marked %s but sits at lat %.4f, outside that band",
+                    "place %s is marked %s but sits at lat %.4f, outside that band "
+                    "(add to REGION_OVERRIDES_HE if intentional)",
                     place.id,
                     place.region.value,
                     place.lat,
@@ -200,3 +210,41 @@ class PlaceRepository:
     def __len__(self) -> int:
         """Number of seeded places — handy in health checks and tests."""
         return len(self._places)
+
+
+def _validate_dataset(places: list[Place]) -> None:
+    """
+    Fail loudly on cross-row and vocabulary problems no single ``Place.model_validate``
+    call can catch on its own — called from ``load()`` before the repository is built,
+    so a bad commit fails at startup/test time rather than shipping quietly.
+
+    A window where close <= open is deliberately not re-checked here: Place's own
+    ``_hours_are_well_formed`` validator already rejects that for every row, before
+    a row ever reaches this function.
+    """
+    errors: list[str] = []
+
+    seen_ids: set[str] = set()
+    duplicate_ids: set[str] = set()
+    for place in places:
+        if place.id in seen_ids:
+            duplicate_ids.add(place.id)
+        seen_ids.add(place.id)
+    for duplicate_id in sorted(duplicate_ids):
+        errors.append(f"duplicate place id: {duplicate_id!r}")
+
+    for place in places:
+        if place.access == AccessType.OPEN and any(window is not None for window in place.opening_hours.values()):
+            errors.append(
+                f"{place.id}: access={AccessType.OPEN.value!r} but opening_hours has a non-null window "
+                f"(open-access places are scheduled by daylight, not hours, and must carry no hours at all)"
+            )
+
+    vocabulary = _load_tag_vocabulary()
+    for place in places:
+        unknown_tags = sorted(set(place.tags) - vocabulary)
+        if unknown_tags:
+            errors.append(f"{place.id}: tag(s) not in places.template.json's vocabulary: {unknown_tags}")
+
+    if errors:
+        raise ValueError("seed data validation failed:\n  " + "\n  ".join(errors))

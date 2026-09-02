@@ -236,7 +236,8 @@
       ],
       "season": "year_round",
       "_source": "https://he-il.facebook.com/Avis.Restaurant/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "official_url": "https://he-il.facebook.com/Avis.Restaurant/"
     },
     {
       "name_he": "Miname Cafe Restaurant",
@@ -289,7 +290,8 @@
       "season": "year_round",
       "_source": "https://www.instagram.com/miname.cafe/",
       "_scraped_on": "2026-09-01",
-      "id": "north-seed-840d576ad5"
+      "id": "north-seed-840d576ad5",
+      "official_url": "https://www.instagram.com/miname.cafe/"
     },
     {
       "name_he": "מסעדת מגדלנה",
@@ -347,7 +349,8 @@
       "season": "year_round",
       "_source": "https://www.magdalenarest.co.il/",
       "_scraped_on": "2026-09-01",
-      "id": "north-seed-d2f45c44ee"
+      "id": "north-seed-d2f45c44ee",
+      "official_url": "https://www.magdalenarest.co.il/"
     },
     {
       "name_he": "מסעדת בת יער",
@@ -397,7 +400,8 @@
       "season": "year_round",
       "_source": "https://www.batyaar.co.il/",
       "_scraped_on": "2026-09-01",
-      "id": "north-seed-a36470fb67"
+      "id": "north-seed-a36470fb67",
+      "official_url": "https://www.batyaar.co.il/"
     },
     {
       "name_he": "Mercato by Omri Shahar",
@@ -447,7 +451,8 @@
       "season": "year_round",
       "_source": "https://www.mercatorest.co.il/",
       "_scraped_on": "2026-09-01",
-      "id": "north-seed-866b861266"
+      "id": "north-seed-866b861266",
+      "official_url": "https://www.mercatorest.co.il/"
     },
     {
       "id": "north-seed-ae332f3d9b",
@@ -552,9 +557,11 @@
       ],
       "season": "year_round",
       "_source": "https://www.kofim.co.il/",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "official_url": "https://www.kofim.co.il/"
     },
     {
+      "id": "north-seed-a10059af03",
       "name_he": "מסעדת אליאסמין",
       "description_he": "",
       "tip_he": "",
@@ -604,8 +611,8 @@
       ],
       "season": "year_round",
       "_source": "https://he-il.facebook.com/alyasmin.rest/",
-      "_scraped_on": "2026-09-01"
+      "_scraped_on": "2026-09-01",
+      "official_url": "https://he-il.facebook.com/alyasmin.rest/"
     }
   ]
 }
-    

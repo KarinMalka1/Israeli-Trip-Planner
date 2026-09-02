@@ -234,7 +234,12 @@ class Place(BaseModel):
                 raise ValueError(f"{day.value}: times must be 'HH:MM', got {window!r}")
             if opens >= closes:
                 # Lexicographic comparison is safe for zero-padded "HH:MM".
-                raise ValueError(f"{day.value}: opens at or after it closes ({window!r})")
+                raise ValueError(
+                    f"{day.value}: opens at or after it closes ({window!r}) — opening_hours "
+                    "cannot cross midnight (SPEC.md section 14); if this is a genuine "
+                    "overnight closing time, run api/scripts/clamp_overnight_hours.py to "
+                    "clamp it to 23:59 rather than hand-editing the seed"
+                )
         return hours
 
 

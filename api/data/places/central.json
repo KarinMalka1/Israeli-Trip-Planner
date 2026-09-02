@@ -126,7 +126,7 @@
       "description_source": "generated",
       "category": "historic",
       "region": "central",
-      "access": "open",
+      "access": "gated",
       "lat": 31.593234616849458,
       "lng": 34.898646282116324,
       "duration_min": 60,
