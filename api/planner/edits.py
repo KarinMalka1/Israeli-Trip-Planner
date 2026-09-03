@@ -79,7 +79,7 @@ class ItineraryEditor:
         rescheduled = self._reschedule(remaining, itinerary)
         if rescheduled is None:
             raise EditNotPossible("לא ניתן להסיר את העצירה הזו בלי לשבור את לוח הזמנים")
-        return self._with_day(itinerary, rescheduled)
+        return self.annotate(self._with_day(itinerary, rescheduled))
 
     def swap(self, itinerary: Itinerary, place_id: str) -> Optional[Itinerary]:
         """
@@ -102,16 +102,54 @@ class ItineraryEditor:
             return None
 
         current = [stop.place for stop in day.stops]
-        for alternative in self._alternatives(itinerary, current, index):
-            rebuilt = current[:index] + [alternative] + current[index + 1 :]
-            rescheduled = self._reschedule(rebuilt, itinerary)
-            # Take the first alternative whose day still holds together: every
-            # leg present in the matrix, and every visit inside opening hours.
-            if rescheduled is not None:
-                return self._with_day(itinerary, rescheduled)
+        rescheduled = self._find_swap_result(itinerary, current, index)
+        if rescheduled is not None:
+            return self.annotate(self._with_day(itinerary, rescheduled))
 
         logger.info("no swap alternative for %s in itinerary %s", place_id, itinerary.id)
-        return itinerary
+        return self.annotate(itinerary)
+
+    # -- Editability (can_remove / can_swap) --------------------------------
+
+    def annotate(self, itinerary: Itinerary) -> Itinerary:
+        """
+        Stamp can_remove/can_swap onto every stop, so the client can disable
+        the X and the swap button before the user clicks rather than after
+        (SPEC section 7: the client does zero rule evaluation of its own).
+
+        Both mutating routes call this on every Itinerary they return — see
+        main.py — and this is also called once right after planning, so a
+        freshly created itinerary already carries correct flags. A resumed
+        or undone itinerary needs no recomputation: it was annotated at the
+        point it was stored.
+
+        can_remove is a plain stop count against the same MIN_STOPS
+        remove()'s own reschedule ultimately depends on — removing any one
+        stop always reduces the count by exactly one, so it does not matter
+        which stop. can_swap actually runs the same alternative search and
+        reschedule swap() itself uses (_find_swap_result), not just the
+        cheaper "does at least one candidate fit the leg cap" check — a
+        candidate that fits the cap can still fail once opening-hours
+        cascade is checked, and can_swap must reflect what swap() would
+        really do, not a looser approximation of it.
+        """
+        day = self._single_day(itinerary)
+        if day is None or not day.stops:
+            return itinerary
+
+        can_remove = len(day.stops) > schedule.MIN_STOPS
+        current = [stop.place for stop in day.stops]
+
+        annotated_stops = [
+            stop.model_copy(
+                update={
+                    "can_remove": can_remove,
+                    "can_swap": self._find_swap_result(itinerary, current, index) is not None,
+                }
+            )
+            for index, stop in enumerate(day.stops)
+        ]
+        return self._with_day(itinerary, day.model_copy(update={"stops": annotated_stops}))
 
     # -- Rescheduling ------------------------------------------------------
 
@@ -160,6 +198,24 @@ class ItineraryEditor:
                 return None
 
         return day
+
+    def _find_swap_result(
+        self, itinerary: Itinerary, current: list[Place], index: int
+    ) -> Optional[Day]:
+        """
+        The first alternative at ``index`` whose day still holds together, or None.
+
+        Shared by swap() (which uses the Day it returns) and annotate()
+        (which only cares whether the result is None) so "is there a valid
+        swap" is answered by literally trying the swap, not a cheaper proxy
+        for it — see annotate()'s docstring for why that distinction matters.
+        """
+        for alternative in self._alternatives(itinerary, current, index):
+            rebuilt = current[:index] + [alternative] + current[index + 1 :]
+            rescheduled = self._reschedule(rebuilt, itinerary)
+            if rescheduled is not None:
+                return rescheduled
+        return None
 
     def _alternatives(
         self, itinerary: Itinerary, current: list[Place], index: int

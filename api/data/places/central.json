@@ -83,7 +83,14 @@
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/en-judah/",
       "_scraped_on": "2026-08-31",
-      "official_url": "https://www.parks.org.il/reserve-park/en-judah/"
+      "official_url": "https://www.parks.org.il/reserve-park/en-judah/",
+      "images": [
+        {
+          "url": "/images/central-seed-b38c628671-1.jpg",
+          "credit": "Hadar Leonzini, CC BY 4.0",
+          "source_url": "https://commons.wikimedia.org/w/index.php?curid=180942529"
+        }
+      ]
     },
     {
       "id": "central-seed-50e2dfa3ca",
@@ -116,7 +123,24 @@
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/n-poleg/",
       "_scraped_on": "2026-08-31",
-      "official_url": "https://www.parks.org.il/reserve-park/n-poleg/"
+      "official_url": "https://www.parks.org.il/reserve-park/n-poleg/",
+      "images": [
+        {
+          "url": "/images/central-seed-50e2dfa3ca-1.jpg",
+          "credit": "BAswim, CC BY-SA 4.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:Iris_Karp_1.jpg"
+        },
+        {
+          "url": "/images/central-seed-50e2dfa3ca-2.jpg",
+          "credit": "BAswim, CC BY-SA 4.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:Osnat_Ehrlich_1.jpg"
+        },
+        {
+          "url": "/images/central-seed-50e2dfa3ca-3.jpg",
+          "credit": "BAswim, CC BY-SA 4.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:Yonatan_Rosin_1.jpg"
+        }
+      ]
     },
     {
       "id": "central-tel-maresha",
@@ -168,7 +192,14 @@
       "season": "year_round",
       "_source": "https://he.wikipedia.org/wiki/%D7%9E%D7%A8%D7%A9%D7%94",
       "_scraped_on": "2026-09-01",
-      "official_url": "https://he.wikipedia.org/wiki/%D7%9E%D7%A8%D7%A9%D7%94"
+      "official_url": "https://he.wikipedia.org/wiki/%D7%9E%D7%A8%D7%A9%D7%94",
+      "images": [
+        {
+          "url": "/images/central-tel-maresha-1.jpg",
+          "credit": "Chai, CC BY-SA 3.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:Beit_Guvrin_4.JPG"
+        }
+      ]
     },
     {
       "id": "central-ein-levan",
@@ -202,7 +233,14 @@
       "season": "year_round",
       "_source": "https://www.tiuli.com/points-of-interest/62/%D7%A2%D7%99%D7%9F-%D7%9C%D7%91%D7%9F",
       "_scraped_on": "2026-09-01",
-      "official_url": "https://www.tiuli.com/points-of-interest/62/%D7%A2%D7%99%D7%9F-%D7%9C%D7%91%D7%9F"
+      "official_url": "https://www.tiuli.com/points-of-interest/62/%D7%A2%D7%99%D7%9F-%D7%9C%D7%91%D7%9F",
+      "images": [
+        {
+          "url": "/images/central-ein-levan-1.jpg",
+          "credit": "SuperJew, CC BY-SA 3.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:Ein_Lavan_lower_pool.jpg"
+        }
+      ]
     },
     {
       "id": "central-seed-cceb345207",
@@ -235,7 +273,14 @@
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/zikim/",
       "_scraped_on": "2026-08-31",
-      "official_url": "https://www.parks.org.il/reserve-park/zikim/"
+      "official_url": "https://www.parks.org.il/reserve-park/zikim/",
+      "images": [
+        {
+          "url": "/images/central-seed-cceb345207-1.jpg",
+          "credit": "IPPA photographer, CC BY 4.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:A_wild_area_still_exist_near_the_Gaza_Strip_(FL62957783).jpg"
+        }
+      ]
     },
     {
       "id": "central-seed-88811b1907",
@@ -302,7 +347,24 @@
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/tel-tzafit/",
       "_scraped_on": "2026-08-31",
-      "official_url": "https://www.parks.org.il/reserve-park/tel-tzafit/"
+      "official_url": "https://www.parks.org.il/reserve-park/tel-tzafit/",
+      "images": [
+        {
+          "url": "/images/central-seed-9e2f07ed19-1.jpg",
+          "credit": "מקף־עברי, CC BY-SA 4.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:Tel_Zafit,_21_February_2026_04.jpg"
+        },
+        {
+          "url": "/images/central-seed-9e2f07ed19-2.jpg",
+          "credit": "מקף־עברי, CC BY-SA 4.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:Tel_Zafit,_21_February_2026_05.jpg"
+        },
+        {
+          "url": "/images/central-seed-9e2f07ed19-3.jpg",
+          "credit": "מקף־עברי, CC BY-SA 4.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:Tel_Zafit,_21_February_2026_03.jpg"
+        }
+      ]
     },
     {
       "id": "central-seed-aea0e44110",
@@ -335,7 +397,24 @@
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/a-kadima/",
       "_scraped_on": "2026-08-31",
-      "official_url": "https://www.parks.org.il/reserve-park/a-kadima/"
+      "official_url": "https://www.parks.org.il/reserve-park/a-kadima/",
+      "images": [
+        {
+          "url": "/images/central-seed-aea0e44110-1.jpg",
+          "credit": "SigTif, CC BY-SA 4.0",
+          "source_url": "https://commons.wikimedia.org/w/index.php?curid=144644616"
+        },
+        {
+          "url": "/images/central-seed-aea0e44110-2.jpg",
+          "credit": "DovGazit, CC BY-SA 4.0",
+          "source_url": "https://commons.wikimedia.org/w/index.php?curid=77106485"
+        },
+        {
+          "url": "/images/central-seed-aea0e44110-3.jpg",
+          "credit": "DovGazit, CC BY-SA 4.0",
+          "source_url": "https://commons.wikimedia.org/w/index.php?curid=77106483"
+        }
+      ]
     },
     {
       "id": "central-seed-aebf1599e9",
@@ -368,7 +447,24 @@
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/eiris/",
       "_scraped_on": "2026-08-31",
-      "official_url": "https://www.parks.org.il/reserve-park/eiris/"
+      "official_url": "https://www.parks.org.il/reserve-park/eiris/",
+      "images": [
+        {
+          "url": "/images/central-seed-aebf1599e9-1.jpg",
+          "credit": "Yitzchak M, CC BY-SA 4.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:IHM_אירוסים_הארגמן.jpeg"
+        },
+        {
+          "url": "/images/central-seed-aebf1599e9-2.jpg",
+          "credit": "Yitzchak M, CC BY-SA 4.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:IHM_גבעת_האירוסים.jpeg"
+        },
+        {
+          "url": "/images/central-seed-aebf1599e9-3.jpg",
+          "credit": "Yitzchak M, CC BY-SA 4.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:IHM_אירוסים_הארגמן_1.jpeg"
+        }
+      ]
     },
     {
       "id": "central-tel-zayit",
@@ -401,7 +497,14 @@
       ],
       "season": "year_round",
       "_source": "openstreetmap",
-      "_scraped_on": "2026-09-01"
+      "_scraped_on": "2026-09-01",
+      "images": [
+        {
+          "url": "/images/central-tel-zayit-1.jpg",
+          "credit": "Hanay, CC BY-SA 3.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:Tel_Zayit.JPG"
+        }
+      ]
     },
     {
       "id": "central-seed-2740f0ad4d",
@@ -448,7 +551,24 @@
       ],
       "season": "year_round",
       "_source": "manual",
-      "_scraped_on": "2026-08-31"
+      "_scraped_on": "2026-08-31",
+      "images": [
+        {
+          "url": "/images/central-seed-2740f0ad4d-1.jpg",
+          "credit": "Rakoon, CC0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:20180225-161808-cafe-rehovot-herzel-street-2018.jpg"
+        },
+        {
+          "url": "/images/central-seed-2740f0ad4d-2.jpg",
+          "credit": "Rakoon, CC0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:20180225-155717-rehovot-herzel-street-2018.jpg"
+        },
+        {
+          "url": "/images/central-seed-2740f0ad4d-3.jpg",
+          "credit": "Nizzan Cohen, CC BY 4.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:Rehovot_Police_Station8.jpg"
+        }
+      ]
     },
     {
       "id": "central-seed-7b8ba8a15a",
@@ -501,7 +621,14 @@
       "season": "year_round",
       "_source": "https://www.imj.org.il/he/visit",
       "_scraped_on": "2026-08-31",
-      "official_url": "https://www.imj.org.il/he/visit"
+      "official_url": "https://www.imj.org.il/he/visit",
+      "images": [
+        {
+          "url": "/images/central-seed-7b8ba8a15a-1.jpg",
+          "credit": "Original uploader was אסף.צ at he.wikipedia, CC BY-SA 3.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:Israel_museum.JPG"
+        }
+      ]
     },
     {
       "id": "central-seed-65ac45ce7e",
@@ -554,7 +681,14 @@
       "season": "year_round",
       "_source": "https://www.yadvashem.org/he/museum",
       "_scraped_on": "2026-08-31",
-      "official_url": "https://www.yadvashem.org/he/museum"
+      "official_url": "https://www.yadvashem.org/he/museum",
+      "images": [
+        {
+          "url": "/images/central-seed-65ac45ce7e-1.jpg",
+          "credit": "Hagai Agmon-Snir حچاي اچمون-سنير חגי אגמון-שניר, CC BY-SA 4.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:YadVashemMar042023_01.jpg"
+        }
+      ]
     },
     {
       "id": "central-seed-272ad17aa8",
@@ -610,7 +744,14 @@
       "season": "summer_only",
       "_source": "https://waterpark.co.il/",
       "_scraped_on": "2026-08-31",
-      "official_url": "https://waterpark.co.il/"
+      "official_url": "https://waterpark.co.il/",
+      "images": [
+        {
+          "url": "/images/central-seed-272ad17aa8-1.jpg",
+          "credit": "Neukoln, CC BY-SA 3.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:WikiAir_IL-13-06_001.JPG"
+        }
+      ]
     },
     {
       "id": "central-vinino-petah-tikva",
@@ -711,7 +852,24 @@
       "season": "year_round",
       "_source": "https://tabitisrael.co.il/site/%D7%A8%D7%95%D7%96%D7%94-%D7%9E%D7%95%D7%93%D7%99%D7%A2%D7%99%D7%9F",
       "_scraped_on": "2026-09-01",
-      "official_url": "https://tabitisrael.co.il/site/%D7%A8%D7%95%D7%96%D7%94-%D7%9E%D7%95%D7%93%D7%99%D7%A2%D7%99%D7%9F"
+      "official_url": "https://tabitisrael.co.il/site/%D7%A8%D7%95%D7%96%D7%94-%D7%9E%D7%95%D7%93%D7%99%D7%A2%D7%99%D7%9F",
+      "images": [
+        {
+          "url": "/images/central-roza-modiin-1.jpg",
+          "credit": "Etibenlish, CC BY-SA 4.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:201124-kavim-191_(1).jpg"
+        },
+        {
+          "url": "/images/central-roza-modiin-2.jpg",
+          "credit": "McKaby, CC BY-SA 4.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:Mecalac_714_MW_crossrail_excavator.jpg"
+        },
+        {
+          "url": "/images/central-roza-modiin-3.jpg",
+          "credit": "McKaby, CC BY-SA 4.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:Dieci_f7000_crossrail_Cement_Mixer_Truck.jpg"
+        }
+      ]
     }
   ]
 }

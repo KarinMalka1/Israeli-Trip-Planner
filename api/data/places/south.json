@@ -54,7 +54,24 @@
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/en-bokek/",
       "_scraped_on": "2026-08-31",
-      "official_url": "https://www.parks.org.il/reserve-park/en-bokek/"
+      "official_url": "https://www.parks.org.il/reserve-park/en-bokek/",
+      "images": [
+        {
+          "url": "/images/south-seed-91a27f61f5-1.jpg",
+          "credit": "Ovedc, CC BY-SA 4.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:Beit_HaYotzer_Museum_-_By_Ovedc_02.jpg"
+        },
+        {
+          "url": "/images/south-seed-91a27f61f5-2.jpg",
+          "credit": "Hila Livne, CC0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:שלט_לשחרור_אוהד_יהלומי_בעין_בוקק,_2024.jpg"
+        },
+        {
+          "url": "/images/south-seed-91a27f61f5-3.jpg",
+          "credit": "Gideon Pisanty (Gidip) גדעון פיזנטי, CC BY 3.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:Suaeda_fruticosa_1.jpg"
+        }
+      ]
     },
     {
       "id": "south-seed-10ef768d6c",
@@ -135,7 +152,24 @@
       "season": "year_round",
       "_source": "https://omers-eilat.co.il/",
       "_scraped_on": "2026-08-31",
-      "official_url": "https://omers-eilat.co.il/"
+      "official_url": "https://omers-eilat.co.il/",
+      "images": [
+        {
+          "url": "/images/south-seed-21e19a180f-1.jpg",
+          "credit": "UK in Israel, CC BY 2.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:UK_Renewable_Energy_Mission_to_Israel_(5512950262).jpg"
+        },
+        {
+          "url": "/images/south-seed-21e19a180f-2.jpg",
+          "credit": "UK in Israel, CC BY 2.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:UK_Renewable_Energy_Mission_to_Israel_(5512513068).jpg"
+        },
+        {
+          "url": "/images/south-seed-21e19a180f-3.jpg",
+          "credit": "UK in Israel, CC BY 2.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:UK_Renewable_Energy_Mission_to_Israel_(5512022517).jpg"
+        }
+      ]
     },
     {
       "id": "south-seed-fa84d22776",
@@ -186,7 +220,24 @@
       "season": "year_round",
       "_source": "https://www.goda.co.il/",
       "_scraped_on": "2026-09-01",
-      "official_url": "https://www.goda.co.il/"
+      "official_url": "https://www.goda.co.il/",
+      "images": [
+        {
+          "url": "/images/south-seed-fa84d22776-1.jpg",
+          "credit": "McKaby, CC BY-SA 4.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:Zelek_Star_on_the_beach_at_Ashdod_Januar_2020_(3).jpg"
+        },
+        {
+          "url": "/images/south-seed-fa84d22776-2.jpg",
+          "credit": "Anatoli Axelrod, CC BY 3.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:Buildings_on_HaTaelet,_Ashdot_-_panoramio_(1).jpg"
+        },
+        {
+          "url": "/images/south-seed-fa84d22776-3.jpg",
+          "credit": "yfrimer, CC BY-SA 3.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:The_streets_of_Ashdod,_Israel_-_park_near_beach_-_panoramio_-_yfrimer_(12).jpg"
+        }
+      ]
     },
     {
       "id": "south-seed-28f32c9c7b",
@@ -234,7 +285,14 @@
       "season": "year_round",
       "_source": "https://hahavit.com/",
       "_scraped_on": "2026-09-01",
-      "official_url": "https://hahavit.com/"
+      "official_url": "https://hahavit.com/",
+      "images": [
+        {
+          "url": "/images/south-seed-28f32c9c7b-1.jpg",
+          "credit": "zeevveez, CC BY 4.0",
+          "source_url": "https://www.flickr.com/photos/29001414@N00/22963685235"
+        }
+      ]
     },
     {
       "id": "south-seed-94b2175ed5",
@@ -285,7 +343,24 @@
       "season": "year_round",
       "_source": "https://asadobamidbar.co.il/",
       "_scraped_on": "2026-09-01",
-      "official_url": "https://asadobamidbar.co.il/"
+      "official_url": "https://asadobamidbar.co.il/",
+      "images": [
+        {
+          "url": "/images/south-seed-94b2175ed5-1.jpg",
+          "credit": "V&A Dudush, CC BY 3.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:Panoramio_-_V&A_Dudush_-_Ovnat.jpg"
+        },
+        {
+          "url": "/images/south-seed-94b2175ed5-2.jpg",
+          "credit": "V&A Dudush, CC BY 3.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:Panoramio_-_V&A_Dudush_-_Ovnat_(1).jpg"
+        },
+        {
+          "url": "/images/south-seed-94b2175ed5-3.jpg",
+          "credit": "Elliot825, CC BY-SA 3.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:Driving_North_Along_Dead_Sea_-_panoramio.jpg"
+        }
+      ]
     },
     {
       "id": "south-makhtesh-ramon",
@@ -339,7 +414,14 @@
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/ramon-mm/",
       "_scraped_on": "2026-09-01",
-      "official_url": "https://www.parks.org.il/reserve-park/ramon-mm/"
+      "official_url": "https://www.parks.org.il/reserve-park/ramon-mm/",
+      "images": [
+        {
+          "url": "/images/south-makhtesh-ramon-1.jpg",
+          "credit": "Godot13, CC BY-SA 4.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:Israel-2013-Aerial_00-Negev-Makhtesh_Ramon.jpg"
+        }
+      ]
     }
   ]
 }

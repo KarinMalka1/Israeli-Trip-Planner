@@ -31,7 +31,24 @@
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/aynot-fakhum/",
       "_scraped_on": "2026-08-30",
-      "official_url": "https://www.parks.org.il/reserve-park/aynot-fakhum/"
+      "official_url": "https://www.parks.org.il/reserve-park/aynot-fakhum/",
+      "images": [
+        {
+          "url": "/images/north-seed-e5f5100140-1.jpg",
+          "credit": "חיליק אגמון, CC BY-SA 4.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:IHM_בריכת_פאחם.jpeg"
+        },
+        {
+          "url": "/images/north-seed-e5f5100140-2.jpg",
+          "credit": "חיליק אגמון, CC BY-SA 4.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:IHM_בריכת_פאחם_1.jpeg"
+        },
+        {
+          "url": "/images/north-seed-e5f5100140-3.jpg",
+          "credit": "Yotam Nachum, CC BY-SA 4.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:Einot_Pekham_1.jpg"
+        }
+      ]
     },
     {
       "id": "north-seed-3686f95c75",
@@ -99,7 +116,14 @@
       "season": "year_round",
       "_source": "https://www.parks.org.il/reserve-park/ubedya/",
       "_scraped_on": "2026-08-31",
-      "official_url": "https://www.parks.org.il/reserve-park/ubedya/"
+      "official_url": "https://www.parks.org.il/reserve-park/ubedya/",
+      "images": [
+        {
+          "url": "/images/north-seed-da9b27b966-1.jpg",
+          "credit": "Omry Barzilai (Q59672148), CC BY-SA 4.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:Archaeological_excavation_site_of_the_Ubeidiya_prehistoric_site_in_2021,_picture_taken_by_Omry_Barzilai.jpg"
+        }
+      ]
     },
     {
       "id": "north-seed-a6ce875f47",
@@ -237,7 +261,24 @@
       "season": "year_round",
       "_source": "https://he-il.facebook.com/Avis.Restaurant/",
       "_scraped_on": "2026-08-31",
-      "official_url": "https://he-il.facebook.com/Avis.Restaurant/"
+      "official_url": "https://he-il.facebook.com/Avis.Restaurant/",
+      "images": [
+        {
+          "url": "/images/north-seed-2d436a3c17-1.jpg",
+          "credit": "User:Mattes, Public domain",
+          "source_url": "https://commons.wikimedia.org/wiki/File:Israel_Batch_2_(195).JPG"
+        },
+        {
+          "url": "/images/north-seed-2d436a3c17-2.jpg",
+          "credit": "geagea, CC BY 3.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:Magen_David_Adom,_Tiberias_P1010794.JPG"
+        },
+        {
+          "url": "/images/north-seed-2d436a3c17-3.jpg",
+          "credit": "Rakoon, CC0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:20171212_133343-tverya-etz-khaim-synagouge.jpg"
+        }
+      ]
     },
     {
       "name_he": "Miname Cafe Restaurant",
@@ -291,7 +332,24 @@
       "_source": "https://www.instagram.com/miname.cafe/",
       "_scraped_on": "2026-09-01",
       "id": "north-seed-840d576ad5",
-      "official_url": "https://www.instagram.com/miname.cafe/"
+      "official_url": "https://www.instagram.com/miname.cafe/",
+      "images": [
+        {
+          "url": "/images/north-seed-840d576ad5-1.jpg",
+          "credit": "שלמה רודד, CC BY 2.5",
+          "source_url": "https://commons.wikimedia.org/wiki/File:125702_acre_-_sea_mosque_sinan_basha_PikiWiki_Israel.jpg"
+        },
+        {
+          "url": "/images/north-seed-840d576ad5-2.jpg",
+          "credit": "Hilary Perkins from London, UK, CC BY-SA 2.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:Akko_marina_(2178469649).jpg"
+        },
+        {
+          "url": "/images/north-seed-840d576ad5-3.jpg",
+          "credit": "User:Mattes, Public domain",
+          "source_url": "https://commons.wikimedia.org/wiki/File:Israel_Batch_3_(375).JPG"
+        }
+      ]
     },
     {
       "name_he": "מסעדת מגדלנה",
@@ -342,9 +400,21 @@
         "paid"
       ],
       "images": [
-        {"url": "/images/ein-hemed-1.jpg", "credit": "בדיקה", "source_url": "https://example.com"},
-        {"url": "/images/ein-hemed-2.jpg", "credit": "בדיקה", "source_url": "https://example.com"},
-        {"url": "/images/ein-hemed-3.jpg", "credit": "בדיקה", "source_url": "https://example.com"}
+        {
+          "url": "/images/ein-hemed-1.jpg",
+          "credit": "בדיקה",
+          "source_url": "https://example.com"
+        },
+        {
+          "url": "/images/ein-hemed-2.jpg",
+          "credit": "בדיקה",
+          "source_url": "https://example.com"
+        },
+        {
+          "url": "/images/ein-hemed-3.jpg",
+          "credit": "בדיקה",
+          "source_url": "https://example.com"
+        }
       ],
       "season": "year_round",
       "_source": "https://www.magdalenarest.co.il/",
@@ -401,7 +471,24 @@
       "_source": "https://www.batyaar.co.il/",
       "_scraped_on": "2026-09-01",
       "id": "north-seed-a36470fb67",
-      "official_url": "https://www.batyaar.co.il/"
+      "official_url": "https://www.batyaar.co.il/",
+      "images": [
+        {
+          "url": "/images/north-seed-a36470fb67-1.jpg",
+          "credit": "Yotam Nachum, CC0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:Bat_Yaar_Restaurant_Entrance.jpg"
+        },
+        {
+          "url": "/images/north-seed-a36470fb67-2.jpg",
+          "credit": "Yotam Nachum, CC0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:Bat_Yaar_2.jpg"
+        },
+        {
+          "url": "/images/north-seed-a36470fb67-3.jpg",
+          "credit": "Yotam Nachum, CC0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:Bat_Yaar_French_Fries.jpg"
+        }
+      ]
     },
     {
       "name_he": "Mercato by Omri Shahar",
@@ -452,7 +539,24 @@
       "_source": "https://www.mercatorest.co.il/",
       "_scraped_on": "2026-09-01",
       "id": "north-seed-866b861266",
-      "official_url": "https://www.mercatorest.co.il/"
+      "official_url": "https://www.mercatorest.co.il/",
+      "images": [
+        {
+          "url": "/images/north-seed-866b861266-1.jpg",
+          "credit": "דוד פלד, CC BY 2.5",
+          "source_url": "https://commons.wikimedia.org/wiki/File:95669_museum_of_the_gita_fighters_house_PikiWiki_Israel.jpg"
+        },
+        {
+          "url": "/images/north-seed-866b861266-2.jpg",
+          "credit": "דן פרופטה, CC BY-SA 4.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:עכו_ממבט_הרחפן_2017_-11.jpg"
+        },
+        {
+          "url": "/images/north-seed-866b861266-3.jpg",
+          "credit": "Liorca, CC BY-SA 4.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:נמל_ועיר_עתיקה.jpg"
+        }
+      ]
     },
     {
       "id": "north-seed-ae332f3d9b",
@@ -502,7 +606,14 @@
       "season": "year_round",
       "_source": "https://www.rallimuseums.com/Information",
       "_scraped_on": "2026-08-31",
-      "official_url": "https://www.rallimuseums.com/Information"
+      "official_url": "https://www.rallimuseums.com/Information",
+      "images": [
+        {
+          "url": "/images/north-seed-ae332f3d9b-1.jpg",
+          "credit": "Dr. Avishai  Teicher, CC BY 2.5",
+          "source_url": "https://commons.wikimedia.org/wiki/File:PikiWiki_Israel_33367_Ralli_Museum.JPG"
+        }
+      ]
     },
     {
       "id": "north-seed-58fbcc2b19",
@@ -612,7 +723,24 @@
       "season": "year_round",
       "_source": "https://he-il.facebook.com/alyasmin.rest/",
       "_scraped_on": "2026-09-01",
-      "official_url": "https://he-il.facebook.com/alyasmin.rest/"
+      "official_url": "https://he-il.facebook.com/alyasmin.rest/",
+      "images": [
+        {
+          "url": "/images/north-seed-a10059af03-1.jpg",
+          "credit": "Ori Mey Raz, CC BY-SA 4.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:IHM_כיכר_הסולטן_1.jpeg"
+        },
+        {
+          "url": "/images/north-seed-a10059af03-2.jpg",
+          "credit": "Ori Mey Raz, CC BY-SA 4.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:IHM_כיכר_הסולטן.jpeg"
+        },
+        {
+          "url": "/images/north-seed-a10059af03-3.jpg",
+          "credit": "Onzd, CC BY-SA 4.0",
+          "source_url": "https://commons.wikimedia.org/wiki/File:Israel_Hiking_Map_מג'דל_שמס.jpeg"
+        }
+      ]
     }
   ]
 }

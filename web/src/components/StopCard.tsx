@@ -1,4 +1,3 @@
-import { forwardRef, useEffect, useRef, useState } from "react";
 import type { Place, PlaceImage, Stop } from "../types";
 
 interface StopCardProps {
@@ -12,6 +11,13 @@ interface StopCardProps {
 // Every field here is read straight off the Stop the API returned — no
 // arithmetic, no derived end time. The API contract's own rule: "the client
 // never does time arithmetic."
+// Hebrew explanations for the two disabled-button states — shown as both
+// title and aria-label so the reason is available on hover and to screen
+// readers alike. can_remove/can_swap come from the API already computed
+// (SPEC section 7); this component only chooses which string to show.
+const CANNOT_REMOVE_LABEL = "לא ניתן להסיר — מסלול חייב לפחות 3 עצירות";
+const CANNOT_SWAP_LABEL = "לא ניתן להחליף — לא נמצאה עצירה חלופית במרחק הנסיעה שנבחר";
+
 export default function StopCard({ stop, index, onRemove, onSwap, disabled = false }: StopCardProps) {
   const { place } = stop;
   const isMeal = place.category === "meal";
@@ -43,7 +49,7 @@ export default function StopCard({ stop, index, onRemove, onSwap, disabled = fal
             <div className="flex flex-wrap items-center gap-2">
               <StopName place={place} />
               {isMeal && (
-                <span className="rounded-full bg-amber-200 px-2 py-0.5 text-xs font-medium text-amber-900 md:text-3xl">
+                <span className="rounded-full bg-amber-200 px-2 py-0.5 text-xs font-medium text-amber-900 md:text-sm">
                   ארוחה
                 </span>
               )}
@@ -51,28 +57,33 @@ export default function StopCard({ stop, index, onRemove, onSwap, disabled = fal
           </div>
           <button
             type="button"
-            aria-label={`הסר את ${place.name_he} מהמסלול`}
+            aria-label={stop.can_remove ? `הסר את ${place.name_he} מהמסלול` : CANNOT_REMOVE_LABEL}
+            title={stop.can_remove ? undefined : CANNOT_REMOVE_LABEL}
             onClick={() => onRemove(stop.place_id)}
-            disabled={disabled}
+            disabled={disabled || !stop.can_remove}
             className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-slate-300 text-slate-500 transition-colors hover:border-red-400 hover:text-red-600 disabled:cursor-not-allowed disabled:opacity-60 md:h-11 md:w-11"
           >
             <span aria-hidden="true">✕</span>
           </button>
         </div>
 
-        {stop.travel_min_from_prev > 0 && (
-          <p className="text-sm text-slate-500 md:text-base">{stop.travel_min_from_prev} דק׳ נסיעה מהעצירה הקודמת</p>
-        )}
+        <div className="flex flex-col gap-1">
+          {stop.travel_min_from_prev > 0 && (
+            <p className="text-sm leading-snug text-slate-500 md:text-lg">{stop.travel_min_from_prev} דק׳ נסיעה מהעצירה הקודמת</p>
+          )}
 
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-base text-slate-600 md:text-lg">
-          <span>מגיעים בשעה {stop.arrive_at}</span>
-          <span>משך ביקור: {stop.duration_min} דק׳</span>
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-base leading-snug text-slate-600 md:text-lg">
+            <span>מגיעים בשעה {stop.arrive_at}</span>
+            <span>משך ביקור: {stop.duration_min} דק׳</span>
+          </div>
         </div>
 
         <button
           type="button"
+          aria-label={stop.can_swap ? undefined : CANNOT_SWAP_LABEL}
+          title={stop.can_swap ? undefined : CANNOT_SWAP_LABEL}
           onClick={() => onSwap(stop.place_id)}
-          disabled={disabled}
+          disabled={disabled || !stop.can_swap}
           className="self-start rounded-full border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 transition-colors hover:border-emerald-400 hover:text-emerald-700 disabled:cursor-not-allowed disabled:opacity-60 md:px-4 md:py-2.5 md:text-base"
         >
           החלף עצירה
@@ -120,34 +131,15 @@ function StopName({ place }: { place: Place }) {
 // removing it and watching the ratio resolve correctly).
 const IMAGE_COLUMN_CLASS = "aspect-[16/9] w-full md:aspect-auto md:w-1/3 md:flex-none";
 
-// One large hero, up to two smaller ones beneath it, side by side. Clicking
-// a small image swaps it into the hero slot (pure local state — no API
-// call, no URL change); nothing is ever hidden, so this isn't a carousel.
-// The hero:small-row height ratio (flex-[3]:flex-[2], ~60%/40%) fills
-// whatever height the column ends up with rather than a fixed px, so this
-// scales with the text column instead of imposing its own height on the
-// card. Empty images is the common case (most restaurants and small sites
-// have no Commons coverage), so the fallback is a deliberate grey initial
-// filling the same column, not a broken icon.
+// A single static image, never interactive — the gallery/swap version was
+// removed because almost no place in the dataset has 3 free-licence
+// photos, so a carousel of thumbnails never had anything to show. images
+// stays a list (images[0] is shown, the rest ignored) purely so a gallery
+// can come back later without a data-shape change. Empty images is the
+// common case (most restaurants and small sites have no free photo at
+// all), so the fallback is a deliberate grey initial filling the same
+// column, not a broken icon.
 function PlaceImages({ images, name }: { images: PlaceImage[]; name: string }) {
-  const [featuredIndex, setFeaturedIndex] = useState(0);
-  // Swapping moves a button from the small row into the hero slot, a
-  // different position in the tree, so React remounts it and the browser
-  // drops focus to <body>. Refocus the new hero button after a user-driven
-  // swap so keyboard users don't lose their place — but not on first mount,
-  // where nothing has been interacted with yet.
-  const heroRef = useRef<HTMLButtonElement>(null);
-  const swappedByUser = useRef(false);
-
-  useEffect(() => {
-    if (swappedByUser.current) heroRef.current?.focus();
-  }, [featuredIndex]);
-
-  function handleSelect(index: number) {
-    swappedByUser.current = true;
-    setFeaturedIndex(index);
-  }
-
   if (images.length === 0) {
     return (
       <div className={IMAGE_COLUMN_CLASS}>
@@ -161,88 +153,34 @@ function PlaceImages({ images, name }: { images: PlaceImage[]; name: string }) {
     );
   }
 
-  const hero = images[featuredIndex];
-  const smallIndices = images.map((_, i) => i).filter((i) => i !== featuredIndex);
+  const image = images[0];
 
   return (
     <div className={`${IMAGE_COLUMN_CLASS} flex flex-col gap-1`}>
-      <ImageButton
-        ref={heroRef}
-        image={hero}
-        index={featuredIndex}
-        total={images.length}
-        name={name}
-        rounded="rounded-lg"
-        onSelect={handleSelect}
-        className="min-h-0 flex-[3]"
-      />
-      {smallIndices.length > 0 && (
-        <div className="flex min-h-0 flex-[2] gap-1">
-          {smallIndices.map((i) => (
-            <ImageButton
-              key={images[i].url}
-              image={images[i]}
-              index={i}
-              total={images.length}
-              name={name}
-              rounded="rounded-md"
-              onSelect={handleSelect}
-              className="h-full min-h-0 min-w-0 flex-1"
-            />
-          ))}
-        </div>
-      )}
+      {/* The <img> is position:absolute + inset-0, not a normal-flow flex
+          child of this wrapper. An in-flow <img> with h-full/object-cover
+          still carries its own real intrinsic aspect ratio, and when this
+          wrapper's own height comes from flex-1 inside a column
+          (PlaceImages) whose height is itself only known via the <li>'s
+          items-stretch, browsers fall back to that intrinsic ratio while
+          computing the column's un-stretched auto height — confirmed by
+          removing the <img> in that state and watching the whole column
+          collapse toward zero. Taking the <img> out of flow removes it
+          from that auto-size computation entirely, which is what lets the
+          image column actually follow the text column's height instead of
+          the reverse. */}
+      <div className="relative min-h-0 flex-1 overflow-hidden rounded-lg">
+        <img src={image.url} alt={name} className="absolute inset-0 h-full w-full object-cover rounded-lg" />
+      </div>
       <a
-        href={hero.source_url}
+        href={image.source_url}
         target="_blank"
         rel="noopener noreferrer"
-        title={hero.credit}
-        className="shrink-0 truncate text-center text-[10px] text-slate-400 hover:text-slate-600 md:text-3xl"
+        title={image.credit}
+        className="shrink-0 truncate text-center text-[10px] text-slate-400 hover:text-slate-600 md:text-sm"
       >
-        {hero.credit}
+        {image.credit}
       </a>
     </div>
   );
 }
-
-// index/total refer to the image's fixed position within the place's own
-// images array, not its current slot — so "תמונה 2 מתוך 3" keeps naming the
-// same photo whether it's currently featured or small.
-//
-// The <img> is position:absolute + inset-0, not a normal-flow flex child of
-// the button. An in-flow <img> with h-full/object-cover still carries its
-// own real intrinsic aspect ratio, and when this button's own height comes
-// from flex-grow inside a column (PlaceImages) whose height is itself only
-// known via items-stretch from a sibling, browsers fall back to that
-// intrinsic ratio while computing the column's un-stretched auto height —
-// confirmed by removing every <img> in that state and watching the whole
-// column collapse toward zero. Taking the <img> out of flow removes it from
-// that auto-size computation entirely, which is what lets the image column
-// actually follow the text column's height instead of the reverse.
-const ImageButton = forwardRef<
-  HTMLButtonElement,
-  {
-    image: PlaceImage;
-    index: number;
-    total: number;
-    name: string;
-    rounded: string;
-    onSelect: (index: number) => void;
-    className: string;
-  }
->(function ImageButton({ image, index, total, name, rounded, onSelect, className }, ref) {
-  return (
-    <button
-      ref={ref}
-      type="button"
-      onClick={() => onSelect(index)}
-      aria-label={`תמונה ${index + 1} מתוך ${total}`}
-      className={
-        `${className} ${rounded} relative block w-full overflow-hidden border-0 bg-transparent p-0 focus-visible:outline ` +
-        "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
-      }
-    >
-      <img src={image.url} alt={name} className={`absolute inset-0 h-full w-full object-cover ${rounded}`} />
-    </button>
-  );
-});

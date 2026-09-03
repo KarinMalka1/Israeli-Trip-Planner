@@ -258,6 +258,15 @@ class Stop(BaseModel):
     # Travel from the previous stop. Always 0 for the first stop: there is no
     # origin and no leg before it (rule 8).
     travel_min_from_prev: int = Field(ge=0)
+    # Whether the remove/swap button for this stop should be enabled — SPEC
+    # section 7's "the client does zero rule evaluation" applies here too, so
+    # the server decides, not a stop count the client would otherwise have to
+    # duplicate. build_day sets both True as a construction-time placeholder;
+    # ItineraryEditor.annotate() is what stamps the real values before an
+    # Itinerary ever reaches a response, using the exact same rules
+    # remove()/swap() themselves enforce.
+    can_remove: bool = True
+    can_swap: bool = True
 
 
 class Day(BaseModel):

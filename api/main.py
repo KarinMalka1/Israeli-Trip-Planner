@@ -139,6 +139,7 @@ def create_itinerary(
     planner: ItineraryPlanner = Depends(get_planner),
     places: PlaceRepository = Depends(get_places),
     store: ItineraryStore = Depends(get_store),
+    editor: ItineraryEditor = Depends(get_editor),
 ) -> Itinerary:
     """
     Plan a day from the two chips plus the weekday (US-1).
@@ -161,6 +162,7 @@ def create_itinerary(
         starts_at=body.starts_at,
         day_length=body.day_length,
     )
+    itinerary = editor.annotate(itinerary)
 
     _reject_if_invalid(itinerary, places)
     return store.save(itinerary)

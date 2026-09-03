@@ -63,6 +63,11 @@ export interface Stop {
   arrive_at: string;
   duration_min: number;
   travel_min_from_prev: number;
+  // Server-computed, same rules the /remove and /swap endpoints themselves
+  // enforce (SPEC section 7: the client does zero rule evaluation) — false
+  // means the button must render disabled, not "enabled but will fail".
+  can_remove: boolean;
+  can_swap: boolean;
 }
 
 export interface Day {
