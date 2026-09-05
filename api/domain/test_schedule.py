@@ -146,3 +146,104 @@ def test_open_access_place_is_unaffected_by_hours_verified():
     for verified in (True, False):
         place = _place(access=AccessType.OPEN, hours_verified=verified)
         assert schedule.is_available_on(place, Weekday.TUE, month=6) is True
+
+
+# --------------------------------------------------------------------------
+# Friday is a deadline on the visit, not a filter on closing time (bug fix).
+# --------------------------------------------------------------------------
+
+
+def _fri_hours(opens: str, closes: str) -> dict:
+    """All-null opening_hours except Friday, for isolating the Friday deadline."""
+    return {**{day: None for day in Weekday}, Weekday.FRI: (opens, closes)}
+
+
+def test_open_access_place_is_schedulable_on_friday():
+    """
+    The regression test for the bug: an access=="open" place has seven null
+    opening hours by design (SPEC section 10) and must not be read as
+    "closed on Friday" the way the old code did.
+    """
+    place = _place(access=AccessType.OPEN)
+    assert schedule.is_available_on(place, Weekday.FRI, month=6) is True
+
+
+def test_gated_place_open_friday_morning_to_evening_is_schedulable_early_not_late():
+    """
+    Fri 09:00-18:00, duration 120min: schedulable at 09:00 (ends 11:00, well
+    before the 15:00 deadline) but not at 14:00 (would end at 16:00).
+    """
+    place = _place(
+        access=AccessType.GATED,
+        hours_verified=True,
+        opening_hours=_fri_hours("09:00", "18:00"),
+        duration_min=120,
+    )
+    assert schedule.visit_fits_opening_hours(place, Weekday.FRI, "09:00") is True
+    assert schedule.visit_fits_opening_hours(place, Weekday.FRI, "14:00") is False
+
+
+def test_gated_place_open_only_after_the_friday_deadline_is_not_schedulable_at_all():
+    """Fri 16:00-20:00 opens after the 15:00 deadline — no visit can ever fit."""
+    place = _place(
+        access=AccessType.GATED,
+        hours_verified=True,
+        opening_hours=_fri_hours("16:00", "20:00"),
+        duration_min=30,
+    )
+    assert schedule.is_available_on(place, Weekday.FRI, month=6) is False
+    assert schedule._effective_window(place, Weekday.FRI) is None
+
+
+def test_validate_day_reports_rule_12_violation_when_friday_day_ends_after_1500():
+    place = _place(
+        access=AccessType.GATED,
+        hours_verified=True,
+        opening_hours=_fri_hours("09:00", "20:00"),
+        duration_min=390,  # 09:00 + 6.5h = 15:30
+    )
+    day = schedule.build_day([place], [0], starts_at="09:00")
+
+    problems = schedule.validate_day(
+        day, region=Region.CENTRAL, weekday=Weekday.FRI, max_leg_min=90, known_place_ids={place.id}
+    )
+
+    assert any(p.startswith("rule 12") for p in problems)
+
+
+def test_validate_day_reports_no_rule_12_violation_when_friday_day_ends_by_1500():
+    place = _place(
+        access=AccessType.GATED,
+        hours_verified=True,
+        opening_hours=_fri_hours("09:00", "20:00"),
+        duration_min=345,  # 09:00 + 5.75h = 14:45
+    )
+    day = schedule.build_day([place], [0], starts_at="09:00")
+
+    problems = schedule.validate_day(
+        day, region=Region.CENTRAL, weekday=Weekday.FRI, max_leg_min=90, known_place_ids={place.id}
+    )
+
+    assert not any(p.startswith("rule 12") for p in problems)
+
+
+def test_saturday_behaviour_is_unchanged_by_the_friday_fix():
+    place = _place(
+        access=AccessType.GATED,
+        hours_verified=True,
+        opening_hours={day: ("09:00", "18:00") for day in Weekday},
+        closed_on_shabbat=True,
+    )
+    assert schedule.is_available_on(place, Weekday.SAT, month=6) is False
+    assert schedule.is_available_on(place, Weekday.THU, month=6) is True
+
+
+def test_effective_window_is_unclamped_sunday_through_thursday():
+    """No deadline applies outside Friday, so the window is exactly the raw hours."""
+    place = _place(
+        access=AccessType.GATED,
+        hours_verified=True,
+        opening_hours={day: ("09:00", "20:00") for day in Weekday},
+    )
+    for weekday in (Weekday.SUN, Weekday.MON, Weekday.TUE, Weekday.WED, Weekday.THU):
+        assert schedule._effective_window(place, weekday) == ("09:00", "20:00")

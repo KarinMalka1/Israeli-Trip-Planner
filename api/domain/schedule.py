@@ -89,27 +89,64 @@ def add_minutes(hhmm: str, delta: int) -> str:
 # --------------------------------------------------------------------------
 
 
-def is_open_at(place: Place, weekday: Weekday, at: str) -> bool:
+def _effective_window(
+    place: Place,
+    weekday: Weekday,
+    shabbat_observant: bool = True,
+) -> tuple[str, str] | None:
+    """
+    The window this place can actually be visited in on this weekday, or None
+    when it cannot be visited at all.
+
+    Three things collapse into one pair here, which is why every other hours
+    check delegates to it rather than re-deriving them:
+
+      * a ``gated`` place's own ``opening_hours`` for the weekday (None => closed),
+      * an ``open`` place's fixed daylight window (it has no gate to describe),
+      * rule 12's Friday deadline, applied as a *clamp on the close time*
+        rather than as a rejection of the place.
+
+    Saturday's rule (a ``closed_on_shabbat`` place excluded outright) is
+    deliberately not applied here — that is a fact about the place, not
+    about its hours, and stays in ``shabbat.is_shabbat_eligible`` instead.
+    """
+    if place.access == AccessType.OPEN:
+        opens, closes = DAYLIGHT_START, DAYLIGHT_END
+    else:
+        window = place.opening_hours.get(weekday)
+        if window is None:
+            return None
+        opens, closes = window
+
+    deadline = shabbat.friday_deadline(weekday, shabbat_observant)
+    if deadline is not None:
+        # Zero-padded "HH:MM" compares correctly as a string.
+        closes = min(closes, deadline)
+
+    if opens >= closes:
+        return None
+    return opens, closes
+
+
+def is_open_at(place: Place, weekday: Weekday, at: str, shabbat_observant: bool = True) -> bool:
     """
     Rule 11 exactly as written: is this place open at this instant on this weekday?
 
-    ``opening_hours[weekday] is None`` means closed that day for a ``gated``
-    place, and a place closed that day is never scheduled. An ``open`` place
-    (SPEC section 10 amendment) has no gate for ``opening_hours`` to describe
-    at all — it is always seven nulls by design — so it is checked against
-    the fixed daylight window instead, not read as permanently closed.
+    Delegates to ``_effective_window`` for what "open" means on this weekday —
+    a ``gated`` place's own hours, an ``open`` place's daylight window, and
+    (when ``shabbat_observant``) Friday's 15:00 deadline clamped onto whichever
+    of those applies. ``None`` means closed outright, at any time.
     """
-    if place.access == AccessType.OPEN:
-        return DAYLIGHT_START <= at < DAYLIGHT_END
-
-    window = place.opening_hours.get(weekday)
+    window = _effective_window(place, weekday, shabbat_observant)
     if window is None:
         return False
     opens, closes = window
     return to_minutes(opens) <= to_minutes(at) < to_minutes(closes)
 
 
-def visit_fits_opening_hours(place: Place, weekday: Weekday, arrive_at: str) -> bool:
+def visit_fits_opening_hours(
+    place: Place, weekday: Weekday, arrive_at: str, shabbat_observant: bool = True
+) -> bool:
     """
     Stricter than rule 11: does the *whole* visit fit inside the opening window?
 
@@ -118,27 +155,24 @@ def visit_fits_opening_hours(place: Place, weekday: Weekday, arrive_at: str) -> 
     tighter test when choosing stops; ``validate_itinerary`` still checks the
     literal rule, so a hand-edited itinerary is judged by the spec, not by this.
 
-    ``open`` places use the same daylight window as ``is_open_at`` — the
-    whole visit must finish by ``DAYLIGHT_END``, not merely start before it.
+    Uses the same ``_effective_window`` as ``is_open_at``, so a Friday visit
+    must finish by the (already-clamped) close time, not merely start before it.
     """
-    arrival = to_minutes(arrive_at)
-
-    if place.access == AccessType.OPEN:
-        return to_minutes(DAYLIGHT_START) <= arrival and arrival + place.duration_min <= to_minutes(
-            DAYLIGHT_END
-        )
-
-    window = place.opening_hours.get(weekday)
+    window = _effective_window(place, weekday, shabbat_observant)
     if window is None:
         return False
     opens, closes = window
+    arrival = to_minutes(arrive_at)
     return to_minutes(opens) <= arrival and arrival + place.duration_min <= to_minutes(closes)
 
 
-def is_available_on(place: Place, weekday: Weekday, month: int) -> bool:
+def is_available_on(
+    place: Place, weekday: Weekday, month: int, shabbat_observant: bool = True
+) -> bool:
     """
-    Combined day-level filter: verified, open at all that weekday,
-    shabbat-eligible (rule 12), and in season (SPEC section 11 amendment).
+    Combined day-level filter: verified, open at all that weekday (with room
+    for its own duration), shabbat-eligible (rule 12), and in season (SPEC
+    section 11 amendment).
 
     ``month`` is 1-12. A ``summer_only`` place is excluded outside
     April-October; a ``year_round`` place is unaffected by ``month``.
@@ -149,13 +183,25 @@ def is_available_on(place: Place, weekday: Weekday, month: int) -> bool:
     "shown with invented hours". This never touches an ``open`` place: it has
     no gate and no hours to verify, so ``hours_verified`` says nothing about
     it either way (same reasoning as the daylight-window carve-out above).
+
+    The Friday deadline (rule 12) is now a clamp on the window, via
+    ``_effective_window``, rather than a rejection of the place — a gated
+    place open 16:00-20:00 on Friday has no room left after the deadline
+    clamps its close to 15:00, so ``opens >= closes`` there makes the window
+    ``None`` and this correctly excludes it, with no special case needed.
     """
     if place.access == AccessType.GATED and not place.hours_verified:
         return False
     if place.season == "summer_only" and month not in SUMMER_ONLY_MONTHS:
         return False
-    is_open_that_day = place.access == AccessType.OPEN or place.opening_hours.get(weekday) is not None
-    return is_open_that_day and shabbat.is_shabbat_eligible(place, weekday)
+    if not shabbat.is_shabbat_eligible(place, weekday):
+        return False
+
+    window = _effective_window(place, weekday, shabbat_observant)
+    if window is None:
+        return False
+    opens, closes = window
+    return to_minutes(closes) - to_minutes(opens) >= place.duration_min
 
 
 # --------------------------------------------------------------------------
@@ -345,12 +391,24 @@ def validate_day(
             )
 
     # -- Shabbat ----------------------------------------------------------
-    # Rule 12.
+    # Rule 12, Saturday half: unchanged — a closed_on_shabbat place is
+    # rejected outright. is_shabbat_eligible never fires outside Saturday
+    # now, so this loop has nothing left to do on any other weekday.
     for stop in stops:
         if not shabbat.is_shabbat_eligible(stop.place, weekday):
             problems.append(
                 f"rule 12: {stop.place_id!r} is not eligible on {weekday.value}"
             )
+
+    # Rule 12, Friday half: a deadline on the whole day, not a filter on any
+    # one stop's own closing time. Times are strictly increasing (rule 9), so
+    # if ends_at is within the deadline, every individual visit is too —
+    # checking the one thing here stands in for checking all seven stops.
+    deadline = shabbat.friday_deadline(weekday)
+    if deadline is not None and to_minutes(day.ends_at) > to_minutes(deadline):
+        problems.append(
+            f"rule 12: day ends at {day.ends_at}, after the Friday deadline {deadline}"
+        )
 
     return problems
 
