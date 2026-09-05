@@ -93,6 +93,11 @@ export interface Itinerary {
   // target band. Same shape as meal_included: day_length is a preference,
   // not a guarantee, and this is what the server actually managed.
   length_matched: boolean;
+  // Which of the two rule-12 Friday behaviours this itinerary was built
+  // under (SPEC section 17). Persisted here — not just on the request —
+  // because remove/swap/undo recompute a stored itinerary with no request
+  // of their own, same reason max_leg_min and weekday live here too.
+  shabbat_observant: boolean;
 }
 
 export interface CreateItineraryRequest {
@@ -107,6 +112,11 @@ export interface CreateItineraryRequest {
   starts_at?: StartsAt;
   // A preference, not a hard constraint — see Itinerary.length_matched.
   day_length?: DayLength;
+  // Selects which of two rule-12 Friday behaviours applies (SPEC section
+  // 17). Default true (observant): every visit ends by 15:00. false is an
+  // ordinary weekday — real hours/daylight apply. No effect Sunday-Thursday;
+  // Saturday's closed_on_shabbat exclusion is unconditional either way.
+  shabbat_observant?: boolean;
 }
 
 export interface PlaceRefRequest {
