@@ -89,6 +89,7 @@ class RuleBasedPlanner(ItineraryPlanner):
         with_meal: bool = True,
         starts_at: StartsAt = "09:00",
         day_length: DayLength = "long",
+        shabbat_observant: bool = True,
     ) -> Itinerary:
         """
         Build an itinerary, degrading through the section 4 ladder as needed.
@@ -110,15 +111,21 @@ class RuleBasedPlanner(ItineraryPlanner):
         meal-free day inside it. Either preference can still need to relax
         the leg cap along the way; ``relaxed_to`` reflects whichever attempt
         actually produced the returned day.
+
+        ``shabbat_observant`` (rule 12, amended, SPEC section 17) selects
+        which Friday behaviour applies and is threaded into the candidate
+        pool and every opening-hours check below — never into the search
+        algorithm itself. It is echoed back on ``Itinerary.shabbat_observant``
+        so a later edit recomputes under the same rule the day was built under.
         """
         if seed is None:
             seed = random.randrange(_RANDOM_SEED_UPPER_BOUND)
         rng = random.Random(seed)
 
-        candidates = self._places.candidates(region, weekday, month)
+        candidates = self._places.candidates(region, weekday, month, shabbat_observant)
         logger.debug(
-            "planning %s/%s cap=%dmin seed=%d with_meal=%s starts_at=%s day_length=%s: "
-            "%d candidate places",
+            "planning %s/%s cap=%dmin seed=%d with_meal=%s starts_at=%s day_length=%s "
+            "shabbat_observant=%s: %d candidate places",
             region.value,
             weekday.value,
             max_leg_min,
@@ -126,6 +133,7 @@ class RuleBasedPlanner(ItineraryPlanner):
             with_meal,
             starts_at,
             day_length,
+            shabbat_observant,
             len(candidates),
         )
 
@@ -149,7 +157,7 @@ class RuleBasedPlanner(ItineraryPlanner):
         for require_meal, band in attempts:
             pool = candidates if require_meal else meal_free_candidates
             result = self._search_across_ladder(
-                pool, max_leg_min, weekday, rng, starts_at, require_meal, band
+                pool, max_leg_min, weekday, rng, starts_at, require_meal, band, shabbat_observant
             )
             if result is not None:
                 meal_included = require_meal
@@ -171,6 +179,7 @@ class RuleBasedPlanner(ItineraryPlanner):
                 seed=seed,
                 meal_included=meal_included,
                 length_matched=length_matched,
+                shabbat_observant=shabbat_observant,
             )
 
         # Fallback step 2: no schedule is possible, so hand back the region's
@@ -193,6 +202,7 @@ class RuleBasedPlanner(ItineraryPlanner):
             seed=seed,
             meal_included=False,
             length_matched=False,
+            shabbat_observant=shabbat_observant,
         )
 
     def _search_across_ladder(
@@ -204,10 +214,13 @@ class RuleBasedPlanner(ItineraryPlanner):
         starts_at: str,
         require_meal: bool,
         target_band: Optional[tuple[int, int]],
+        shabbat_observant: bool,
     ) -> Optional[tuple[Day, int]]:
         """Walk the relaxation ladder once, returning the first (day, cap used) that succeeds."""
         for attempt_cap in self._relaxation_ladder(max_leg_min):
-            day = self._search_day(candidates, attempt_cap, weekday, rng, starts_at, require_meal, target_band)
+            day = self._search_day(
+                candidates, attempt_cap, weekday, rng, starts_at, require_meal, target_band, shabbat_observant
+            )
             if day is not None:
                 return day, attempt_cap
         return None
@@ -236,6 +249,7 @@ class RuleBasedPlanner(ItineraryPlanner):
         starts_at: str,
         require_meal: bool,
         target_band: Optional[tuple[int, int]],
+        shabbat_observant: bool,
     ) -> Optional[Day]:
         """
         Find one valid day among ``candidates`` at this leg cap, or ``None``.
@@ -263,7 +277,7 @@ class RuleBasedPlanner(ItineraryPlanner):
         if len(candidates) < MIN_STOPS:
             return None
 
-        starts = self._start_order(candidates, weekday, rng, starts_at)
+        starts = self._start_order(candidates, weekday, rng, starts_at, shabbat_observant)
         budget = [self._search_budget]
 
         stop_counts = list(PREFERRED_STOP_COUNTS)
@@ -293,6 +307,7 @@ class RuleBasedPlanner(ItineraryPlanner):
                     starts_at=starts_at,
                     require_meal=require_meal,
                     target_band=target_band,
+                    shabbat_observant=shabbat_observant,
                 )
                 if found is not None:
                     chain, legs = found
@@ -316,6 +331,7 @@ class RuleBasedPlanner(ItineraryPlanner):
         starts_at: str,
         require_meal: bool,
         target_band: Optional[tuple[int, int]],
+        shabbat_observant: bool,
     ) -> Optional[tuple[list[Place], list[int]]]:
         """
         Depth-first extension of a partial chain, one stop at a time.
@@ -372,6 +388,7 @@ class RuleBasedPlanner(ItineraryPlanner):
             max_leg_min=max_leg_min,
             weekday=weekday,
             rng=rng,
+            shabbat_observant=shabbat_observant,
         ):
             budget[0] -= 1
             if budget[0] <= 0:
@@ -390,6 +407,7 @@ class RuleBasedPlanner(ItineraryPlanner):
                 starts_at=starts_at,
                 require_meal=require_meal,
                 target_band=target_band,
+                shabbat_observant=shabbat_observant,
             )
             if found is not None:
                 return found
@@ -405,6 +423,7 @@ class RuleBasedPlanner(ItineraryPlanner):
         max_leg_min: int,
         weekday: Weekday,
         rng: random.Random,
+        shabbat_observant: bool,
     ) -> list[tuple[Place, int, int]]:
         """
         Every legal next stop from ``last``, as ``(place, travel_min, arrive_min)``.
@@ -433,7 +452,7 @@ class RuleBasedPlanner(ItineraryPlanner):
 
             # Rule 11 (strengthened): the whole visit must fit inside the
             # opening window, not merely the moment of arrival.
-            if not schedule.visit_fits_opening_hours(place, weekday, arrive_at):
+            if not schedule.visit_fits_opening_hours(place, weekday, arrive_at, shabbat_observant):
                 continue
 
             # Rule 4: at most one meal, and only inside the midday window.
@@ -502,6 +521,7 @@ class RuleBasedPlanner(ItineraryPlanner):
         weekday: Weekday,
         rng: random.Random,
         starts_at: str,
+        shabbat_observant: bool,
     ) -> list[Place]:
         """
         Every valid first stop, in random order (lever 1 of 3 for variety).
@@ -522,7 +542,7 @@ class RuleBasedPlanner(ItineraryPlanner):
         openable = [
             place
             for place in candidates
-            if schedule.visit_fits_opening_hours(place, weekday, starts_at)
+            if schedule.visit_fits_opening_hours(place, weekday, starts_at, shabbat_observant)
         ]
         rng.shuffle(openable)
         return openable

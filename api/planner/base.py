@@ -45,6 +45,7 @@ class ItineraryPlanner(ABC):
         with_meal: bool = True,
         starts_at: StartsAt = "09:00",
         day_length: DayLength = "long",
+        shabbat_observant: bool = True,
     ) -> Itinerary:
         """
         Build one itinerary for the given region, leg cap and weekday.
@@ -81,6 +82,16 @@ class ItineraryPlanner(ABC):
         lands in the target band (e.g. a late ``starts_at`` with "long" is
         often impossible once opening hours bite) and report that via
         ``Itinerary.length_matched``, never by failing down to fallback step 2.
+
+        ``shabbat_observant`` (rule 12, amended, SPEC section 17) selects
+        which of two Friday behaviours applies: every visit ends by 15:00
+        (default, True) or an ordinary weekday with real hours/daylight
+        (False). It has no effect Sunday-Thursday. Saturday's
+        ``closed_on_shabbat`` exclusion is unconditional either way — this
+        flag only ever changes Friday's deadline, never Saturday's factual
+        filter. Implementations must persist the value they actually used
+        onto ``Itinerary.shabbat_observant``, since edits recompute a stored
+        itinerary with no request of their own.
 
         Implementations must not raise on a sparse region: too few places is a
         normal outcome that the section 4 fallback ladder handles.

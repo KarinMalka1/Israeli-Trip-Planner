@@ -189,7 +189,9 @@ class ItineraryEditor:
         # Re-timing shifts everything after the edit, so a stop that was open
         # on the old clock can be closed on the new one. Check before returning.
         for stop in day.stops:
-            if not schedule.is_open_at(stop.place, itinerary.weekday, stop.arrive_at):
+            if not schedule.is_open_at(
+                stop.place, itinerary.weekday, stop.arrive_at, itinerary.shabbat_observant
+            ):
                 logger.info(
                     "reschedule puts %s outside opening hours at %s",
                     stop.place_id,
@@ -234,7 +236,9 @@ class ItineraryEditor:
         after = current[index + 1] if index + 1 < len(current) else None
 
         scored: list[tuple[int, str, Place]] = []
-        for place in self._places.candidates(itinerary.region, itinerary.weekday):
+        for place in self._places.candidates(
+            itinerary.region, itinerary.weekday, shabbat_observant=itinerary.shabbat_observant
+        ):
             if place.id in used:
                 continue
 

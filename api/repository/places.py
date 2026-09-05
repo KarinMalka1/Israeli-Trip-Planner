@@ -187,7 +187,13 @@ class PlaceRepository:
         """
         return list(self._by_region.get(region, []))
 
-    def candidates(self, region: Region, weekday: Weekday, month: Optional[int] = None) -> list[Place]:
+    def candidates(
+        self,
+        region: Region,
+        weekday: Weekday,
+        month: Optional[int] = None,
+        shabbat_observant: bool = True,
+    ) -> list[Place]:
         """
         The planner's starting set: in-region, open that weekday, shabbat-eligible, in season.
 
@@ -199,12 +205,17 @@ class PlaceRepository:
         ``month`` defaults to the current calendar month when omitted — a
         remove/swap edit has no request date of its own to carry forward, so
         "now" is the only sensible default for it.
+
+        ``shabbat_observant`` (SPEC section 17) only changes rule 12's Friday
+        half — the deadline ``schedule.is_available_on`` clamps a place's
+        window against. Saturday's ``closed_on_shabbat`` exclusion is
+        unconditional regardless of this flag.
         """
         effective_month = month if month is not None else dt.date.today().month
         return [
             place
             for place in self._by_region.get(region, [])
-            if schedule.is_available_on(place, weekday, effective_month)
+            if schedule.is_available_on(place, weekday, effective_month, shabbat_observant)
         ]
 
     def __len__(self) -> int:

@@ -45,7 +45,14 @@ def _dense_matrix(places: list[Place], leg_minutes: int = 15) -> DistanceMatrix:
     return DistanceMatrix(minutes)
 
 
-def _itinerary(day_places: list[Place], matrix: DistanceMatrix, *, max_leg_min: int = 45) -> Itinerary:
+def _itinerary(
+    day_places: list[Place],
+    matrix: DistanceMatrix,
+    *,
+    max_leg_min: int = 45,
+    weekday: Weekday = Weekday.TUE,
+    shabbat_observant: bool = True,
+) -> Itinerary:
     """Build a valid one-day itinerary directly from an ordered place list, bypassing the planner."""
     legs = [0] + [matrix.travel_min(a.id, b.id) for a, b in zip(day_places, day_places[1:])]
     day = schedule.build_day(day_places, legs, starts_at="09:00")
@@ -53,11 +60,12 @@ def _itinerary(day_places: list[Place], matrix: DistanceMatrix, *, max_leg_min: 
         id="test-itinerary",
         region=day_places[0].region,
         max_leg_min=max_leg_min,
-        weekday=Weekday.TUE,
+        weekday=weekday,
         days=[day],
         seed=1,
         meal_included=False,
         length_matched=True,
+        shabbat_observant=shabbat_observant,
     )
 
 
@@ -180,3 +188,68 @@ def test_swap_result_flags_match_a_fresh_annotate_call():
     actual = [(stop.can_remove, stop.can_swap) for stop in edited.days[0].stops]
     expected = [(stop.can_remove, stop.can_swap) for stop in reannotated.days[0].stops]
     assert actual == expected
+
+
+# --------------------------------------------------------------------------
+# shabbat_observant: the editor must read it off the Itinerary it was
+# handed, never from a default — an edit must not silently change the rule
+# the day was built under (BRIEF_shabbat_mode.md Part 3, item 6).
+# --------------------------------------------------------------------------
+
+
+def test_swap_honours_the_itinerary_shabbat_observant_false_on_friday():
+    """
+    Three open-access (daylight 07:00-18:00) places, 170min each, 15min legs:
+    p0 09:00-11:50, p1 12:05-14:55, p2 15:10-18:00. p2's 15:10 arrival is only
+    legal on a Friday when shabbat_observant is False (no 15:00 deadline) —
+    if the editor read a default True instead of the itinerary's own False,
+    every reschedule attempt would fail the (wrongly clamped) opening-hours
+    check and swap() would silently no-op instead of actually swapping.
+    """
+    places = [_open_place(i, duration_min=170) for i in range(3)]
+    spare = _open_place(99, duration_min=170)
+    matrix = _dense_matrix(places + [spare])
+    editor = ItineraryEditor(PlaceRepository(places + [spare]), matrix)
+    itinerary = _itinerary(places, matrix, weekday=Weekday.FRI, shabbat_observant=False)
+
+    assert schedule.validate_itinerary(itinerary, {p.id for p in places}) == []
+
+    edited = editor.swap(itinerary, places[0].id)
+
+    assert edited is not None
+    assert edited.days[0].stops[0].place_id == spare.id
+    assert edited.days[0].stops[-1].arrive_at == "15:10"
+
+
+def test_remove_honours_the_itinerary_shabbat_observant_false_on_friday():
+    """Same setup as the swap test, but removing the trailing spare stop instead."""
+    places = [_open_place(i, duration_min=170) for i in range(3)]
+    tail = _open_place(99, duration_min=60)
+    matrix = _dense_matrix(places + [tail])
+    editor = ItineraryEditor(PlaceRepository(places + [tail]), matrix)
+    itinerary = _itinerary(places + [tail], matrix, weekday=Weekday.FRI, shabbat_observant=False)
+
+    edited = editor.remove(itinerary, tail.id)
+
+    assert edited is not None
+    assert [stop.place_id for stop in edited.days[0].stops] == [p.id for p in places]
+    assert edited.days[0].stops[-1].arrive_at == "15:10"
+
+
+def test_swap_fails_to_find_an_alternative_when_the_itinerary_is_observant():
+    """
+    Control for the test above: with shabbat_observant=True on the same
+    Friday setup, the 15:00 deadline clamps daylight to end at 15:00, so
+    p2's 15:10 arrival is illegal and no reschedule (including the identity
+    one) can succeed — swap must no-op rather than silently ignoring the flag.
+    """
+    places = [_open_place(i, duration_min=170) for i in range(3)]
+    spare = _open_place(99, duration_min=170)
+    matrix = _dense_matrix(places + [spare])
+    editor = ItineraryEditor(PlaceRepository(places + [spare]), matrix)
+    itinerary = _itinerary(places, matrix, weekday=Weekday.FRI, shabbat_observant=True)
+
+    edited = editor.swap(itinerary, places[0].id)
+
+    assert edited is not None
+    assert edited.days[0].stops[0].place_id == places[0].id  # unchanged: no-op

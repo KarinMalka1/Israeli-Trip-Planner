@@ -161,6 +161,7 @@ def create_itinerary(
         with_meal=body.with_meal,
         starts_at=body.starts_at,
         day_length=body.day_length,
+        shabbat_observant=body.shabbat_observant,
     )
     itinerary = editor.annotate(itinerary)
 

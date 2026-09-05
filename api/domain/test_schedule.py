@@ -227,6 +227,28 @@ def test_validate_day_reports_no_rule_12_violation_when_friday_day_ends_by_1500(
     assert not any(p.startswith("rule 12") for p in problems)
 
 
+def test_validate_day_reports_no_rule_12_violation_after_1500_when_not_observant():
+    """SPEC section 17: shabbat_observant=False makes Friday an ordinary weekday."""
+    place = _place(
+        access=AccessType.GATED,
+        hours_verified=True,
+        opening_hours=_fri_hours("09:00", "20:00"),
+        duration_min=390,  # 09:00 + 6.5h = 15:30
+    )
+    day = schedule.build_day([place], [0], starts_at="09:00")
+
+    problems = schedule.validate_day(
+        day,
+        region=Region.CENTRAL,
+        weekday=Weekday.FRI,
+        max_leg_min=90,
+        known_place_ids={place.id},
+        shabbat_observant=False,
+    )
+
+    assert not any(p.startswith("rule 12") for p in problems)
+
+
 def test_saturday_behaviour_is_unchanged_by_the_friday_fix():
     place = _place(
         access=AccessType.GATED,

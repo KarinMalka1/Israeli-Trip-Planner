@@ -14,6 +14,7 @@ from pathlib import Path
 
 import pytest
 
+from api.models import AccessType, Category, DescriptionSource, Place, Region, Weekday
 from api.repository.places import PlaceRepository
 
 
@@ -197,3 +198,58 @@ def test_tag_in_vocabulary_is_fine(tmp_path):
 
     repository = PlaceRepository.load(tmp_path)
     assert repository.get("central-good-tag") is not None
+
+
+# --------------------------------------------------------------------------
+# candidates(): shabbat_observant (SPEC section 17) only changes rule 12's
+# Friday half, via the deadline schedule.is_available_on clamps against.
+# --------------------------------------------------------------------------
+
+
+def _gated_place(**overrides) -> Place:
+    base: dict = dict(
+        id="central-fri-late",
+        name_he="מקום בדיקה",
+        description_he="",
+        tip_he="",
+        description_source=DescriptionSource.GENERATED,
+        category=Category.NATURE,
+        region=Region.CENTRAL,
+        access=AccessType.GATED,
+        lat=32.0,
+        lng=34.9,
+        duration_min=60,
+        opening_hours={**{day: None for day in Weekday}, Weekday.FRI: ("16:00", "20:00")},
+        hours_verified=True,
+        closed_on_shabbat=False,
+        kid_friendly=False,
+        accessible=False,
+        tags=[],
+    )
+    base.update(overrides)
+    return Place(**base)
+
+
+def test_candidates_excludes_a_late_opening_friday_place_when_observant():
+    """Fri 16:00-20:00 opens after the 15:00 deadline — no room for any visit."""
+    place = _gated_place()
+    repository = PlaceRepository([place])
+
+    assert repository.candidates(Region.CENTRAL, Weekday.FRI, month=6, shabbat_observant=True) == []
+
+
+def test_candidates_includes_the_same_place_on_friday_when_not_observant():
+    """Without the deadline, Fri 16:00-20:00 is an ordinary window."""
+    place = _gated_place()
+    repository = PlaceRepository([place])
+
+    result = repository.candidates(Region.CENTRAL, Weekday.FRI, month=6, shabbat_observant=False)
+
+    assert [p.id for p in result] == [place.id]
+
+
+def test_candidates_defaults_to_observant():
+    place = _gated_place()
+    repository = PlaceRepository([place])
+
+    assert repository.candidates(Region.CENTRAL, Weekday.FRI, month=6) == []

@@ -282,6 +282,7 @@ def validate_day(
     weekday: Weekday,
     max_leg_min: int,
     known_place_ids: Iterable[str],
+    shabbat_observant: bool = True,
 ) -> list[str]:
     """
     Check one day against rules 1-12 and return every violation found.
@@ -289,6 +290,10 @@ def validate_day(
     Returns a list rather than raising so the planner can log exactly why a
     candidate was rejected, and so tests read as an assertion on an empty list.
     Messages are English: they are internal diagnostics, never user-facing (rule 13).
+
+    ``shabbat_observant`` (SPEC section 17) only affects rule 11 (via
+    ``is_open_at``) and rule 12's Friday deadline below — Saturday's
+    ``closed_on_shabbat`` exclusion is unconditional regardless of it.
     """
     problems: list[str] = []
     known = set(known_place_ids)
@@ -385,7 +390,7 @@ def validate_day(
 
     # Rule 11: every stop open on arrival.
     for stop in stops:
-        if not is_open_at(stop.place, weekday, stop.arrive_at):
+        if not is_open_at(stop.place, weekday, stop.arrive_at, shabbat_observant):
             problems.append(
                 f"rule 11: {stop.place_id!r} is not open at {stop.arrive_at} on {weekday.value}"
             )
@@ -404,7 +409,7 @@ def validate_day(
     # one stop's own closing time. Times are strictly increasing (rule 9), so
     # if ends_at is within the deadline, every individual visit is too —
     # checking the one thing here stands in for checking all seven stops.
-    deadline = shabbat.friday_deadline(weekday)
+    deadline = shabbat.friday_deadline(weekday, shabbat_observant)
     if deadline is not None and to_minutes(day.ends_at) > to_minutes(deadline):
         problems.append(
             f"rule 12: day ends at {day.ends_at}, after the Friday deadline {deadline}"
@@ -419,6 +424,11 @@ def validate_itinerary(itinerary: Itinerary, known_place_ids: Iterable[str]) -> 
 
     The API must never return an invalid itinerary, so this is the last gate
     before a response leaves the planner.
+
+    ``shabbat_observant`` is read off the itinerary itself, not taken as a
+    parameter here — the whole point of persisting it on ``Itinerary`` (SPEC
+    section 17) is that this validator, and callers like
+    ``main.py::_reject_if_invalid``, never need to know it separately.
     """
     problems: list[str] = []
 
@@ -440,6 +450,7 @@ def validate_itinerary(itinerary: Itinerary, known_place_ids: Iterable[str]) -> 
                 weekday=itinerary.weekday,
                 max_leg_min=itinerary.max_leg_min,
                 known_place_ids=known_place_ids,
+                shabbat_observant=itinerary.shabbat_observant,
             )
         )
 

@@ -313,6 +313,13 @@ class Itinerary(BaseModel):
     # day is valid (still inside the hard 4-9h rule 10 bound) but outside the
     # preferred band.
     length_matched: bool
+    # Rule 12 (amended, SPEC section 17): which of the two Friday behaviours
+    # this itinerary was built under. Persisted here — not just read off the
+    # request — because remove/swap/undo recompute a stored itinerary with no
+    # request of their own, the same reason max_leg_min and weekday live here
+    # too. Saturday's closed_on_shabbat exclusion is unconditional either way
+    # (see domain/shabbat.py); this only ever changes Friday's deadline.
+    shabbat_observant: bool
 
 
 class CreateItineraryRequest(BaseModel):
@@ -345,6 +352,16 @@ class CreateItineraryRequest(BaseModel):
     # Rule 10 (amended): a preference for a band inside the hard 4-9h bound —
     # see Itinerary.length_matched for what happens when it can't be met.
     day_length: DayLength = DEFAULT_DAY_LENGTH
+    # Rule 12 (amended, SPEC section 17): selects which of two documented
+    # Friday behaviours applies — every visit ends by 15:00 (default, True)
+    # vs. an ordinary weekday with real hours/daylight (False). Saturday's
+    # closed_on_shabbat exclusion is unconditional and unaffected either way.
+    # Defaults to True (observant) because the two failure modes are not
+    # symmetric: defaulting False and being wrong schedules an observant user
+    # into Shabbat, while defaulting True and being wrong only ends a secular
+    # user's Friday earlier than it had to — recoverable with one tap, and
+    # this also preserves pre-amendment behaviour.
+    shabbat_observant: bool = True
 
 
 class PlaceRefRequest(BaseModel):
