@@ -36,12 +36,13 @@ server, restored on load.
 ## 2. The user controls
 
 The MVP shipped with two rows of three chips and nothing else. It now ships
-five: region, max drive per leg, meal preference, start time and day length
-(meal preference is a section 10-era addition; start time and day length are
-section 13's — see the change log). This section describes what actually
-ships today; the tension that growth creates with the original
-max-3-options-per-row constraint is addressed at the end of this section
-rather than quietly dropped.
+five: region, max drive per leg, meal preference, day length and shabbat
+observance (meal preference is a section 10-era addition; day length is
+section 13's; shabbat observance is section 17's). This section describes
+what actually ships today. Every row here stays inside the original
+max-3-options-per-row constraint — the one row that did not, start time, was
+cut; its history is recorded at the end of this section rather than quietly
+dropped from it.
 
 **Region** — a hard boundary. Every stop in an itinerary belongs to the
 selected region. Cross-region itineraries do not exist.
@@ -71,30 +72,38 @@ meal stop, positioned 12:00-15:00): `with_meal: false` excludes meal places
 from the search entirely, `true` tries to include one before falling back to
 a meal-free day, and the response's `meal_included` says which happened.
 
-**Start time** — when the first stop arrives. Chips: 08:00 / 09:00 / 10:00 /
-11:00. Default 09:00 (rule 8, amended section 13). `ends_at` is still always
-computed server-side; the user never picks it.
-
 **Day length** — a preference for how long the day runs. Chips: יום קצר /
 יום ארוך (short / long). Default long. Targets a narrower band inside rule
 10's hard 4-9h bound (section 13); `length_matched` in the response says
 whether the returned day actually landed inside it.
 
-**Tension with the max-3-options rule.** The original accessibility
-constraint — at most three chip rows, at most three options per row — is now
-broken on both counts: five rows ship, not two or three, and start time
-carries four options, not three (flagged in the component itself,
-`web/src/components/StartTimeChips.tsx`, rather than silently resolved).
-Region, drive time, meal and day length each earn their place by mapping to
-a distinct, otherwise-invisible planner behavior a user would reasonably
-want to steer — which stops exist at all, how far apart they can be, whether
-one is a meal, and how long the day runs — and each stays inside the
-three-option cap. Start time is the odd one out on both counts: it is the
-newest addition, it already exceeds three options, and shifting the whole
-day's clock is a smaller behavioral change than the other four. If this
-constraint has to be restored rather than re-justified, start time is what
-we would cut first — collapsing back to the original fixed 09:00 default —
-not one of the other four.
+**Shabbat observance** (section 17) — which of two rule-12 Friday behaviours
+applies. Chips: שומר שבת / לא שומר שבת. Default שומר שבת (`true`): every
+visit ends by 15:00. `false` treats Friday as an ordinary weekday. Inert on
+every other day of the week; see section 17 for the reasoning, and for why
+Saturday is untouched by this row regardless of which chip is selected.
+
+**History: a sixth row that was added, measured, and cut.** For a period
+this section documented a sixth control, start time (08:00 / 09:00 / 10:00 /
+11:00, default 09:00, rule 8 amended section 13), sitting alongside these
+five. It was the only row ever shipped with four options rather than three,
+which broke the original accessibility constraint — at most three chip rows,
+at most three options per row — on both counts at once: six rows, not five,
+and one of them over the per-row cap. That constraint's own text named start
+time as what to cut first if it ever had to be restored rather than
+re-justified, precisely because shifting the day's clock is a smaller
+behavioural change than removing any of the other five:
+`web/src/components/StartTimeChips.tsx` is deleted, `startsAt` state and its
+chip are gone from `web/src/App.tsx`, and the constraint holds again — five
+rows, each inside the three-option cap. The capability start time added is
+not gone with it:
+`starts_at` stays a `CreateItineraryRequest` field, `ItineraryPlanner.plan`
+still takes it, and the server still defaults it to `"09:00"` — cutting the
+control cost nothing on the contract, and `planner/llm.py` will be able to
+infer a start time from free text later without touching it. The fact that
+this row was cut rather than re-justified, once measured against the
+constraint it broke, is the more interesting record than the row itself ever
+was.
 
 ---
 
@@ -559,3 +568,154 @@ The current dataset has zero `gated` places with `hours_verified == false`,
 so this filter changes nothing today, in any region. It exists to block the
 day one does appear rather than let it silently reach a user with invented
 hours.
+
+---
+
+## 17. Amendment: Friday is a deadline, `shabbat_observant` (2026-09-05)
+
+### Rule 12's Friday half was a bug, corrected
+
+Rule 12 (section 3) said: *"If Friday, every stop must close before 15:00 in
+its own hours."* That was implemented as a filter on the place's own closing
+time, and it was wrong twice over:
+
+1. An `access == "open"` place has seven `null` opening hours **by design**
+   (section 10) — there is no gate for a weekly schedule to describe. The old
+   code read that `null` as "closed on Friday" and dropped every such place,
+   every Friday.
+2. Even for a `gated` place, "closes by 15:00" is stricter than the rule
+   ever needed. A museum open 09:00–18:00 on Friday can be visited
+   09:00–11:00 with the user home long before Shabbat. The rule the product
+   actually wants is *the visit ends by 15:00*, not *the place shuts by 15:00*.
+
+Rule 12's Friday half is now: **every visit must end by 15:00; the day's
+`ends_at` must be `<= 15:00`.** This is enforced as a clamp on the effective
+opening window (`domain/schedule.py`'s `_effective_window`), not as a
+rejection of the place — a `gated` place open 16:00–20:00 on Friday still has
+no room after the clamp and is correctly unschedulable, with no special case
+needed. Measured on the seed, places available on Friday:
+
+| region  | before | after |
+|---------|--------|-------|
+| north   | 2      | 12    |
+| central | 3      | 15    |
+| south   | 0      | 5     |
+
+Saturday's rule — a `closed_on_shabbat` place is never scheduled, regardless
+of what `opening_hours["sat"]` says — is unchanged and stays unconditional
+for every user; see the non-decision below for why it stays that way even
+after `shabbat_observant` is introduced.
+
+### `shabbat_observant`: a planner input, default `true`
+
+`CreateItineraryRequest` and `Itinerary` (section 7) both gain:
+
+```ts
+interface CreateItineraryRequest {
+  // ...as above...
+  shabbat_observant?: boolean;   // default true
+}
+
+interface Itinerary {
+  // ...as above...
+  shabbat_observant: boolean;
+}
+```
+
+This is a **planner input**, not an LLM feature: a boolean that selects which
+of two documented rule-12 Friday behaviours applies. There is no
+`planner/llm.py` in this repo yet; when it lands, its job will be to map free
+Hebrew text ("אנחנו שומרי שבת") onto this field, exactly as it will for
+`region` and `with_meal`. Adding the field now is what makes that later
+mapping a one-line change instead of a new rule.
+
+|         | `shabbat_observant: true` (default) | `false`                    |
+|---------|--------------------------------------|----------------------------|
+| Fri     | every visit ends by 15:00; day `ends_at <= 15:00` | ordinary weekday; real hours / daylight apply |
+| Sat     | `closed_on_shabbat` places excluded | identical — same exclusion |
+| Sun–Thu | no effect                           | no effect                  |
+
+It is persisted on `Itinerary`, not read only from the request, for the same
+reason `max_leg_min` and `weekday` are: `remove` / `swap` / `undo` recompute
+a stored itinerary and have no request of their own, and an edit must not
+silently change the rule the day was built under.
+
+**Default is `true`.** The two failure modes are not symmetric. Defaulting
+to `false` and being wrong schedules an observant user into Shabbat;
+defaulting to `true` and being wrong only gives a secular user a Friday that
+ends earlier than it had to — recoverable with one tap. Defaulting `true`
+also preserves the corrected rule 12 behaviour above as the out-of-the-box
+experience, so this amendment is additive rather than a second behaviour
+change riding on the first.
+
+**Saturday is deliberately untouched — a considered non-decision.** Whether
+an observant user would travel on Shabbat at all is not something this app
+can answer: there is no origin, no location, and no way to build a
+walking-distance day (section 5). The factual filter this app *does* have —
+a place closed on Shabbat is closed for everyone, `closed_on_shabbat` —
+already covers what the seed data actually knows, and stays unconditional
+regardless of `shabbat_observant`. Making Saturday's exclusion conditional
+on the flag would imply the app knows something about an observant user's
+Saturday travel that it does not; leaving it alone says exactly what the app
+can and cannot answer. This is written down rather than left implicit
+because an undocumented non-decision reads, on the next pass, as an
+oversight to "fix."
+
+**Interaction with `day_length` (section 13) — expected, not a bug.** Friday
++ `shabbat_observant: true` + the default 09:00 start caps the day at 6.0
+hours (09:00–15:00), below the `"long"` band's 6.5h floor. `length_matched`
+is therefore `false` for every such request. This is section 13's existing
+"preference degrades, never fails" shape working exactly as designed — rule
+10's hard 4–9h bound is still satisfied, the day is still valid, and nobody
+should "fix" the mismatch by relaxing rule 10 or the deadline.
+
+**Known limitation, surfaced while testing this amendment: `day_length:
+"long"` can occasionally fail to find a day that exists.** Writing the test
+above (a large `shabbat_observant: false` Friday pool, `day_length: "long"`)
+uncovered a pre-existing bug in `planner/rule_based.py`'s search, not
+something this amendment introduced or is responsible for fixing. `"short"`'s
+target band has an upper bound well inside rule 10's hard 9h ceiling, so
+`_extend`'s early prune (elapsed already past the band's own top) kicks in
+well before the hard bound would anyway. `"long"`'s upper bound *is* the hard
+9h ceiling, so that same prune buys nothing extra for it: a large pool of
+same-duration candidates can occasionally have its `PREFERRED_STOP_COUNTS`
+order shuffled so that the impossible 6-stop case is tried before the 4- or
+5-stop case that would actually succeed, and fully exploring every 6-stop
+combination first can exhaust the whole search budget — occasionally
+reporting no valid day when a "long" one plainly exists. Measured at roughly
+1 run in 20–50 with a 10-candidate pool. Out of scope for this amendment
+(`planner/rule_based.py`'s search algorithm is explicitly not touched here);
+`api/planner/test_rule_based.py`'s
+`test_long_day_length_with_ten_uniform_candidates_sometimes_fails_to_find_a_day`
+is marked `xfail(strict=False)` to document it without either hiding it or
+failing the suite on the runs that hit it.
+
+### Frontend: five rows, panel below the itinerary
+
+Three changes, all in `/web`, recorded together because the third is what
+the first two made room for:
+
+- **Start time cut, capability kept** — see section 2's own history
+  paragraph for the row's full record. In short: `StartTimeChips.tsx` and its
+  state are deleted from `/web`, but `starts_at` stays in
+  `CreateItineraryRequest`, `ItineraryPlanner.plan`, and `types.ts`, still
+  defaulting to `"09:00"` server-side. This is section 2's own
+  max-3-options-per-row clause being exercised — start time was already
+  named as what to cut first — not a silent deletion, and it deliberately
+  reverses section 13's addition of a start-time control rather than
+  building on it.
+- **`ShabbatChips.tsx`** — the sixth row's actual UI, added in start time's
+  place: two options, `שומר שבת` / `לא שומר שבת`, structured identically to
+  `MealChips.tsx`.
+- **The controls panel moves below the itinerary.** `App.tsx` already plans
+  on mount (`useEffect`, US-1), so a result-first layout — itinerary,
+  fallback, and notices first, the five-row panel (headed `רוצים משהו אחר?`)
+  after — costs zero taps and no new state, and puts the answer before the
+  form for every visitor, sighted or not. Shabbat observance is deliberately
+  the last of the five rows and never reorders itself on Friday: a panel
+  whose layout changes by weekday would be exactly the kind of surprise this
+  product's accessibility rules exist to prevent. The row is always
+  rendered, even on the five days it is inert, with a small note saying so —
+  a hidden control is invisible to a reviewer who opens the demo on a
+  Tuesday, and an inert control that says it is inert is honest in a way a
+  vanishing one is not.
