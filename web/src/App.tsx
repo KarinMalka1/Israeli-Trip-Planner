@@ -4,11 +4,11 @@ import DayLengthChips from "./components/DayLengthChips";
 import DriveTimeChips from "./components/DriveTimeChips";
 import MealChips from "./components/MealChips";
 import RegionChips from "./components/RegionChips";
-import StartTimeChips from "./components/StartTimeChips";
+import ShabbatChips from "./components/ShabbatChips";
 import Timeline from "./components/Timeline";
 import Toast from "./components/Toast";
 import { clearStoredItineraryId, getOrCreateSessionId, getStoredItineraryId, setStoredItineraryId } from "./session";
-import type { DayLength, Itinerary, MaxLegMin, Region, StartsAt } from "./types";
+import type { DayLength, Itinerary, MaxLegMin, Region } from "./types";
 import { getTodayWeekday } from "./weekday";
 
 type Status = "loading" | "ready" | "error";
@@ -31,8 +31,8 @@ function App() {
   const [region, setRegion] = useState<Region>("central");
   const [maxLegMin, setMaxLegMin] = useState<MaxLegMin>(45);
   const [withMeal, setWithMeal] = useState<boolean>(true);
-  const [startsAt, setStartsAt] = useState<StartsAt>("09:00");
   const [dayLength, setDayLength] = useState<DayLength>("long");
+  const [shabbatObservant, setShabbatObservant] = useState<boolean>(true);
   const [itinerary, setItinerary] = useState<Itinerary | null>(null);
   const [status, setStatus] = useState<Status>("loading");
   const [errorText, setErrorText] = useState<string | null>(null);
@@ -44,8 +44,8 @@ function App() {
       nextRegion: Region,
       nextMaxLeg: MaxLegMin,
       nextWithMeal: boolean,
-      nextStartsAt: StartsAt,
       nextDayLength: DayLength,
+      nextShabbatObservant: boolean,
     ) => {
       setBusy(true);
       setStatus("loading");
@@ -57,8 +57,8 @@ function App() {
           max_leg_min: nextMaxLeg,
           weekday: getTodayWeekday(),
           with_meal: nextWithMeal,
-          starts_at: nextStartsAt,
           day_length: nextDayLength,
+          shabbat_observant: nextShabbatObservant,
         });
         setStoredItineraryId(created.id);
         setItinerary(created);
@@ -87,7 +87,7 @@ function App() {
   useEffect(() => {
     const savedId = getStoredItineraryId();
     if (!savedId) {
-      void planNew(region, maxLegMin, withMeal, startsAt, dayLength);
+      void planNew(region, maxLegMin, withMeal, dayLength, shabbatObservant);
       return;
     }
     getItinerary(savedId)
@@ -100,7 +100,7 @@ function App() {
       .catch((err: unknown) => {
         if (err instanceof ApiError && err.status === 404) {
           clearStoredItineraryId();
-          void planNew(region, maxLegMin, withMeal, startsAt, dayLength);
+          void planNew(region, maxLegMin, withMeal, dayLength, shabbatObservant);
         } else {
           setStatus("error");
           setErrorText(errorMessage(err));
@@ -114,31 +114,31 @@ function App() {
   function handleRegionSelect(next: Region) {
     if (busy || next === region) return;
     setRegion(next);
-    void planNew(next, maxLegMin, withMeal, startsAt, dayLength);
+    void planNew(next, maxLegMin, withMeal, dayLength, shabbatObservant);
   }
 
   function handleMaxLegSelect(next: MaxLegMin) {
     if (busy || next === maxLegMin) return;
     setMaxLegMin(next);
-    void planNew(region, next, withMeal, startsAt, dayLength);
+    void planNew(region, next, withMeal, dayLength, shabbatObservant);
   }
 
   function handleMealSelect(next: boolean) {
     if (busy || next === withMeal) return;
     setWithMeal(next);
-    void planNew(region, maxLegMin, next, startsAt, dayLength);
-  }
-
-  function handleStartTimeSelect(next: StartsAt) {
-    if (busy || next === startsAt) return;
-    setStartsAt(next);
-    void planNew(region, maxLegMin, withMeal, next, dayLength);
+    void planNew(region, maxLegMin, next, dayLength, shabbatObservant);
   }
 
   function handleDayLengthSelect(next: DayLength) {
     if (busy || next === dayLength) return;
     setDayLength(next);
-    void planNew(region, maxLegMin, withMeal, startsAt, next);
+    void planNew(region, maxLegMin, withMeal, next, shabbatObservant);
+  }
+
+  function handleShabbatSelect(next: boolean) {
+    if (busy || next === shabbatObservant) return;
+    setShabbatObservant(next);
+    void planNew(region, maxLegMin, withMeal, dayLength, next);
   }
 
   async function handleUndo() {
@@ -197,29 +197,6 @@ function App() {
       </header>
 
       <main className="mx-auto flex max-w-2xl flex-col gap-6 px-4 pb-24 md:max-w-6xl md:px-8">
-        <div className="flex flex-col gap-4 rounded-xl bg-white p-4 shadow-sm">
-          <div>
-            <p className="mb-2 text-sm font-medium text-slate-600">אורך היום</p>
-            <DayLengthChips selected={dayLength} onSelect={handleDayLengthSelect} disabled={busy} />
-          </div>
-          <div>
-            <p className="mb-2 text-sm font-medium text-slate-600">שעת יציאה</p>
-            <StartTimeChips selected={startsAt} onSelect={handleStartTimeSelect} disabled={busy} />
-          </div>
-          <div>
-            <p className="mb-2 text-sm font-medium text-slate-600">אזור</p>
-            <RegionChips selected={region} onSelect={handleRegionSelect} disabled={busy} />
-          </div>
-          <div>
-            <p className="mb-2 text-sm font-medium text-slate-600">זמן נסיעה מקסימלי בין עצירות</p>
-            <DriveTimeChips selected={maxLegMin} onSelect={handleMaxLegSelect} disabled={busy} />
-          </div>
-          <div>
-            <p className="mb-2 text-sm font-medium text-slate-600">ארוחה</p>
-            <MealChips selected={withMeal} onSelect={handleMealSelect} disabled={busy} />
-          </div>
-        </div>
-
         {status === "loading" && !itinerary && <p className="text-center text-slate-500">בונים מסלול…</p>}
 
         {status === "error" && errorText && (
@@ -237,7 +214,11 @@ function App() {
         )}
 
         {dayLengthNotMatched && (
-          <p className="text-sm text-slate-500">משך היום יצא קצר יותר מהמבוקש</p>
+          <p className="text-sm text-slate-500">
+            {shabbatObservant && getTodayWeekday() === "fri"
+              ? "היום מסתיים ב-15:00 לקראת שבת, ולכן קצר מהמבוקש"
+              : "משך היום יצא קצר יותר מהמבוקש"}
+          </p>
         )}
 
         {hasFallbackPlaces && itinerary && (
@@ -255,6 +236,33 @@ function App() {
             </ul>
           </div>
         )}
+
+        <div className="flex flex-col gap-4 rounded-xl bg-white p-4 shadow-sm">
+          <h2 className="text-lg font-semibold">רוצים משהו אחר?</h2>
+          <div>
+            <p className="mb-2 text-sm font-medium text-slate-600">אזור</p>
+            <RegionChips selected={region} onSelect={handleRegionSelect} disabled={busy} />
+          </div>
+          <div>
+            <p className="mb-2 text-sm font-medium text-slate-600">זמן נסיעה מקסימלי בין עצירות</p>
+            <DriveTimeChips selected={maxLegMin} onSelect={handleMaxLegSelect} disabled={busy} />
+          </div>
+          <div>
+            <p className="mb-2 text-sm font-medium text-slate-600">ארוחה</p>
+            <MealChips selected={withMeal} onSelect={handleMealSelect} disabled={busy} />
+          </div>
+          <div>
+            <p className="mb-2 text-sm font-medium text-slate-600">אורך היום</p>
+            <DayLengthChips selected={dayLength} onSelect={handleDayLengthSelect} disabled={busy} />
+          </div>
+          <div>
+            <p className="mb-2 text-sm font-medium text-slate-600">שמירת שבת</p>
+            <ShabbatChips selected={shabbatObservant} onSelect={handleShabbatSelect} disabled={busy} />
+            {getTodayWeekday() !== "fri" && (
+              <p className="mt-1 text-xs text-slate-500">משפיע על תכנון ליום שישי בלבד</p>
+            )}
+          </div>
+        </div>
       </main>
 
       {toast && (
