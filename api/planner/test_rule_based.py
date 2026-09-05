@@ -6,6 +6,8 @@ has plenty of open-access places within the leg cap.
 
 from __future__ import annotations
 
+import pytest
+
 from api.domain import schedule
 from api.domain.distance import DistanceMatrix
 from api.models import AccessType, Category, DescriptionSource, Place, Region, Weekday
@@ -341,3 +343,230 @@ def test_late_start_plus_long_returns_valid_day_with_length_matched_false():
 
     problems = schedule.validate_itinerary(itinerary, {place.id for place in places})
     assert problems == []
+
+
+# --------------------------------------------------------------------------
+# shabbat_observant (SPEC section 17): a planner input selecting which of
+# two documented rule-12 Friday behaviours applies. Threaded into candidates()
+# and every opening-hours check, never into the search algorithm itself.
+# --------------------------------------------------------------------------
+
+
+def test_itinerary_echoes_the_requested_shabbat_observant():
+    places = [_open_place(i) for i in range(20)]
+    repository = PlaceRepository(places)
+    matrix = _dense_matrix(places, leg_minutes=15)
+    planner = RuleBasedPlanner(repository, matrix)
+
+    observant = planner.plan(
+        itinerary_id="observant", region=Region.CENTRAL, max_leg_min=45, weekday=Weekday.TUE
+    )
+    secular = planner.plan(
+        itinerary_id="secular",
+        region=Region.CENTRAL,
+        max_leg_min=45,
+        weekday=Weekday.TUE,
+        shabbat_observant=False,
+    )
+
+    assert observant.shabbat_observant is True  # default
+    assert secular.shabbat_observant is False
+
+
+def test_itinerary_echoes_shabbat_observant_on_fallback_step_2_too():
+    """The flag must be persisted even when no day could be built at all."""
+    places = [_open_place(0)]  # fewer than MIN_STOPS: always falls back
+    repository = PlaceRepository(places)
+    matrix = _dense_matrix(places, leg_minutes=15)
+    planner = RuleBasedPlanner(repository, matrix)
+
+    itinerary = planner.plan(
+        itinerary_id="fallback",
+        region=Region.CENTRAL,
+        max_leg_min=45,
+        weekday=Weekday.TUE,
+        shabbat_observant=False,
+    )
+
+    assert itinerary.days == []
+    assert itinerary.shabbat_observant is False
+
+
+def test_observant_friday_day_ends_by_1500():
+    """
+    Fri 09:00-20:00, duration 90min, 15min legs: an observant request must
+    never produce a day ending after the 15:00 deadline.
+    """
+    # Exactly 5 candidates, not 10: PREFERRED_STOP_COUNTS includes 6, and
+    # with a uniform-duration pool larger than 6 the search can burn its
+    # whole budget fully exploring every impossible 6-stop combination
+    # before ever trying 4 or 5 (day_length="long"'s upper bound coincides
+    # with rule 10's hard 9h ceiling, so unlike "short" there is no early
+    # prune to save it — see _extend's own comment on the "short" case this
+    # bit the search before). Capping candidates at 5 makes target_stops=6
+    # skip immediately (`target_stops > len(candidates)`), so this test
+    # exercises the flag deterministically rather than occasionally.
+    places = [_gated_place(i, opens="09:00", closes="20:00", duration_min=90) for i in range(5)]
+    repository = PlaceRepository(places)
+    matrix = _dense_matrix(places, leg_minutes=15)
+    planner = RuleBasedPlanner(repository, matrix)
+
+    itinerary = planner.plan(
+        itinerary_id="fri-observant",
+        region=Region.CENTRAL,
+        max_leg_min=45,
+        weekday=Weekday.FRI,
+        with_meal=False,
+        shabbat_observant=True,
+    )
+
+    assert len(itinerary.days) == 1
+    assert itinerary.days[0].ends_at <= "15:00"
+
+    problems = schedule.validate_itinerary(itinerary, {place.id for place in places})
+    assert problems == []
+
+
+def test_non_observant_friday_can_end_after_1500():
+    """
+    Same seed as the test above, but shabbat_observant=False: the same
+    region must now be able to build an ordinary "long" day that runs past
+    15:00 — proof the flag actually reaches the search, not just a default
+    that happens not to matter.
+    """
+    # Exactly 5 candidates, not 10: PREFERRED_STOP_COUNTS includes 6, and
+    # with a uniform-duration pool larger than 6 the search can burn its
+    # whole budget fully exploring every impossible 6-stop combination
+    # before ever trying 4 or 5 (day_length="long"'s upper bound coincides
+    # with rule 10's hard 9h ceiling, so unlike "short" there is no early
+    # prune to save it — see _extend's own comment on the "short" case this
+    # bit the search before). Capping candidates at 5 makes target_stops=6
+    # skip immediately (`target_stops > len(candidates)`), so this test
+    # exercises the flag deterministically rather than occasionally.
+    places = [_gated_place(i, opens="09:00", closes="20:00", duration_min=90) for i in range(5)]
+    repository = PlaceRepository(places)
+    matrix = _dense_matrix(places, leg_minutes=15)
+    planner = RuleBasedPlanner(repository, matrix)
+
+    itinerary = planner.plan(
+        itinerary_id="fri-secular",
+        region=Region.CENTRAL,
+        max_leg_min=45,
+        weekday=Weekday.FRI,
+        with_meal=False,
+        day_length="long",
+        shabbat_observant=False,
+    )
+
+    assert len(itinerary.days) == 1
+    assert itinerary.days[0].ends_at > "15:00"
+    assert itinerary.length_matched is True
+
+    problems = schedule.validate_itinerary(itinerary, {place.id for place in places})
+    assert problems == []
+
+
+@pytest.mark.xfail(
+    strict=False,
+    reason=(
+        "planner/rule_based.py budget-exhaustion bug, not a shabbat_observant bug: "
+        "day_length='long' has no early-pruning benefit (its upper bound coincides "
+        "with rule 10's hard 9h ceiling, unlike 'short'), so a bad shuffle of "
+        "PREFERRED_STOP_COUNTS can burn the whole 40_000 search budget fully "
+        "exploring every impossible 6-stop chain before ever trying the 4- or "
+        "5-stop chains that would succeed. Out of scope for BRIEF_shabbat_mode.md "
+        "(search algorithm is explicitly not to be touched there) — SPEC.md "
+        "section 17 records this as a known limitation. Fails ~1 run in 9; "
+        "strict=False so neither an occasional real failure nor an occasional "
+        "lucky pass breaks the suite."
+    ),
+)
+def test_long_day_length_with_ten_uniform_candidates_sometimes_fails_to_find_a_day():
+    """
+    Reproduces the exact case that made test_non_observant_friday_can_end_after_1500
+    flaky before its fixture was narrowed to 5 candidates: 10 uniform-duration,
+    always-open gated places, day_length="long", with_meal=False. A valid 4- or
+    5-stop day always exists here (elapsed 405min/510min both land inside the
+    390-540 "long" band) — the planner should always find one, but occasionally
+    does not, because of the budget-exhaustion mechanism described above rather
+    than any actual absence of a valid day.
+    """
+    places = [_gated_place(i, opens="09:00", closes="20:00", duration_min=90) for i in range(10)]
+    repository = PlaceRepository(places)
+    matrix = _dense_matrix(places, leg_minutes=15)
+    planner = RuleBasedPlanner(repository, matrix)
+
+    itinerary = planner.plan(
+        itinerary_id="fri-secular-ten-candidates",
+        region=Region.CENTRAL,
+        max_leg_min=45,
+        weekday=Weekday.FRI,
+        with_meal=False,
+        day_length="long",
+        shabbat_observant=False,
+    )
+
+    assert len(itinerary.days) == 1, "a valid 4- or 5-stop day exists but the search failed to find it"
+
+
+def test_friday_observant_day_length_is_capped_below_the_long_band():
+    """
+    Friday + observant + the 09:00 default start caps the day at 6.0h
+    (09:00-15:00), below the "long" band's 6.5h floor (domain/schedule
+    .DAY_LENGTH_BANDS). BRIEF_shabbat_mode.md is explicit that
+    length_matched must be False here — the existing "preference degrades,
+    never fails" shape working correctly, not a bug to "fix" by relaxing
+    rule 10.
+    """
+    # Exactly 5 candidates, not 10: PREFERRED_STOP_COUNTS includes 6, and
+    # with a uniform-duration pool larger than 6 the search can burn its
+    # whole budget fully exploring every impossible 6-stop combination
+    # before ever trying 4 or 5 (day_length="long"'s upper bound coincides
+    # with rule 10's hard 9h ceiling, so unlike "short" there is no early
+    # prune to save it — see _extend's own comment on the "short" case this
+    # bit the search before). Capping candidates at 5 makes target_stops=6
+    # skip immediately (`target_stops > len(candidates)`), so this test
+    # exercises the flag deterministically rather than occasionally.
+    places = [_gated_place(i, opens="09:00", closes="20:00", duration_min=90) for i in range(5)]
+    repository = PlaceRepository(places)
+    matrix = _dense_matrix(places, leg_minutes=15)
+    planner = RuleBasedPlanner(repository, matrix)
+
+    itinerary = planner.plan(
+        itinerary_id="fri-observant-long",
+        region=Region.CENTRAL,
+        max_leg_min=45,
+        weekday=Weekday.FRI,
+        with_meal=False,
+        day_length="long",
+        shabbat_observant=True,
+    )
+
+    assert len(itinerary.days) == 1, "expected a valid degraded day, not fallback step 2"
+    assert itinerary.days[0].ends_at <= "15:00"
+    assert itinerary.length_matched is False
+
+    problems = schedule.validate_itinerary(itinerary, {place.id for place in places})
+    assert problems == []
+
+
+def test_saturday_still_excludes_closed_on_shabbat_regardless_of_shabbat_observant():
+    """Saturday's exclusion is a fact about the place, never conditional on the flag (Part 3's non-decision)."""
+    open_places = [_open_place(i) for i in range(6)]
+    closed_on_shabbat_place = _open_place(99).model_copy(update={"closed_on_shabbat": True})
+    places = open_places + [closed_on_shabbat_place]
+    repository = PlaceRepository(places)
+    matrix = _dense_matrix(places, leg_minutes=15)
+    planner = RuleBasedPlanner(repository, matrix)
+
+    for observant in (True, False):
+        itinerary = planner.plan(
+            itinerary_id=f"sat-{observant}",
+            region=Region.CENTRAL,
+            max_leg_min=45,
+            weekday=Weekday.SAT,
+            with_meal=False,
+            shabbat_observant=observant,
+        )
+        used_ids = {stop.place_id for stop in itinerary.days[0].stops} if itinerary.days else set()
+        assert closed_on_shabbat_place.id not in used_ids
