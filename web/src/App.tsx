@@ -192,52 +192,29 @@ function App() {
 
   return (
     <div dir="rtl" lang="he" className="min-h-screen bg-slate-50 text-slate-900">
-      <header className="mx-auto max-w-2xl px-4 pt-8 pb-2 md:max-w-6xl md:px-8">
-        <h1 className="text-2xl font-bold md:text-3xl">מסלול יום בישראל</h1>
+      {/* Same max-width as the two-column container below, so the title
+          spans the identical box and reads as centred above both the
+          sidebar and the itinerary, not just above whichever one its own
+          (narrower) box happened to line up with. */}
+      <header className="mx-auto max-w-2xl px-4 pt-8 pb-2 text-center md:px-8 min-[768px]:max-w-[1152px] min-[900px]:max-w-[1400px] min-[900px]:px-12">
+        <h1 className="text-2xl font-bold md:text-[3rem]">מסלול יום בישראל</h1>
       </header>
 
-      <main className="mx-auto flex max-w-2xl flex-col gap-6 px-4 pb-24 md:max-w-6xl md:px-8">
-        {status === "loading" && !itinerary && <p className="text-center text-slate-500">בונים מסלול…</p>}
-
-        {status === "error" && errorText && (
-          <p role="alert" className="rounded-xl bg-red-50 p-4 text-red-700">
-            {errorText}
-          </p>
-        )}
-
-        {day && day.stops.length > 0 && (
-          <Timeline day={day} onRemove={handleRemove} onSwap={handleSwap} disabled={busy} />
-        )}
-
-        {wantedMealButNoneFound && (
-          <p className="text-sm text-slate-500">לא נמצאה מסעדה מתאימה במרחק הנסיעה שנבחר</p>
-        )}
-
-        {dayLengthNotMatched && (
-          <p className="text-sm text-slate-500">
-            {shabbatObservant && getTodayWeekday() === "fri"
-              ? "היום מסתיים ב-15:00 לקראת שבת, ולכן קצר מהמבוקש"
-              : "משך היום יצא קצר יותר מהמבוקש"}
-          </p>
-        )}
-
-        {hasFallbackPlaces && itinerary && (
-          <div className="flex flex-col gap-3">
-            <p role="status" className="rounded-xl bg-amber-50 p-4 text-amber-900">
-              לא מצאנו מספיק מקומות לבנות מסלול מלא באזור הזה עם ההגבלות הנוכחיות. הנה מה שיש:
-            </p>
-            <ul className="flex flex-col gap-3">
-              {itinerary.places.map((place) => (
-                <li key={place.id} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
-                  <h3 className="text-lg font-semibold">{place.name_he}</h3>
-                  {place.description_he && <p className="mt-1 text-sm text-slate-600">{place.description_he}</p>}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        <div className="flex flex-col gap-4 rounded-xl bg-white p-4 shadow-sm">
+      {/* Sidebar first in document order, itinerary column second: under
+          dir="rtl" that alone puts the sidebar at the inline-start (visually
+          right) and the itinerary at the inline-end (visually left), with no
+          inset-inline-start/margin-inline-end needed — the same DOM-order
+          approach StopCard already uses for its own two-column split. Below
+          900px (a layout-specific breakpoint, distinct from the 768px one
+          type-scale/StopCard use) the row becomes a column, so the same
+          order stacks the filters above the itinerary — never a drawer or a
+          hamburger, since SPEC forbids hidden content. min-[900px]:gap-16
+          (versus the 24px base gap) is what gives the sidebar clear
+          separation from the itinerary at desktop width, on top of the
+          min-[900px]:px-12 edge padding below giving it separation from
+          the screen edge on its other side. */}
+      <div className="mx-auto flex max-w-2xl flex-col gap-6 px-4 pb-24 md:px-8 min-[768px]:max-w-[1152px] min-[900px]:max-w-[1400px] min-[900px]:flex-row min-[900px]:items-start min-[900px]:gap-16 min-[900px]:px-12">
+        <aside className="flex flex-none flex-col gap-4 rounded-xl bg-white p-4 shadow-sm min-[900px]:sticky min-[900px]:top-8 min-[900px]:w-[328px] min-[900px]:px-3">
           <h2 className="text-lg font-semibold">רוצים משהו אחר?</h2>
           <div>
             <p className="mb-2 text-sm font-medium text-slate-600">אזור</p>
@@ -262,8 +239,50 @@ function App() {
               <p className="mt-1 text-xs text-slate-500">משפיע על תכנון ליום שישי בלבד</p>
             )}
           </div>
-        </div>
-      </main>
+        </aside>
+
+        <main className="flex min-w-0 flex-1 flex-col gap-6">
+          {status === "loading" && !itinerary && <p className="text-center text-slate-500">בונים מסלול…</p>}
+
+          {status === "error" && errorText && (
+            <p role="alert" className="rounded-xl bg-red-50 p-4 text-red-700">
+              {errorText}
+            </p>
+          )}
+
+          {day && day.stops.length > 0 && (
+            <Timeline day={day} onRemove={handleRemove} onSwap={handleSwap} disabled={busy} />
+          )}
+
+          {wantedMealButNoneFound && (
+            <p className="text-sm text-slate-500">לא נמצאה מסעדה מתאימה במרחק הנסיעה שנבחר</p>
+          )}
+
+          {dayLengthNotMatched && (
+            <p className="text-sm text-slate-500">
+              {shabbatObservant && getTodayWeekday() === "fri"
+                ? "היום מסתיים ב-15:00 לקראת שבת, ולכן קצר מהמבוקש"
+                : "משך היום יצא קצר יותר מהמבוקש"}
+            </p>
+          )}
+
+          {hasFallbackPlaces && itinerary && (
+            <div className="flex flex-col gap-3">
+              <p role="status" className="rounded-xl bg-amber-50 p-4 text-amber-900">
+                לא מצאנו מספיק מקומות לבנות מסלול מלא באזור הזה עם ההגבלות הנוכחיות. הנה מה שיש:
+              </p>
+              <ul className="flex flex-col gap-3">
+                {itinerary.places.map((place) => (
+                  <li key={place.id} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+                    <h3 className="text-lg font-semibold">{place.name_he}</h3>
+                    {place.description_he && <p className="mt-1 text-sm text-slate-600">{place.description_he}</p>}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </main>
+      </div>
 
       {toast && (
         <Toast

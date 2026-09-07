@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { Place, PlaceImage, Stop } from "../types";
 
 interface StopCardProps {
@@ -42,7 +43,7 @@ export default function StopCard({ stop, index, onRemove, onSwap, disabled = fal
           The gap here (name/times/button spacing) plus the card's own
           padding above are what roughly double the card's height — same
           content, no new fields, just room to breathe. */}
-      <div className="flex min-w-0 flex-col gap-6 md:w-2/3 md:flex-none md:gap-11">
+      <div className="flex min-w-0 flex-col gap-6 md:w-3/5 md:flex-none md:gap-11">
         <div className="flex items-start justify-between gap-3">
           <div>
             <p className="text-xs font-medium text-slate-500 md:text-sm">עצירה {index + 1}</p>
@@ -119,17 +120,28 @@ function StopName({ place }: { place: Place }) {
   );
 }
 
-// Shared by both PlaceImages branches so the card's width — and, at md:,
-// its height — never depends on whether the place has images: an
-// aspect-ratio box below md: (there is no sibling to stretch to yet), full
-// height matched to the text column at and above it via the <li>'s
-// items-stretch — deliberately NOT an explicit h-full here too: a flex
-// item's stretched cross size is definite for its own children's
+// Shared by both PlaceImages branches (image present vs. empty/failed) so
+// the card's width — and, at md:, its height — never depends on which one
+// renders: an aspect-ratio box below md: (there is no sibling to stretch to
+// yet), full height matched to the text column at and above it via the
+// <li>'s items-stretch — deliberately NOT an explicit h-full here too: a
+// flex item's stretched cross size is definite for its own children's
 // flex-basis/flex-grow resolution, but layering a redundant height:100% on
-// top of that pushed it back into an indefinite-height context in testing,
-// silently breaking the hero:small-row 3:1 ratio below (confirmed by
-// removing it and watching the ratio resolve correctly).
-const IMAGE_COLUMN_CLASS = "aspect-[16/9] w-full md:aspect-auto md:w-1/3 md:flex-none";
+// top of that pushed it back into an indefinite-height context in testing
+// (confirmed by removing it and watching the column's own children resolve
+// correctly again). md:w-2/5 (~40%) pairs with the text column's md:w-3/5.
+const IMAGE_COLUMN_CLASS = "aspect-[16/9] w-full md:aspect-auto md:w-2/5 md:flex-none";
+
+const EMPTY_IMAGE_PANEL = (name: string) => (
+  <div className={IMAGE_COLUMN_CLASS}>
+    <div
+      aria-hidden="true"
+      className="flex h-full w-full items-center justify-center rounded-lg bg-slate-200 text-3xl font-semibold text-slate-400"
+    >
+      {name.charAt(0)}
+    </div>
+  </div>
+);
 
 // A single static image, never interactive — the gallery/swap version was
 // removed because almost no place in the dataset has 3 free-licence
@@ -138,19 +150,15 @@ const IMAGE_COLUMN_CLASS = "aspect-[16/9] w-full md:aspect-auto md:w-1/3 md:flex
 // can come back later without a data-shape change. Empty images is the
 // common case (most restaurants and small sites have no free photo at
 // all), so the fallback is a deliberate grey initial filling the same
-// column, not a broken icon.
+// column, not a broken icon — and the same fallback covers a place that
+// does have an images entry but whose file 404s (a data/disk mismatch,
+// not something the client can fix), via onError below, rather than
+// showing the browser's own broken-image glyph.
 function PlaceImages({ images, name }: { images: PlaceImage[]; name: string }) {
-  if (images.length === 0) {
-    return (
-      <div className={IMAGE_COLUMN_CLASS}>
-        <div
-          aria-hidden="true"
-          className="flex h-full w-full items-center justify-center rounded-lg bg-slate-200 text-3xl font-semibold text-slate-400"
-        >
-          {name.charAt(0)}
-        </div>
-      </div>
-    );
+  const [failed, setFailed] = useState(false);
+
+  if (images.length === 0 || failed) {
+    return EMPTY_IMAGE_PANEL(name);
   }
 
   const image = images[0];
@@ -170,7 +178,12 @@ function PlaceImages({ images, name }: { images: PlaceImage[]; name: string }) {
           image column actually follow the text column's height instead of
           the reverse. */}
       <div className="relative min-h-0 flex-1 overflow-hidden rounded-lg">
-        <img src={image.url} alt={name} className="absolute inset-0 h-full w-full object-cover rounded-lg" />
+        <img
+          src={image.url}
+          alt={name}
+          onError={() => setFailed(true)}
+          className="absolute inset-0 h-full w-full object-cover rounded-lg"
+        />
       </div>
       <a
         href={image.source_url}

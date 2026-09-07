@@ -276,6 +276,34 @@ def elapsed_minutes(day: Day) -> int:
 # --------------------------------------------------------------------------
 
 
+def meal_rule_violations(stops: Sequence[Stop]) -> list[str]:
+    """
+    Rule 4 in isolation: at most one meal stop, and it must arrive 12:00-15:00.
+
+    Factored out of ``validate_day`` so ``ItineraryEditor`` can run the exact
+    same check on a candidate reschedule before ever handing it back from
+    remove()/swap() — a production bug shipped a day with two meal stops
+    (one outside the window) because a swap could install a second meal with
+    nothing downstream checking rule 4 at all. This is the one piece of
+    validate_day's logic edits.py needs standalone, since the rest of
+    validate_day's rules either can't be violated by an edit (rule 1: no
+    invented places; rule 3: no repeats, guarded by the `used` set) or are a
+    user's deliberate, accepted choice on removal (rules 2 and 10 — see
+    ItineraryEditor's own docstring) that this fix does not touch.
+    """
+    problems: list[str] = []
+    meals = [stop for stop in stops if stop.place.category == Category.MEAL]
+    if len(meals) > 1:
+        problems.append(f"rule 4: {len(meals)} meal stops, at most 1 allowed")
+    for meal in meals:
+        if not MEAL_WINDOW_START <= meal.arrive_at <= MEAL_WINDOW_END:
+            problems.append(
+                f"rule 4: meal {meal.place_id!r} arrives at {meal.arrive_at}, "
+                f"outside {MEAL_WINDOW_START}-{MEAL_WINDOW_END}"
+            )
+    return problems
+
+
 def validate_day(
     day: Day,
     region: Region,
@@ -319,15 +347,7 @@ def validate_day(
         seen.add(stop.place_id)
 
     # Rule 4: at most one meal, arrived at between 12:00 and 15:00.
-    meals = [stop for stop in stops if stop.place.category == Category.MEAL]
-    if len(meals) > 1:
-        problems.append(f"rule 4: {len(meals)} meal stops, at most 1 allowed")
-    for meal in meals:
-        if not MEAL_WINDOW_START <= meal.arrive_at <= MEAL_WINDOW_END:
-            problems.append(
-                f"rule 4: meal {meal.place_id!r} arrives at {meal.arrive_at}, "
-                f"outside {MEAL_WINDOW_START}-{MEAL_WINDOW_END}"
-            )
+    problems.extend(meal_rule_violations(stops))
 
     # -- Geography --------------------------------------------------------
     # Rule 5: one region, no exceptions.

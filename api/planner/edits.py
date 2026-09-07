@@ -10,9 +10,19 @@ is the module that recomputes it.
 A note on validity. The planner guarantees rules 1-13 at generation time. A
 user removing a fourth stop can drop the day below three stops or under four
 hours, and that is their explicit choice, made through a visible X with a
-visible undo — not a planner error. So edits recompute honestly and return the
-result rather than refusing it. The one invariant kept absolute is that we
-never emit stale times: whatever the shape of the day, its clock is correct.
+visible undo — not a planner error. So a removal recomputes honestly and
+returns the result rather than refusing it on stop-count or day-length
+grounds. The one invariant kept absolute is that we never emit stale times:
+whatever the shape of the day, its clock is correct.
+
+Rule 4 is not part of that leniency. Unlike a short day, a second meal stop
+or one outside 12:00-15:00 is never a choice a user is offered — there is no
+UI path that asks for it — so it is refused outright: ``_reschedule`` rejects
+any candidate day that violates it (the same way a missing matrix leg or a
+closed opening-hours window already is), and ``main.py`` re-checks it again
+on every mutating response as a last line of defence. A production bug once
+shipped a day with two meal stops after a swap silently installed a second
+one; this is what closed the gap.
 """
 
 from __future__ import annotations
@@ -198,6 +208,24 @@ class ItineraryEditor:
                     stop.arrive_at,
                 )
                 return None
+
+        # Rule 4: at most one meal, arrived at 12:00-15:00. Neither remove()
+        # nor swap() checked this before — a swap into a non-meal position
+        # could still install a MEAL-category candidate (_alternatives never
+        # excluded them), and even swapping the existing meal itself for
+        # another meal candidate skipped the window check entirely, since
+        # the loop above only checks opening hours. This shipped a real
+        # production bug: a swap installed a second meal stop outside the
+        # window with nothing downstream to catch it. Checked here, not just
+        # in validate_itinerary, so a bad candidate is rejected the same way
+        # a missing matrix leg or a closed opening-hours window already is —
+        # _find_swap_result tries the next alternative, or gives up cleanly —
+        # rather than an exception the caller has to handle specially.
+        if schedule.meal_rule_violations(day.stops):
+            logger.info(
+                "reschedule violates rule 4 (meal count/window) for itinerary %s", itinerary.id
+            )
+            return None
 
         return day
 

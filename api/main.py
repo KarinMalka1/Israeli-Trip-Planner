@@ -209,6 +209,7 @@ def remove_stop(
 
     if edited is None:
         raise HTTPException(status.HTTP_404_NOT_FOUND, detail="העצירה לא נמצאה במסלול")
+    _reject_if_meal_rule_violated(edited)
     return store.update(edited)
 
 
@@ -235,6 +236,7 @@ def swap_stop(
 
     if edited is None:
         raise HTTPException(status.HTTP_404_NOT_FOUND, detail="העצירה לא נמצאה במסלול")
+    _reject_if_meal_rule_violated(edited)
     return store.update(edited)
 
 
@@ -251,7 +253,9 @@ def undo_edit(
     """
     itinerary = _require(store, itinerary_id)
     restored = store.undo(itinerary_id)
-    return restored if restored is not None else itinerary
+    result = restored if restored is not None else itinerary
+    _reject_if_meal_rule_violated(result)
+    return result
 
 
 # --------------------------------------------------------------------------
@@ -313,6 +317,34 @@ def _reject_if_invalid(itinerary: Itinerary, places: PlaceRepository) -> None:
     problems = schedule.validate_itinerary(itinerary, places.known_ids())
     if problems:
         logger.error("planner produced an invalid itinerary: %s", "; ".join(problems))
+        raise HTTPException(
+            status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="לא הצלחנו לבנות מסלול תקין",
+        )
+
+
+def _reject_if_meal_rule_violated(itinerary: Itinerary) -> None:
+    """
+    Rule 4's last line of defence on every mutating endpoint, not just
+    creation — a real production bug shipped a day with two meal stops (one
+    outside the midday window) because a swap could install a second meal
+    with nothing on the response path checking rule 4 at all.
+
+    Scoped to rule 4 specifically, not the full ``_reject_if_invalid`` gate:
+    ``ItineraryEditor.remove()`` deliberately allows a removal to drop a day
+    below MIN_STOPS or under the day-length bound as the user's explicit,
+    accepted choice (see edits.py's own docstring) — a policy this fix does
+    not touch. ``ItineraryEditor._reschedule`` already refuses a candidate
+    day that violates rule 4 before remove()/swap() ever return it, so a
+    violation reaching here means that guard itself has a bug, worth a loud
+    500 rather than a silent pass — never a normal, expected outcome the way
+    a short day from a removal is.
+    """
+    if not itinerary.days:
+        return
+    problems = schedule.meal_rule_violations(itinerary.days[0].stops)
+    if problems:
+        logger.error("edit produced a rule-4 violation: %s", "; ".join(problems))
         raise HTTPException(
             status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="לא הצלחנו לבנות מסלול תקין",

@@ -11,6 +11,7 @@ from api.domain import schedule
 from api.domain.distance import DistanceMatrix
 from api.models import AccessType, Category, DescriptionSource, Itinerary, Place, Region, Weekday
 from api.planner.edits import ItineraryEditor
+from api.repository.itineraries import ItineraryStore
 from api.repository.places import PlaceRepository
 
 
@@ -26,6 +27,28 @@ def _open_place(index: int, region: Region = Region.CENTRAL, duration_min: int =
         access=AccessType.OPEN,
         lat=32.0 + index * 0.01,
         lng=34.9 + index * 0.01,
+        duration_min=duration_min,
+        opening_hours={day: None for day in Weekday},
+        hours_verified=False,
+        closed_on_shabbat=False,
+        kid_friendly=False,
+        accessible=False,
+        tags=[],
+    )
+
+
+def _meal_place(place_id: str, name_he: str, region: Region = Region.CENTRAL, duration_min: int = 60) -> Place:
+    return Place(
+        id=place_id,
+        name_he=name_he,
+        description_he="",
+        tip_he="",
+        description_source=DescriptionSource.GENERATED,
+        category=Category.MEAL,
+        region=region,
+        access=AccessType.OPEN,
+        lat=32.05,
+        lng=34.95,
         duration_min=duration_min,
         opening_hours={day: None for day in Weekday},
         hours_verified=False,
@@ -253,3 +276,97 @@ def test_swap_fails_to_find_an_alternative_when_the_itinerary_is_observant():
 
     assert edited is not None
     assert edited.days[0].stops[0].place_id == places[0].id  # unchanged: no-op
+
+
+# --------------------------------------------------------------------------
+# Rule 4 (production bug): a swap installed a second meal stop, outside the
+# midday window, with nothing downstream to catch it. _alternatives() never
+# excluded MEAL-category candidates and _reschedule() never checked rule 4
+# at all, so a swap into a non-meal position could still land a meal place
+# there. Reproduces the reported shape: an existing meal at 12:45 (valid),
+# a swap that would add a second meal arriving 15:50 (both halves of rule 4
+# broken at once) — the exact two failures reported in production, just
+# against a small, deterministic fixture instead of the real seed/matrix.
+# --------------------------------------------------------------------------
+
+
+def test_swap_does_not_install_a_second_meal_stop_outside_the_window():
+    bat_yaar = _meal_place("central-meal-bat-yaar", "מסעדת בת יער")
+    magdalena = _meal_place("central-meal-magdalena", "מסעדת מגדלנה")
+    p0, p1, p2, p3 = (_open_place(i) for i in range(4))
+
+    # p0 09:00-10:00 -[15]- p1 10:15-11:15 -[90]- bat_yaar 12:45-13:45 (valid
+    # meal, inside the window) -[15]- p2 14:00-15:00 -[??]- p3, where p3 is
+    # about to be swapped out for magdalena.
+    matrix = DistanceMatrix(
+        {
+            p0.id: {p1.id: 15},
+            p1.id: {p0.id: 15, bat_yaar.id: 90},
+            bat_yaar.id: {p1.id: 90, p2.id: 15},
+            p2.id: {bat_yaar.id: 15, p3.id: 15, magdalena.id: 50},
+            p3.id: {p2.id: 15},
+            magdalena.id: {p2.id: 50},
+        }
+    )
+    day_places = [p0, p1, bat_yaar, p2, p3]
+    itinerary = _itinerary(day_places, matrix, max_leg_min=90)
+    assert schedule.validate_itinerary(itinerary, {p.id for p in day_places} | {bat_yaar.id}) == []
+    assert itinerary.days[0].stops[2].arrive_at == "12:45"  # bat_yaar, sanity-check the fixture's own timing
+
+    # magdalena is the only candidate this small region can offer for p3's slot.
+    editor = ItineraryEditor(PlaceRepository(day_places + [magdalena]), matrix)
+
+    edited = editor.swap(itinerary, p3.id)
+
+    assert edited is not None
+    resulting_places = [stop.place_id for stop in edited.days[0].stops]
+    meal_arrivals = [stop.arrive_at for stop in edited.days[0].stops if stop.place.category == Category.MEAL]
+
+    # The swap must be rejected outright (day unchanged) rather than accepted
+    # with a second meal — magdalena must not appear, bat_yaar's slot must
+    # not have grown a second meal stop, and there is still only one arrival
+    # time counted as a meal.
+    assert magdalena.id not in resulting_places, "swap installed a second meal stop"
+    assert len(meal_arrivals) == 1, f"expected exactly one meal stop, found {len(meal_arrivals)}: {meal_arrivals}"
+    assert schedule.meal_rule_violations(edited.days[0].stops) == []
+
+
+def test_remove_then_undo_cannot_produce_a_second_meal():
+    """
+    remove() only ever deletes a stop, never adds one, so it cannot introduce
+    a second meal by itself — this guards the store/undo plumbing: the state
+    undo restores must be exactly the pre-removal state (already valid, one
+    meal), never some corrupted merge that duplicates it.
+    """
+    meal = _meal_place("central-meal-only", "מסעדת בת יער", duration_min=60)
+    p0, p1, p2 = (_open_place(i, duration_min=170) for i in range(3))
+    # p0 09:00-11:50 -[10]- meal 12:00-13:00 -[15]- p1 13:15-16:05 -[15]- p2 16:20-19:10
+    matrix = DistanceMatrix(
+        {
+            p0.id: {meal.id: 10},
+            meal.id: {p0.id: 10, p1.id: 15},
+            p1.id: {meal.id: 15, p2.id: 15},
+            p2.id: {p1.id: 15},
+        }
+    )
+    day_places = [p0, meal, p1, p2]
+    itinerary = _itinerary(day_places, matrix, max_leg_min=45)
+    assert itinerary.days[0].stops[1].arrive_at == "12:00"  # sanity-check the fixture's own timing
+    assert schedule.meal_rule_violations(itinerary.days[0].stops) == []
+
+    store = ItineraryStore()
+    store.save(itinerary)
+    editor = ItineraryEditor(PlaceRepository(day_places), matrix)
+
+    # Remove the trailing stop -- it is after the meal, so removing it can
+    # never shift the meal's own arrival time.
+    edited = editor.remove(itinerary, p2.id)
+    assert edited is not None
+    assert schedule.meal_rule_violations(edited.days[0].stops) == []
+    store.update(edited)
+
+    restored = store.undo(itinerary.id)
+    assert restored is not None
+    restored_meals = [stop for stop in restored.days[0].stops if stop.place.category == Category.MEAL]
+    assert len(restored_meals) == 1
+    assert schedule.meal_rule_violations(restored.days[0].stops) == []

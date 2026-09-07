@@ -570,3 +570,89 @@ def test_saturday_still_excludes_closed_on_shabbat_regardless_of_shabbat_observa
         )
         used_ids = {stop.place_id for stop in itinerary.days[0].stops} if itinerary.days else set()
         assert closed_on_shabbat_place.id not in used_ids
+
+
+# --------------------------------------------------------------------------
+# Rule 4 property test — 50 random seeds, all three regions. The planner's
+# own pruning (_meal_is_placeable, used in both _start_order's caller and
+# _next_options) is what is supposed to guarantee this; this is the test
+# proving that guarantee actually holds across the search's own randomness
+# (shuffled stop-count order, shuffled start order, shuffled option order),
+# not just on whichever single seed a hand-written test happens to pick.
+# --------------------------------------------------------------------------
+
+
+def _region_open_place(region: Region, index: int, duration_min: int = 60) -> Place:
+    return Place(
+        id=f"{region.value}-rule4-open-{index}",
+        name_he=f"מקום פתוח {index}",
+        description_he="",
+        tip_he="",
+        description_source=DescriptionSource.GENERATED,
+        category=_CATEGORIES[index % len(_CATEGORIES)],
+        region=region,
+        access=AccessType.OPEN,
+        lat=32.0 + index * 0.01,
+        lng=34.9 + index * 0.01,
+        duration_min=duration_min,
+        opening_hours={day: None for day in Weekday},
+        hours_verified=False,
+        closed_on_shabbat=False,
+        kid_friendly=False,
+        accessible=False,
+        tags=[],
+    )
+
+
+def _region_meal_place(region: Region, index: int, duration_min: int = 60) -> Place:
+    return Place(
+        id=f"{region.value}-rule4-meal-{index}",
+        name_he=f"מסעדה {index}",
+        description_he="",
+        tip_he="",
+        description_source=DescriptionSource.GENERATED,
+        category=Category.MEAL,
+        region=region,
+        access=AccessType.OPEN,
+        lat=32.05 + index * 0.01,
+        lng=34.95 + index * 0.01,
+        duration_min=duration_min,
+        opening_hours={day: None for day in Weekday},
+        hours_verified=False,
+        closed_on_shabbat=False,
+        kid_friendly=False,
+        accessible=False,
+        tags=[],
+    )
+
+
+@pytest.mark.parametrize("region", [Region.NORTH, Region.CENTRAL, Region.SOUTH])
+def test_fifty_random_seeds_never_produce_more_than_one_meal(region):
+    """
+    15 open places plus 3 meal places, dense at 15min (comfortably under the
+    45min cap) — plenty of room for the search to go wrong if rule 4 were
+    only checked after the fact rather than pruned during the walk.
+    """
+    places = [_region_open_place(region, i) for i in range(15)] + [
+        _region_meal_place(region, i) for i in range(3)
+    ]
+    matrix = _dense_matrix(places, leg_minutes=15)
+    planner = RuleBasedPlanner(PlaceRepository(places), matrix)
+
+    for seed in range(50):
+        itinerary = planner.plan(
+            itinerary_id=f"{region.value}-seed-{seed}",
+            region=region,
+            max_leg_min=45,
+            weekday=Weekday.TUE,
+            seed=seed,
+            with_meal=True,
+        )
+        for day in itinerary.days:
+            meals = [stop for stop in day.stops if stop.place.category == Category.MEAL]
+            assert len(meals) <= 1, f"{region.value} seed {seed}: {len(meals)} meal stops in one day"
+            for meal in meals:
+                assert schedule.MEAL_WINDOW_START <= meal.arrive_at <= schedule.MEAL_WINDOW_END, (
+                    f"{region.value} seed {seed}: meal arrives at {meal.arrive_at}, "
+                    f"outside {schedule.MEAL_WINDOW_START}-{schedule.MEAL_WINDOW_END}"
+                )
