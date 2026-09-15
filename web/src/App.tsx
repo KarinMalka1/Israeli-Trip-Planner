@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { ApiError, createItinerary, getItinerary, removeStop, swapStop, undoEdit } from "./api/client";
 import DayLengthChips from "./components/DayLengthChips";
 import DriveTimeChips from "./components/DriveTimeChips";
+import MapPanel from "./components/MapPanel";
 import MealChips from "./components/MealChips";
 import RegionChips from "./components/RegionChips";
 import ShabbatChips from "./components/ShabbatChips";
@@ -38,6 +39,10 @@ function App() {
   const [errorText, setErrorText] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [toast, setToast] = useState<ToastState | null>(null);
+  // Shared between Timeline (hover a card) and MapPanel (click a pin) —
+  // lives here because the two are siblings, not because App has any use
+  // for it itself.
+  const [highlightedPlaceId, setHighlightedPlaceId] = useState<string | null>(null);
 
   const planNew = useCallback(
     async (
@@ -191,52 +196,88 @@ function App() {
     itinerary !== null && day !== undefined && day.stops.length > 0 && !itinerary.length_matched;
 
   return (
-    <div dir="rtl" lang="he" className="min-h-screen bg-slate-50 text-slate-900">
-      {/* Same max-width as the two-column container below, so the title
-          spans the identical box and reads as centred above both the
-          sidebar and the itinerary, not just above whichever one its own
-          (narrower) box happened to line up with. */}
-      <header className="mx-auto max-w-2xl px-4 pt-8 pb-2 text-center md:px-8 min-[768px]:max-w-[1152px] min-[900px]:max-w-[1400px] min-[900px]:px-12">
-        <h1 className="text-2xl font-bold md:text-[3rem]">מסלול יום בישראל</h1>
+    <div dir="rtl" lang="he" className="min-h-screen bg-page text-slate-900">
+      {/* Full-bleed solid band — bg-emerald-800, not the chips' own
+          emerald-600: white text on emerald-600 measures only 3.77:1,
+          under WCAG AA's 4.5:1 floor, and the brief is explicit that the
+          fix is a darker band, never a dimmer white. emerald-700 (one step
+          down) still only gets the *title* to 5.48:1 — the dimmed
+          subtitle at white/70% on top of emerald-700 measures 3.45:1,
+          still failing. emerald-800 is what actually clears both: title
+          7.6:1, subtitle 4.59:1 at white/70%. Bumped to white/75% anyway
+          for a bit more margin over the floor (measures ~5:1) rather than
+          sitting right on the line. Both stay the app's one green family
+          (Tailwind's own tokens, not a new hex). Height 160px / 200px
+          (md:) is the requested 160-200px range — shorter than the old
+          photo band needed, since a flat fill carries no unusable dead
+          space. The subtitle uses whitespace-nowrap and steps down in
+          size at md: specifically so it can never wrap to a third line at
+          narrow widths — verified at 400px. h-[120px] base (was 160px) is
+          the phone-pass shrink; md:h-[200px] (>=768px) is untouched. */}
+      <header className="flex h-[120px] flex-col items-center justify-center gap-1 bg-emerald-800 px-4 text-center md:h-[200px] md:gap-3">
+        <h1 className="text-2xl font-bold text-white md:text-[3rem]">מסלול יום בישראל</h1>
+        <p className="whitespace-nowrap text-xs text-white/75 md:text-lg">בוחרים אזור, מקבלים יום מתוכנן</p>
       </header>
 
-      {/* Sidebar first in document order, itinerary column second: under
-          dir="rtl" that alone puts the sidebar at the inline-start (visually
-          right) and the itinerary at the inline-end (visually left), with no
-          inset-inline-start/margin-inline-end needed — the same DOM-order
-          approach StopCard already uses for its own two-column split. Below
-          900px (a layout-specific breakpoint, distinct from the 768px one
-          type-scale/StopCard use) the row becomes a column, so the same
-          order stacks the filters above the itinerary — never a drawer or a
-          hamburger, since SPEC forbids hidden content. min-[900px]:gap-16
-          (versus the 24px base gap) is what gives the sidebar clear
-          separation from the itinerary at desktop width, on top of the
-          min-[900px]:px-12 edge padding below giving it separation from
-          the screen edge on its other side. */}
-      <div className="mx-auto flex max-w-2xl flex-col gap-6 px-4 pb-24 md:px-8 min-[768px]:max-w-[1152px] min-[900px]:max-w-[1400px] min-[900px]:flex-row min-[900px]:items-start min-[900px]:gap-16 min-[900px]:px-12">
-        <aside className="flex flex-none flex-col gap-4 rounded-xl bg-white p-4 shadow-sm min-[900px]:sticky min-[900px]:top-8 min-[900px]:w-[328px] min-[900px]:px-3">
-          <h2 className="text-lg font-semibold">רוצים משהו אחר?</h2>
+      {/* Two nested rows, not one, so the sidebar/itinerary split and the
+          map's own join point can sit at different breakpoints. First
+          measured this as a single 900px row for all three: sidebar
+          (fixed 400px) + map placeholder + gaps/padding left the
+          itinerary ~150px wide at exactly 900px — a place name wrapped
+          across 4 lines. That's not an edge case worth tolerating, so the
+          map now joins as a column starting at 1200px; 900-1199px keeps
+          exactly the sidebar+itinerary 2-column layout that already
+          existed (and was already validated) before this change, with
+          the map sitting as a normal full-width block below the
+          itinerary — same treatment as <900px, just covering a wider
+          range. outerRow (this element) controls the map's join point;
+          innerRow (sidebar+main, right below) controls the older,
+          untouched 900px sidebar breakpoint.
+
+          Card-width pass: with the sidebar fixed at 400px (tuned earlier
+          for its own chip row) and main already flex-1 (i.e. already
+          claiming every pixel not spoken for), the only way to widen the
+          itinerary is to shrink what IS spoken for — outer gap-10 -> gap-6
+          and the map's own 260px -> 220px at the 1200px tier, its jump to
+          a roomier width pushed from 1500px out to 1800px. Edge padding
+          (min-[900px]:px-12) is left alone — that was a deliberate
+          "comfortable margin from the screen edge" decision from an
+          earlier pass, not something this request touches. */}
+      <div className="mx-auto flex max-w-2xl flex-col gap-6 px-4 pb-24 md:px-8 min-[768px]:max-w-[1152px] min-[900px]:max-w-[1400px] min-[900px]:px-12 min-[1200px]:max-w-[1800px] min-[1200px]:flex-row min-[1200px]:items-start min-[1200px]:gap-6">
+        <div className="flex min-w-0 flex-1 flex-col gap-6 min-[900px]:flex-row min-[900px]:items-start min-[900px]:gap-16">
+          {/* md:text-[1.0625rem] here is the one base bump for the whole
+              sidebar: every text size below it (h2/labels/chips/note) is an
+              em value, i.e. a multiple of THIS element's font-size, not an
+              independent rem value of its own. Tailwind's own text-*
+              utilities are deliberately rem-based (root-relative, so
+              nesting never silently compounds them) — which is exactly why
+              they can't be the mechanism here: a child's rem class ignores
+              an ancestor's font-size entirely. em is the one unit that
+              actually cascades from a single parent bump, so it is used
+              here instead, only for this subtree. */}
+          <aside className="flex flex-none flex-col gap-4 rounded-xl bg-white p-4 shadow-sm min-[900px]:sticky min-[900px]:top-8 min-[900px]:w-[400px] min-[900px]:px-3 md:text-[1.0625rem]">
+          <h2 className="text-lg font-semibold md:text-[1.3em]">רוצים משהו אחר?</h2>
           <div>
-            <p className="mb-2 text-sm font-medium text-slate-600">אזור</p>
+            <p className="mb-2 text-sm font-medium text-slate-600 md:text-[1em]">אזור</p>
             <RegionChips selected={region} onSelect={handleRegionSelect} disabled={busy} />
           </div>
           <div>
-            <p className="mb-2 text-sm font-medium text-slate-600">זמן נסיעה מקסימלי בין עצירות</p>
+            <p className="mb-2 text-sm font-medium text-slate-600 md:text-[1em]">זמן נסיעה מקסימלי בין עצירות</p>
             <DriveTimeChips selected={maxLegMin} onSelect={handleMaxLegSelect} disabled={busy} />
           </div>
           <div>
-            <p className="mb-2 text-sm font-medium text-slate-600">ארוחה</p>
+            <p className="mb-2 text-sm font-medium text-slate-600 md:text-[1em]">ארוחה</p>
             <MealChips selected={withMeal} onSelect={handleMealSelect} disabled={busy} />
           </div>
           <div>
-            <p className="mb-2 text-sm font-medium text-slate-600">אורך היום</p>
+            <p className="mb-2 text-sm font-medium text-slate-600 md:text-[1em]">אורך היום</p>
             <DayLengthChips selected={dayLength} onSelect={handleDayLengthSelect} disabled={busy} />
           </div>
           <div>
-            <p className="mb-2 text-sm font-medium text-slate-600">שמירת שבת</p>
+            <p className="mb-2 text-sm font-medium text-slate-600 md:text-[1em]">שמירת שבת</p>
             <ShabbatChips selected={shabbatObservant} onSelect={handleShabbatSelect} disabled={busy} />
             {getTodayWeekday() !== "fri" && (
-              <p className="mt-1 text-xs text-slate-500">משפיע על תכנון ליום שישי בלבד</p>
+              <p className="mt-1 text-xs text-slate-500 md:text-[0.8em]">משפיע על תכנון ליום שישי בלבד</p>
             )}
           </div>
         </aside>
@@ -251,7 +292,14 @@ function App() {
           )}
 
           {day && day.stops.length > 0 && (
-            <Timeline day={day} onRemove={handleRemove} onSwap={handleSwap} disabled={busy} />
+            <Timeline
+              day={day}
+              onRemove={handleRemove}
+              onSwap={handleSwap}
+              disabled={busy}
+              highlightedPlaceId={highlightedPlaceId}
+              onHighlight={setHighlightedPlaceId}
+            />
           )}
 
           {wantedMealButNoneFound && (
@@ -282,6 +330,31 @@ function App() {
             </div>
           )}
         </main>
+        </div>
+
+        {/* Map column. Below 1200px this is a normal full-width block
+            (fixed ~300px height) sitting after the sidebar+itinerary row
+            in document order — never covering the list, never a
+            fullscreen overlay. At 1200px+ it becomes the sticky third
+            column, visually the leftmost (inline-end) since it's last in
+            document order under dir="rtl". Width there is fluid (220px at
+            1200px, up to 380px at 1800px+): a flat 400px next to the
+            sidebar's own fixed 400px is what caused the original 900px
+            squeeze worked out earlier, and the same arithmetic bites
+            again at any single fixed width chosen too close to its own
+            breakpoint — kept narrower for longer this pass specifically
+            to give the itinerary column more room in the commonly-tested
+            1200-1799px range. day is only defined once an itinerary with a real
+            day has loaded — MapPanel still renders with an empty stops
+            array before that (a static Israel-wide view, no markers)
+            rather than popping the sticky panel in and out of existence. */}
+        <div className="h-[300px] w-full shrink-0 overflow-hidden rounded-xl border border-slate-200 bg-white p-2 shadow-sm min-[1200px]:sticky min-[1200px]:top-8 min-[1200px]:h-[600px] min-[1200px]:w-[220px] min-[1800px]:w-[380px]">
+          <MapPanel
+            stops={day?.stops ?? []}
+            highlightedPlaceId={highlightedPlaceId}
+            onPinClick={setHighlightedPlaceId}
+          />
+        </div>
       </div>
 
       {toast && (

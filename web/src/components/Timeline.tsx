@@ -6,13 +6,25 @@ interface TimelineProps {
   onRemove: (placeId: string) => void;
   onSwap: (placeId: string) => void;
   disabled?: boolean;
+  highlightedPlaceId?: string | null;
+  onHighlight?: (placeId: string | null) => void;
 }
 
 // Renders days[0].stops in order. starts_at/ends_at are shown as-is from the
 // Day the API returned — ends_at is the "cumulative ends_at" that updates on
 // every remove/swap because App re-renders from the full recomputed
 // Itinerary, never because this component computed anything.
-export default function Timeline({ day, onRemove, onSwap, disabled = false }: TimelineProps) {
+// highlightedPlaceId/onHighlight are just threaded through to each
+// StopCard — the map (a sibling of Timeline up in App) is the other half
+// of this shared state, which is why it lives above both instead of here.
+export default function Timeline({
+  day,
+  onRemove,
+  onSwap,
+  disabled = false,
+  highlightedPlaceId = null,
+  onHighlight,
+}: TimelineProps) {
   return (
     <section aria-label="לוח הזמנים של היום" className="flex flex-col gap-4">
       <div className="flex items-center justify-between rounded-xl bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-900">
@@ -29,6 +41,8 @@ export default function Timeline({ day, onRemove, onSwap, disabled = false }: Ti
             onRemove={onRemove}
             onSwap={onSwap}
             disabled={disabled}
+            isHighlighted={stop.place_id === highlightedPlaceId}
+            onHighlight={onHighlight}
           />
         ))}
       </ol>

@@ -1,5 +1,36 @@
 @import "tailwindcss";
 
+@theme {
+  /* A ~3.5% tint of the app's one green (emerald-600, #059669 — the same
+     color the selected chips already use) mixed into white. This is the
+     single source of truth for the page background: change this one value
+     rather than repeating a hex anywhere else. Deliberately NOT
+     Tailwind's own emerald-50 (#ecfdf5) — the summary band under the
+     header already uses emerald-50, and giving the page the identical
+     color would make that band disappear into its background instead of
+     reading as a highlight on top of it. Kept light enough that
+     text-slate-500, the lightest text that ever sits directly on this
+     background (not inside a white card), still clears WCAG AA 4.5:1 —
+     verified by computing the actual contrast ratio, not eyeballed; see
+     the PR/commit notes for the numbers. */
+  --color-page: #f6fbfa;
+}
+
 :root {
   color-scheme: light dark;
+}
+
+/* Nothing in this app currently animates, but the hero band is exactly the
+   kind of element a later change might add motion to (a slow pan, a fade),
+   so this is a standing guard rather than a fix for something that exists
+   today. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
