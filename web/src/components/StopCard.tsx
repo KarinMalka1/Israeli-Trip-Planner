@@ -45,7 +45,7 @@ export default function StopCard({
       className={
         "flex flex-col items-stretch gap-4 rounded-xl border p-4 shadow-sm transition-shadow md:flex-row md:gap-12 md:p-16 " +
         (isMeal ? "border-amber-300 bg-amber-50" : "border-emerald-600 bg-white") +
-        (isHighlighted ? " ring-2 ring-red-500 ring-offset-2" : "")
+        (isHighlighted ? " ring-2 ring-highlight ring-offset-2" : "")
       }
     >
       {/* The text column is first in document order, the images block second —
@@ -82,7 +82,7 @@ export default function StopCard({
             title={stop.can_remove ? undefined : CANNOT_REMOVE_LABEL}
             onClick={() => onRemove(stop.place_id)}
             disabled={disabled || !stop.can_remove}
-            className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-slate-300 text-slate-500 transition-colors hover:border-red-400 hover:text-red-600 disabled:cursor-not-allowed disabled:opacity-60"
+            className="grid h-11 w-11 shrink-0 cursor-pointer place-items-center rounded-full border border-slate-300 text-slate-500 transition-colors hover:border-red-400 hover:text-red-600 disabled:cursor-not-allowed disabled:opacity-60"
           >
             <span aria-hidden="true">✕</span>
           </button>
@@ -105,7 +105,7 @@ export default function StopCard({
           title={stop.can_swap ? undefined : CANNOT_SWAP_LABEL}
           onClick={() => onSwap(stop.place_id)}
           disabled={disabled || !stop.can_swap}
-          className="min-h-11 self-start rounded-full border border-slate-300 px-4 py-2.5 text-sm font-medium text-slate-700 transition-colors hover:border-emerald-400 hover:text-emerald-700 disabled:cursor-not-allowed disabled:opacity-60 md:px-4 md:py-2.5 md:text-base"
+          className="min-h-11 cursor-pointer self-start rounded-full border border-slate-300 px-4 py-2.5 text-sm font-medium text-slate-700 transition-colors hover:border-emerald-400 hover:text-emerald-700 disabled:cursor-not-allowed disabled:opacity-60 md:px-4 md:py-2.5 md:text-base"
         >
           החלף עצירה
         </button>
@@ -218,7 +218,7 @@ function PlaceImages({ images, name }: { images: PlaceImage[]; name: string }) {
             ? `הגדלת התמונה של ${name} (תמונה 1 מתוך ${images.length})`
             : `הגדלת התמונה של ${name}`
         }
-        className="relative block min-h-0 w-full flex-1 overflow-hidden rounded-lg border-0 bg-transparent p-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+        className="relative block min-h-0 w-full flex-1 cursor-pointer overflow-hidden rounded-lg border-0 bg-transparent p-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
       >
         <img
           src={image.url}

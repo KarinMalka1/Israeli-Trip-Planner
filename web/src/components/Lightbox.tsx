@@ -115,7 +115,7 @@ export default function Lightbox({ images, name, onClose }: LightboxProps) {
           type="button"
           onClick={onClose}
           aria-label="סגירה"
-          className="absolute top-2 end-2 z-10 grid h-11 w-11 place-items-center rounded-full bg-black/60 text-white transition-colors hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+          className="absolute top-2 end-2 z-10 grid cursor-pointer h-11 w-11 place-items-center rounded-full bg-black/60 text-white transition-colors hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
         >
           <span aria-hidden="true" className="text-xl leading-none">
             ✕
@@ -127,7 +127,7 @@ export default function Lightbox({ images, name, onClose }: LightboxProps) {
             type="button"
             onClick={showPrevious}
             aria-label="התמונה הקודמת"
-            className="absolute top-1/2 start-2 z-10 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-black/60 text-white transition-colors hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+            className="absolute top-1/2 start-2 z-10 grid cursor-pointer h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-black/60 text-white transition-colors hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
           >
             <span aria-hidden="true" className="text-2xl leading-none">
               →
@@ -142,7 +142,7 @@ export default function Lightbox({ images, name, onClose }: LightboxProps) {
             type="button"
             onClick={showNext}
             aria-label="התמונה הבאה"
-            className="absolute top-1/2 end-2 z-10 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-black/60 text-white transition-colors hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+            className="absolute top-1/2 end-2 z-10 grid cursor-pointer h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-black/60 text-white transition-colors hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
           >
             <span aria-hidden="true" className="text-2xl leading-none">
               ←

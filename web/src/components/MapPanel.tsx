@@ -15,8 +15,14 @@ interface MapPanelProps {
 // skipped, not plotted at the equator/prime-meridian null island.
 const FALLBACK_CENTER: L.LatLngTuple = [31.5, 34.75];
 const FALLBACK_ZOOM = 7;
-const HIGHLIGHT_COLOR = "#dc2626"; // red-600 — distinct from the app's emerald so "selected" never reads as just "another stop"
-const PIN_COLOR = "#059669"; // emerald-600, the app's one green
+// var(--color-highlight), not a literal hex: the token is defined once in
+// index.css (currently blue-600) and reused here and in StopCard's
+// ring-highlight class — see that @theme entry for why. This is a raw
+// inline style on a Leaflet DivIcon's HTML (plain markup, not JSX), which
+// is exactly the case a Tailwind utility class can't reach but a CSS
+// custom property still can.
+const HIGHLIGHT_COLOR = "var(--color-highlight)";
+const PIN_COLOR = "#059669"; // emerald-600, the app's one green — unrelated to the highlight colour, left as-is
 
 // A DivIcon's element is a plain <div>, not an <img> — Leaflet's own `alt`
 // marker option only ever gets applied to an <img> (L.Icon), so passing it
@@ -31,7 +37,7 @@ function buildIcon(number: number, label: string, highlighted: boolean): L.DivIc
     className: "",
     html: `<div title="${label.replace(/"/g, "&quot;")}" style="
         display:flex;align-items:center;justify-content:center;
-        width:28px;height:28px;border-radius:9999px;
+        width:28px;height:28px;border-radius:9999px;cursor:pointer;
         background:${highlighted ? HIGHLIGHT_COLOR : PIN_COLOR};
         border:2px solid white;box-shadow:0 1px 4px rgba(0,0,0,0.4);
         color:white;font-size:12px;font-weight:700;font-family:inherit;

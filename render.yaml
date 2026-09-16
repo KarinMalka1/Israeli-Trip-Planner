@@ -1,0 +1,27 @@
+# Render Blueprint for the FastAPI backend. Repo root stays the working
+# directory for both commands (no rootDir) because api/main.py imports as
+# `api.main` — `from api.domain import schedule` etc. only resolves when
+# the process starts from the directory that CONTAINS the api/ package,
+# not from inside api/ itself.
+services:
+  - type: web
+    name: israeli-trip-planner-api
+    runtime: python
+    plan: free
+    buildCommand: pip install -r api/requirements.txt
+    # ${PORT:-8000}: Render always sets PORT for a web service, but the
+    # same command still works if it's ever run somewhere that doesn't
+    # (the "defaulting to 8000 locally" half of this requirement lives in
+    # this one shell default rather than in application code, since
+    # binding is the start command's job, not main.py's).
+    startCommand: uvicorn api.main:app --host 0.0.0.0 --port ${PORT:-8000}
+    envVars:
+      # Comma-separated. Set this in the Render dashboard once the Vercel
+      # frontend has a real URL — see DEPLOY.md. Left here only as the
+      # local-dev fallback value; main.py's own default is identical, so
+      # this line exists mainly so the dashboard shows the actual value
+      # in use rather than "not set".
+      - key: ALLOWED_ORIGINS
+        value: http://localhost:5173
+      - key: PYTHON_VERSION
+        value: 3.14.2

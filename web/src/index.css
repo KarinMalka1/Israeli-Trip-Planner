@@ -1,6 +1,56 @@
 @import "tailwindcss";
 
+/* Assistant — designed for Hebrew, soft/round terminals, reads well at the
+   small sizes this app uses a lot of (labels, credits). Self-hosted from
+   web/public/fonts/, not linked to fonts.googleapis.com at runtime: one
+   fewer external dependency, and the app keeps working offline and after
+   deployment without a third-party font CDN in the request path.
+
+   Two files, not four: Google serves Assistant as a variable font (wght
+   200-800 in one file), so requesting the four static weights this app
+   actually uses (400/500/600/700) returned the literal same file four
+   times over — confirmed by downloading and diffing them, not assumed.
+   One variable file per script subset, each declared with a 400-700
+   *range* rather than four separate @font-face blocks, is the version of
+   "only the weights actually used" that fits how this font is actually
+   distributed: the browser still only ever fetches the one file per
+   subset it needs, and every weight in that 400-700 range comes from
+   interpolation within it, not a separate download.
+
+   Two subsets, not one, because Hebrew and Latin/digits are genuinely
+   different files here: the Hebrew-only subset has no digit glyphs at
+   all, and "09:00" etc. would have silently fallen back to a *different*
+   font's numerals — exactly the kind of silent swap this change is
+   supposed to avoid, just for digits instead of Hebrew letters. The
+   browser picks whichever file a given character actually needs via
+   unicode-range, same mechanism Google's own CSS uses. */
+@font-face {
+  font-family: "Assistant";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("/fonts/assistant-hebrew.woff2") format("woff2");
+  unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+@font-face {
+  font-family: "Assistant";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("/fonts/assistant-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 @theme {
+  /* The one font stack for the whole app, set once on body below rather
+     than as a class repeated on every component. System fallbacks are the
+     same ones Tailwind's own default sans stack uses, so a page paints
+     with a normal-looking font immediately (font-display: swap, above)
+     and Assistant swaps in without a layout-shifting metric mismatch once
+     it loads. */
+  --font-app: "Assistant", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+
   /* A ~3.5% tint of the app's one green (emerald-600, #059669 — the same
      color the selected chips already use) mixed into white. This is the
      single source of truth for the page background: change this one value
@@ -14,10 +64,35 @@
      verified by computing the actual contrast ratio, not eyeballed; see
      the PR/commit notes for the numbers. */
   --color-page: #f6fbfa;
+
+  /* The one "this is selected" colour, shared by the map pin highlight
+     (MapPanel.tsx, referenced via var(--color-highlight) in a raw inline
+     style — a Leaflet DivIcon is plain HTML, not a Tailwind-scanned JSX
+     file) and the matching card's ring (StopCard.tsx, via the
+     Tailwind-generated ring-highlight utility this @theme entry produces).
+     One value, one place to tune it, rather than the same hex typed twice
+     and left to drift. blue-600 — was red-600 (#dc2626) in both spots;
+     changed here, not at each call site. */
+  --color-highlight: #2563eb;
 }
 
 :root {
   color-scheme: light dark;
+}
+
+body {
+  font-family: var(--font-app);
+  /* Every digit string in this app is a time, a duration or a count —
+     there's no case here where proportional digits are wanted, so this is
+     global rather than added per element. Checked, not assumed: Assistant
+     has no "tnum" OpenType feature in either subset above (inspected both
+     .woff2 files directly), so this is currently a no-op for Assistant
+     itself — its own digit widths are close enough (0/2-9 share one
+     width; only "1" is ~8% narrower) that a side-by-side render didn't
+     read as ragged. Left in anyway: free once a fallback font (which
+     typically does support tnum) is ever actually showing digits, and
+     free again if a future Assistant update adds the feature. */
+  font-variant-numeric: tabular-nums;
 }
 
 /* Nothing in this app currently animates, but the hero band is exactly the

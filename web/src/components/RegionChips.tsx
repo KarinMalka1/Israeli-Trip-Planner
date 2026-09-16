@@ -26,7 +26,7 @@ export default function RegionChips({ selected, onSelect, disabled = false }: Re
             disabled={disabled}
             onClick={() => onSelect(region.id)}
             className={
-              "whitespace-nowrap shrink-0 rounded-full border px-3 py-2 text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-60 md:px-5 md:py-3 md:text-[1em] " +
+              "whitespace-nowrap shrink-0 cursor-pointer rounded-full border px-3 py-2 text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-60 md:px-5 md:py-3 md:text-[1em] " +
               (isSelected
                 ? "border-emerald-600 bg-emerald-600 text-white"
                 : "border-slate-300 bg-white text-slate-700 hover:border-emerald-400")

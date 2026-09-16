@@ -13,6 +13,7 @@ Error bodies carry a Hebrew ``detail`` because the client renders it directly
 from __future__ import annotations
 
 import logging
+import os
 import uuid
 from contextlib import asynccontextmanager
 
@@ -73,11 +74,24 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="Israeli Day Trip Planner", version="0.1.0", lifespan=lifespan)
 
-# The web client is a separate origin in development. MVP has no auth and no
-# cookies, so there is nothing here for a permissive CORS policy to leak.
+# The web client is always a separate origin (localhost:5173 in dev, a
+# Vercel domain in production) from wherever this API is hosted (Render).
+# ALLOWED_ORIGINS is comma-separated so one Render env var can list a
+# production domain plus a preview-deployment domain without a code change;
+# it is read fresh here at import time rather than hardcoding any specific
+# deployment's URL, Vercel's included — that URL is only known once the
+# frontend is actually deployed, which is not this repo's job to guess.
+# No allow_origins=["*"]: MVP has no auth/cookies today, but an explicit
+# allowlist costs nothing and means this doesn't need revisiting the day
+# auth is added.
+_allowed_origins = [
+    origin.strip()
+    for origin in os.environ.get("ALLOWED_ORIGINS", "http://localhost:5173").split(",")
+    if origin.strip()
+]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=_allowed_origins,
     allow_methods=["GET", "POST"],
     allow_headers=["*"],
 )
