@@ -5,7 +5,7 @@
 import type { CreateItineraryRequest, Itinerary, PlaceRefRequest } from "../types";
 
 // Points at the local FastAPI dev server (`uvicorn api.main:app --reload`).
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:8000";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "https://israeli-trip-planner.onrender.com";
 
 // Carries the HTTP status so callers can special-case a 404 (US-3: a
 // resumed itinerary that no longer exists on the server) without parsing
