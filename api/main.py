@@ -74,6 +74,21 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="Israeli Day Trip Planner", version="0.1.0", lifespan=lifespan)
 
+# הכתובות שמותר להן לפנות לשרת
+origins = [
+    "https://israeli-trip-planner.vercel.app", # הכתובת של Vercel
+    "http://localhost:5173", # לפיתוח מקומי
+    "http://localhost:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 # The web client is always a separate origin (localhost:5173 in dev, a
 # Vercel domain in production) from wherever this API is hosted (Render).
 # ALLOWED_ORIGINS is comma-separated so one Render env var can list a
