@@ -9,59 +9,60 @@
 
 ---
 
-## 📖 About The Project
+## About The Project
 
-Planning a trip in Israel can be overwhelming due to the sheer number of historical sites, nature reserves, and culinary spots. **Israeli Trip Planner** simplifies this process by providing a centralized platform where users can discover, organize, and plan their itineraries seamlessly. 
+Planning a trip in Israel can sometimes feel overwhelming. **Israeli Trip Planner** is designed to simplify this process by providing a clean, centralized platform where users can easily generate, customize, and manage daily itineraries across different regions of the country. 
 
-### ✨ Key Features
-*   **Interactive Itinerary Builder:** Drag and drop attractions to plan your daily schedule.
-*   **Categorized Discoveries:** Filter locations by Nature, History, Food, or Culture.
-*   **User Accounts:** Save your favorite spots and access your planned trips from any device.
-*   **Responsive Design:** Fully optimized for mobile and desktop usage.
+The application handles the logic behind travel times, regional routes, and constraints automatically, letting users focus entirely on the experience.
 
----
-
-## 🎨 Design & Accessibility Philosophy
-
-We believe that planning a trip should be exciting, not overwhelming. A major focus during the development of this project was **accessibility for users with ADHD** (Attention Deficit Hyperactivity Disorder). 
-
-*   **Intentional Minimalism:** We deliberately chose a clean, distraction-free UI. By removing unnecessary animations, pop-ups, and visual clutter, we reduce cognitive load.
-*   **Clear Visual Hierarchy:** High contrast, readable typography, and intuitive navigation ensure that users can focus strictly on their main task—building their itinerary—without getting lost in the interface.
-*   **Action-Oriented:** Every screen has a clear primary action, preventing decision paralysis and making the user journey smooth and predictable.
+### Key Features
+* **Smart Itinerary Generation:** Automatically plans balanced day trips based on region, travel time limits, and preferences.
+* **Interactive Editing:** Easily remove or swap stops in your itinerary with real-time updates.
+* **Shabbat & Dietary Awareness:** Tailored logic to support shabbat-observant travelers and meal scheduling.
+* **Responsive Design:** Fully optimized for smooth usage across desktop and mobile devices.
 
 ---
 
-## 🏗️ Architecture & Technical Decisions
+## Design & Accessibility Philosophy
 
-When building this project, we prioritized maintainability, scalability, and clean code principles. Instead of writing a monolithic application, we made specific architectural decisions to ensure our codebase remains robust:
-
-*   **Separation of Concerns:** We strictly separated the UI layer (Components/Views) from the business logic and state management. This makes the code easier to test and debug.
-*   **Modular Folder Structure:** The project is divided logically by features rather than file types (e.g., `[Insert your folder structure here, e.g., /auth, /trips, /shared]`). This encapsulation means that changes in one feature won't unintentionally break another.
-*   **Why we chose this approach:** 
-    *   *Readability:* New developers can quickly understand the flow of data.
-    *   *Reusability:* UI components (like buttons, cards, and modals) are built as generic elements that can be reused across the app, keeping the codebase DRY (Don't Repeat Yourself).
-    *   *API Integration:* [Optional: Explain how you separated API calls into a dedicated service folder so components don't fetch data directly].
+A major focus during the development of this project was keeping the interface distraction-free and intuitive:
+* **Intentional Minimalism:** Avoiding visual clutter and unnecessary animations to reduce cognitive load and keep the user focused on the planning process.
+* **Clear User Journey:** Every action has a predictable flow, ensuring a smooth and straightforward experience from start to finish.
 
 ---
 
-## 💻 Built With
+## Architecture & Technical Decisions
+
+The project is structured with a clear separation of concerns, dividing the backend logic from the frontend presentation layer to ensure maintainability and clean code practices:
+
+* **Backend (FastAPI):** Built with a strict separation between routes, domain logic, planners, and repositories. The API handles validation and schedule enforcement to ensure that no invalid itinerary is ever returned to the client.
+* **Frontend (Vercel):** Communicates seamlessly with the REST API hosted on Render, managing state and rendering dynamic UI components based on user interactions.
+* **Why this approach?** 
+    * *Modularity:* Isolating the planning rules and data management makes the codebase much easier to debug, test, and extend.
+    * *Robustness:* Centralized validation rules protect the application from edge cases during itinerary edits.
+
+---
+
+## Built With
 
 | Category | Technologies Used |
 | :--- | :--- |
-| **Frontend** | [e.g., React.js, Tailwind CSS, HTML5] |
-| **Backend** | [e.g., Node.js, Express.js] |
-| **Database** | [e.g., MongoDB, PostgreSQL] |
-| **Tools** | Git, GitHub, [e.g., Vercel/Render] |
+| **Frontend** | HTML5, CSS3, JavaScript / TypeScript (Vercel) |
+| **Backend** | Python, FastAPI, Uvicorn (Render) |
+| **Tools & Deployment** | Git, GitHub, REST APIs |
 
 ---
 
-## 🛠️ Getting Started
+## Getting Started
 
-Follow these instructions to set up the project locally on your machine for development and testing purposes.
+Follow these instructions to set up and run the project locally on your machine for development and testing.
 
 ### Prerequisites
-Make sure you have the following installed:
-*   [Node.js](https://nodejs.org/) (v14.0 or higher)
-*   npm
-  ```sh
-  npm install npm@latest -g
+Make sure you have Python installed on your system along with pip.
+
+### Local Installation
+
+1. **Clone the repository:**
+   ```sh
+   git clone [https://github.com/KarinMalka1/Israeli-Trip-Planner.git](https://github.com/KarinMalka1/Israeli-Trip-Planner.git)
+   cd Israeli-Trip-Planner
