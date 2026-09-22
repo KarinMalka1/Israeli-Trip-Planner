@@ -1,11 +1,11 @@
-# Israeli Trip Planner 🇮🇱 🐫
+# Israeli Trip Planner 🇮🇱
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Status: Active](https://img.shields.io/badge/Status-Active-success.svg)]()
 
 > A smart, intuitive, and comprehensive web application designed to help users plan their perfect trip across Israel. 
 
-### 🚀 **[Click here to view the Live Demo]([Insert Your Live Link Here])**
+### 🚀 **[Click here to view the Live Demo](https://israeli-trip-planner.vercel.app)**
 
 ---
 
